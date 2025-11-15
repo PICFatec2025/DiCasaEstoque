@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static dicasa.estoque.navigation.Rotas.*;
+import static dicasa.estoque.navigation.Rotas.PRODUTOS_VIEW;
+import static dicasa.estoque.navigation.Rotas.SOBRE_VIEW;
 
 /**
  * Controller que gerencia a Tela Principal
@@ -27,12 +28,6 @@ public class MainController implements Initializable {
     public MenuItem menuItemFornecedores;
     @FXML
     public MenuItem menuItemLotes;
-    @FXML
-    public MenuItem menuItemPefil;
-    @FXML
-    public MenuItem menuItemNovoUsuario;
-    @FXML
-    public MenuItem menuItemSair;
     @FXML
     private MenuItem menuItemProdutos;
     @FXML
@@ -65,37 +60,19 @@ public class MainController implements Initializable {
 
     }
 
-    @FXML
     public void onMenuItemSaidaProdutosClick(ActionEvent event) {
         System.out.println(menuItemSaidaProdutos.getText());
     }
 
-    @FXML
     public void onMenuItemEntradaProdutosClick(ActionEvent event) {
         System.out.println(menuItemEntradaProdutos.getText());
     }
 
-    @FXML
     public void onMenuItemFornecedoresClick(ActionEvent event) {
-        ScreenNavigator.loadView(contentContainer,FORNECEDORES_VIEW);
+        System.out.println(menuItemFornecedores.getText());
     }
 
-    @FXML
     public void onMenuItemLotesClick(ActionEvent event) {
         System.out.println(menuItemLotes.getText());
-    }
-
-    @FXML
-    public void onMenuItemPerfilClick(ActionEvent event) {
-        ScreenNavigator.loadView(contentContainer,PERFIL_VIEW);
-    }
-
-    @FXML
-    public void onMenuItemNovoUsuarioClick(ActionEvent event) {
-        ScreenNavigator.loadView(contentContainer,NOVO_USUARIO);
-    }
-    @FXML
-    public void onMenuItemSairClick(ActionEvent event) {
-        ScreenNavigator.loadLoginView(LOGIN_VIEW,event);
     }
 }
