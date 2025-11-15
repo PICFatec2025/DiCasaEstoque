@@ -1,0 +1,145 @@
+/* novo-usuario.css */
+
+/* Estilo geral */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Container principal */
+AnchorPane {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 20px;
+}
+
+/* VBox principal */
+VBox {
+    -fx-spacing: 20px;
+    -fx-padding: 10px;
+}
+
+/* Sub-VBox */
+VBox > VBox {
+    -fx-spacing: 15px;
+    -fx-padding: 20px;
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+}
+
+/* Título da seção */
+.label-titulo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 10px 0;
+}
+
+/* Texto descritivo */
+.label-texto {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+    -fx-wrap-text: true;
+    -fx-padding: 0 0 15px 0;
+}
+
+/* Labels dos campos */
+.label-text, .label-textfield {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 5px 0;
+}
+
+/* Campos de texto e senha */
+.rounded-textfield, .password-field {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-pref-width: 300px;
+}
+
+.rounded-textfield:focused, .password-field:focused {
+    -fx-border-color: #feb733;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(254, 183, 51, 0.3), 10, 0, 0, 0);
+}
+
+/* Checkbox */
+.check-box-eh-adm {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px 0;
+}
+
+.check-box-eh-adm .box {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.check-box-eh-adm:selected .mark {
+    -fx-background-color: #feb733;
+}
+
+.check-box-eh-adm:selected .box {
+    -fx-background-color: white;
+    -fx-border-color: #feb733;
+}
+
+.check-box-eh-adm:hover .box {
+    -fx-border-color: #feb733;
+}
+
+/* Botão Criar Usuário */
+.button-cadastrar-usuario {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-background-color: #feb733;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 25px;
+    -fx-cursor: hand;
+    -fx-pref-width: 200px;
+}
+
+.button-cadastrar-usuario:hover {
+    -fx-background-color: #e6a42d;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
+}
+
+.button-cadastrar-usuario:pressed {
+    -fx-background-color: #d5951f;
+    -fx-translate-y: 1px;
+}
+
+/* Labels de erro */
+.error-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #d32f2f;
+    -fx-padding: 5px 0 0 5px;
+}
+
+/* Ajustes de layout interno */
+VBox > VBox > VBox {
+    -fx-spacing: 5px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-effect: none;
+    -fx-border-width: 0;
+}
+
+/* Container interno para os campos */
+VBox > VBox > VBox {
+    -fx-spacing: 5px;
+    -fx-padding: 5px 0;
+}

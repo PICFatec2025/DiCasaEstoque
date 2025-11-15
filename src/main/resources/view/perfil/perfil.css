@@ -1,0 +1,145 @@
+/* perfil.css */
+
+/* Estilo geral */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Container principal */
+AnchorPane {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 20px;
+}
+
+/* VBox principal */
+VBox {
+    -fx-spacing: 30px;
+    -fx-padding: 10px;
+}
+
+/* Sub-VBox */
+VBox > VBox {
+    -fx-spacing: 15px;
+    -fx-padding: 20px;
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+}
+
+/* Títulos das seções */
+.label-titulo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 10px 0;
+}
+
+/* Textos descritivos */
+.label-texto {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+    -fx-wrap-text: true;
+    -fx-padding: 0 0 15px 0;
+}
+
+/* Labels dos campos */
+.label-textfield {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 5px 0;
+}
+
+/* Campos de texto */
+.textfield, .password-field {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-pref-width: 300px;
+}
+
+.textfield:focused, .password-field:focused {
+    -fx-border-color: #feb733;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(254, 183, 51, 0.3), 10, 0, 0, 0);
+}
+
+/* Botões */
+.button {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 25px;
+    -fx-cursor: hand;
+    -fx-pref-width: 200px;
+}
+.error-label {
+    -fx-font-size: 12px;
+    -fx-padding: 5px 0 0 10px;
+}
+
+/* Botão Atualizar Perfil */
+#buttonAtualizarPerfil {
+    -fx-background-color: #feb733;
+    -fx-text-fill: white;
+}
+
+#buttonAtualizarPerfil:hover {
+    -fx-background-color: #e6a42d;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
+}
+
+#buttonAtualizarPerfil:pressed {
+    -fx-background-color: #d5951f;
+    -fx-translate-y: 1px;
+}
+
+/* Botão Alterar Senha */
+#buttonAlterarSenha {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+#buttonAlterarSenha:hover {
+    -fx-background-color: #45a049;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
+}
+
+#buttonAlterarSenha:pressed {
+    -fx-background-color: #3d8b40;
+    -fx-translate-y: 1px;
+}
+
+/* Botão Deletar Perfil */
+#buttonDeletarPerfil {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+
+#buttonDeletarPerfil:hover {
+    -fx-background-color: #d32f2f;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
+}
+
+#buttonDeletarPerfil:pressed {
+    -fx-background-color: #c62828;
+    -fx-translate-y: 1px;
+}
+
+/* Ajustes de layout interno */
+VBox > VBox > VBox {
+    -fx-spacing: 5px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-effect: none;
+    -fx-border-width: 0;
+}

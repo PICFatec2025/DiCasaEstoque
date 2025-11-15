@@ -6,16 +6,45 @@ import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+/**
+ * Classe de execução do JavaFX
+ */
 public class AppLauncher extends Application {
     private ConfigurableApplicationContext springContext;
+
+    /**
+     * Carrega o Spring Boot antes de inicializar o JavaFX
+     */
     @Override
     public void init(){
         springContext = SpringApplication.run(EstoqueApplication.class);
     }
+
+    /**
+     * Carrega a tela inicial, a tela de Login
+     * @param stage
+     * @throws Exception
+     */
     @Override
-    public void start(Stage stage) throws Exception {
-        ScreenNavigator.initialScreen(stage,springContext);
+    public void start(Stage primaryStage) throws Exception {
+        try {
+            // Configura exception handler global
+            Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+                System.err.println("Exception não tratada: " + throwable.getMessage());
+                throwable.printStackTrace();
+            });
+
+            // Chama o initialScreen passando o primaryStage
+            ScreenNavigator.initialScreen(primaryStage, springContext);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    /**
+     * Ao fechar o projeto, finaliza o Spring Boot
+     */
     @Override
     public void stop(){
         springContext.stop();

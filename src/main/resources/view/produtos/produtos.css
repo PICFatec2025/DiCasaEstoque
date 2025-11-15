@@ -1,0 +1,189 @@
+/* Container principal */
+.container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 0px;
+}
+
+/* Título da página */
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px 0 5px 10px;
+}
+
+/* Toolbar */
+.toolbar {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 8px 10px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Botão Novo */
+.new-button {
+    -fx-background-color: #feb733;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.new-button:hover {
+    -fx-background-color: #e6a42d;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+.new-button:pressed {
+    -fx-background-color: #d5951f;
+    -fx-translate-y: 1px;
+}
+
+/* Tabela personalizada - FUNDO GERAL */
+.custom-table {
+    -fx-background-color: #fafafa; /* Fundo geral da tabela */
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px 0 0 0;
+    -fx-padding: 0px;
+}
+
+/* Cabeçalho da tabela - COR FIXA */
+.custom-table .column-header-background {
+    -fx-background-color: #feb733;
+    -fx-background-radius: 0;
+    -fx-padding: 0px;
+}
+
+.custom-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #e6a42d;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 8px 5px;
+    -fx-size: 40px;
+}
+
+.custom-table .column-header .label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* ÁREA DE PREENCHIMENTO DA TABELA (FILLER) - ESSENCIAL */
+.custom-table .filler,
+.custom-table .show-hide-columns-button {
+    -fx-background-color: #feb733; /* Mesma cor do cabeçalho */
+}
+
+/* Linhas da tabela */
+.custom-table .table-row-cell {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 5px 0;
+    -fx-cell-size: 35px;
+}
+
+.custom-table .table-row-cell:empty {
+    -fx-background-color: #fafafa;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.custom-table .table-row-cell:odd {
+    -fx-background-color: #f5f5f5;
+}
+
+.custom-table .table-row-cell:selected {
+    -fx-background-color: #fff5e0;
+    -fx-text-fill: #333333;
+}
+
+.custom-table .table-row-cell:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.custom-table .table-cell {
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 10px;
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+}
+
+/* Área virtual da tabela (espaço vazio) */
+.custom-table .virtual-flow {
+    -fx-background-color: #fafafa;
+}
+
+.custom-table .virtual-flow .scroll-bar:vertical .track-background,
+.custom-table .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: #fafafa;
+}
+
+.custom-table .virtual-flow .corner {
+    -fx-background-color: #fafafa;
+}
+
+/* Nested header - para garantir que todas as partes do cabeçalho tenham a mesma cor */
+.custom-table .nested-column-header {
+    -fx-background-color: #feb733;
+}
+
+/* Botões na tabela (Editar/Deletar) */
+.table-button {
+    -fx-background-radius: 3px;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+    -fx-border-width: 1px;
+}
+
+.edit-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-border-color: #45a049;
+}
+
+.edit-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.delete-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-border-color: #d32f2f;
+}
+
+.delete-button:hover {
+    -fx-background-color: #d32f2f;
+}
+
+/* Scrollbar da tabela */
+.custom-table .scroll-bar:horizontal,
+.custom-table .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.custom-table .scroll-bar:horizontal .track,
+.custom-table .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.custom-table .scroll-bar:horizontal .thumb,
+.custom-table .scroll-bar:vertical .thumb {
+    -fx-background-color: #d0d0d0;
+    -fx-background-radius: 5px;
+}
+
+.custom-table .scroll-bar:horizontal .thumb:hover,
+.custom-table .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #b0b0b0;
+}
+
+/* Ajuste para cabeçalho flutuante */
+.custom-table .column-header-background {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}

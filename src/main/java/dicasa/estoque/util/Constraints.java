@@ -2,7 +2,15 @@ package dicasa.estoque.util;
 
 import javafx.scene.control.*;
 
+/**
+ * Classe relacionada à formatação dos TextFields
+ */
 public class Constraints {
+    /**
+     * Com essa classe, o TextField só recebe número e apenas 1 , ou .
+     * @param textField
+     * @param maxValue valor máximo de caracteres permitidos
+     */
     public static void textFieldRecebeApenasNumeros(
             TextField textField,
             int maxValue
@@ -18,6 +26,12 @@ public class Constraints {
             return null;
         }));
     }
+
+    /**
+     * Função que limita quantos caracteres 1 TextField pode receber
+     * @param textField
+     * @param maxValue
+     */
     public static void defineTamanhoMaximoTextField(TextField textField, int maxValue) {
         textField.setTextFormatter(new TextFormatter<>(change -> {
             String novoTexto = change.getControlNewText();
@@ -27,6 +41,14 @@ public class Constraints {
             return null;
         }));
     }
+
+    /**
+     * Função que verifica se o TextField está em branco
+     * E também define o texto de campo obrigatório na label em caso de TextField vazia
+     * @param textField
+     * @param label
+     * @return true se tiver vazio e false se está preenchido
+     */
     public static boolean textFieldEstaEmBranco(
             TextField textField,
             Label label

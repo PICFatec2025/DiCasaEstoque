@@ -2,6 +2,9 @@ package dicasa.estoque.util;
 
 import java.util.regex.Pattern;
 
+/**
+ * Classe que contém um regex de um e-mail válido e verifica se esse e-mail está correto
+ */
 public class EmailValidator {
     private static final String EMAIL_REGEX =
             "^(?=.{1,64}@)[a-zA-Z0-9_-]+(?:\\.[a-zA-Z0-9_-]+)*@"

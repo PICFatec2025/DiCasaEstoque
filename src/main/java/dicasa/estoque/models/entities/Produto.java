@@ -5,6 +5,11 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entidade usada apenas como exemplo
+ * Coloquei as anotações do Lombok (biblioteca do Java)
+ * para automatizar a criação Getter e Setter, Constructor e etc. para evitar Boilerplate
+ */
 @Getter
 @Setter
 @ToString

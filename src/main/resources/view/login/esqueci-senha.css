@@ -1,0 +1,115 @@
+/* esqueci-senha.css */
+.root {
+    -fx-background-color: #feb733;
+}
+
+.container {
+    -fx-background-color: #feb733;
+    -fx-alignment: center;
+}
+
+.recuperacao-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 400px;
+    -fx-alignment: center;
+}
+
+.label-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.rounded-textfield {
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-pref-width: 280px;
+}
+
+.rounded-textfield:focused {
+    -fx-border-color: #feb733;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(254, 183, 51, 0.3), 10, 0, 0, 0);
+}
+
+.rounded-button {
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-pref-width: 280px;
+    -fx-cursor: hand;
+}
+
+.rounded-button:hover {
+    -fx-background-color: #555555;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+.rounded-button:pressed {
+    -fx-background-color: #222222;
+    -fx-translate-y: 1px;
+}
+
+.error-label {
+    -fx-font-size: 12px;
+    -fx-padding: 5px 0 0 10px;
+}
+
+.voltar-link {
+    -fx-text-fill: #666666;
+    -fx-border-color: transparent;
+    -fx-underline: false;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.voltar-link:hover {
+    -fx-text-fill: #333333;
+    -fx-underline: true;
+}
+
+/* Botão Voltar - Estilização com Margens */
+.voltar-button {
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-background-color: #666666;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 12px;
+    -fx-cursor: hand;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-margin: 10px 0 0 10px; /* Margem: top 10px, left 10px */
+}
+
+.voltar-button:hover {
+    -fx-background-color: #555555;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0, 0, 2);
+}
+
+.voltar-button:pressed {
+    -fx-background-color: #444444;
+    -fx-translate-y: 1px;
+}
+
+/* Posicionamento absoluto do botão voltar */
+#buttonVoltar {
+    -fx-position: absolute;
+    -fx-layout-x: 10px; /* 10px da borda esquerda */
+    -fx-layout-y: 10px; /* 10px da borda superior */
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dicasa.estoque.controller.ProdutoController"
+      prefHeight="400.0" prefWidth="600.0"
+      stylesheets="@produtos.css"
+      styleClass="container">
+    <children>
+        <Label text="Registro de Produtos" styleClass="title-label">
+            <padding>
+                <Insets left="10.0" top="10.0" bottom="5.0"/>
+            </padding>
+        </Label>
+
+        <ToolBar styleClass="toolbar">
+            <items>
+                <Button fx:id="btNovo" mnemonicParsing="false" text="Novo"
+                        onAction="#onBtNovoAction" styleClass="new-button"/>
+            </items>
+        </ToolBar>
+
+        <TableView prefHeight="200.0" prefWidth="200.0" fx:id="produtosTableView" styleClass="custom-table">
+            <columns>
+                <TableColumn prefWidth="120.0" text="Nome" fx:id="tableColumnNome"/>
+                <TableColumn prefWidth="100.0" text="Preço" fx:id="tableColumnPreco"/>
+                <TableColumn prefWidth="110.0" text="Quantidade" fx:id="tableColumnQuantidade"/>
+                <TableColumn prefWidth="130.0" text="Criado Em" fx:id="tableColumnCriadoEm"/>
+                <TableColumn prefWidth="80.0" text="Editar" fx:id="tableColumnEdit"/>
+                <TableColumn prefWidth="80.0" text="Deletar" fx:id="tableColumnDelete"/>
+            </columns>
+        </TableView>
+    </children>
+</VBox>

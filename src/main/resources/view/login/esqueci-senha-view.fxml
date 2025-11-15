@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="container"
+            stylesheets="@esqueci-senha.css " xmlns="http://javafx.com/javafx/21.0.8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.EsqueciSenhaController">
+    <children>
+        <Button fx:id="buttonVoltar" mnemonicParsing="false" onAction="#onClickVoltarButton" styleClass="voltar-button" text="← Voltar" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+        <VBox alignment="CENTER" layoutX="200.0" layoutY="50.0" prefHeight="400.0" prefWidth="400.0" spacing="30.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="50.0">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../static/logo.png" />
+                    </image>
+                </ImageView>
+                <Label styleClass="recuperacao-label" text="Insira seu endereço de e-mail cadastrado no sistema para recuperar a senha" />
+
+                <VBox alignment="CENTER" spacing="20.0">
+                    <VBox alignment="CENTER_LEFT" spacing="5.0">
+                        <Label styleClass="label-text" text="E-mail" />
+                        <TextField fx:id="textFieldEmail" styleClass="rounded-textfield" />
+                        <Label fx:id="labelErrorEmail" styleClass="error-label" textFill="RED" />
+                    </VBox>
+
+                    <Button fx:id="buttonRecuperarSenha" mnemonicParsing="false" onAction="#onCLickButtonRecuperarSenha" styleClass="rounded-button" text="Recuperar Senha" />
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

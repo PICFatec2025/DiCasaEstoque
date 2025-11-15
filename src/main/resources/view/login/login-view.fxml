@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="container" stylesheets="@login.css"
+            xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dicasa.estoque.controller.LoginController">
+    <children>
+        <VBox alignment="CENTER" layoutX="200.0" layoutY="50.0" prefHeight="400.0" prefWidth="400.0" spacing="30.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="50.0">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../static/logo.png" />
+                    </image>
+                </ImageView>
+
+                <VBox alignment="CENTER" spacing="20.0">
+                    <VBox alignment="CENTER_LEFT" spacing="5.0">
+                        <Label styleClass="label-text" text="Usuário" />
+                        <TextField fx:id="textFieldUsuario" styleClass="rounded-textfield" />
+                        <Label fx:id="labelErrorUsuario" styleClass="error-label" textFill="RED" />
+                    </VBox>
+
+                    <VBox alignment="CENTER_LEFT" spacing="5.0">
+                        <Label styleClass="label-text" text="Senha" />
+                        <PasswordField fx:id="textFieldSenha" styleClass="rounded-passwordfield" />
+                        <Label fx:id="labelErrorSenha" styleClass="error-label" textFill="RED" />
+                    </VBox>
+         
+                    <Button fx:id="buttonLogin" mnemonicParsing="false" onAction="#onCLickButtonLogin" styleClass="rounded-button" text="Entrar" />
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+      <Hyperlink layoutX="200.0" layoutY="546.0" text="Esqueci minha senha"
+                 fx:id="hyperlinkEsqueciSenha" onAction="#onClickEsqueciSenha" textFill="#151515" underline="true" />
+    </children>
+</AnchorPane>

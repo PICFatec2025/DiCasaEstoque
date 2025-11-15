@@ -2,6 +2,9 @@ package dicasa.estoque.util;
 
 import java.math.BigDecimal;
 
+/**
+ * Classe que converte String em BigDecimal, usado para variáveies de número
+ */
 public class BigDecimalUtil {
     public static BigDecimal parseBigDecimal(String value) {
         if (value == null || value.isBlank()) {

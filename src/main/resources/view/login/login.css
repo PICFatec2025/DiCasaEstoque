@@ -1,0 +1,58 @@
+.root {
+    -fx-background-color: #feb733;
+}
+
+.container {
+    -fx-background-color: #feb733;
+    -fx-alignment: center;
+}
+
+.label-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.rounded-textfield, .rounded-passwordfield {
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-pref-width: 280px;
+}
+
+.rounded-textfield:focused, .rounded-passwordfield:focused {
+    -fx-border-color: #feb733;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(254, 183, 51, 0.3), 10, 0, 0, 0);
+}
+
+.rounded-button {
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-pref-width: 280px;
+    -fx-cursor: hand;
+}
+
+.rounded-button:hover {
+    -fx-background-color: #555555;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+.rounded-button:pressed {
+    -fx-background-color: #222222;
+    -fx-translate-y: 1px;
+}
+
+.error-label {
+    -fx-font-size: 12px;
+    -fx-padding: 5px 0 0 10px;
+}

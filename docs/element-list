@@ -1,0 +1,10 @@
+dicasa.estoque
+dicasa.estoque.controller
+dicasa.estoque.listener
+dicasa.estoque.models.dto
+dicasa.estoque.models.entities
+dicasa.estoque.models.mapper
+dicasa.estoque.navigation
+dicasa.estoque.repository
+dicasa.estoque.service
+dicasa.estoque.util

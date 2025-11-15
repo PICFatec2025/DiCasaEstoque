@@ -1,0 +1,109 @@
+/* Estilo geral da aplicação */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Container principal */
+.main-container {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Barra de menu personalizada */
+.custom-menu-bar {
+    -fx-background-color: #feb733;
+    -fx-padding: 0px;
+    -fx-border-color: #e6a42d;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.custom-menu-bar .menu {
+    -fx-padding: 8px 15px;
+}
+
+.custom-menu-bar .menu:hover {
+    -fx-background-color: #e6a42d;
+}
+
+.custom-menu-bar .menu:showing {
+    -fx-background-color: #e6a42d;
+}
+
+.custom-menu-bar .label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* Itens do menu */
+.context-menu {
+    -fx-background-color: white;
+    -fx-border-color: #e6a42d;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 0);
+}
+
+.custom-menu-item {
+    -fx-padding: 8px 15px;
+    -fx-background-radius: 3px;
+}
+
+.custom-menu-item .label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+}
+
+.custom-menu-item:hover {
+    -fx-background-color: #feb733;
+    -fx-text-fill: white;
+}
+
+.custom-menu-item:hover .label {
+    -fx-text-fill: white;
+}
+
+.custom-menu-item:focused {
+    -fx-background-color: #e6a42d;
+}
+
+.custom-menu-item:focused .label {
+    -fx-text-fill: white;
+}
+
+/* Área de conteúdo */
+.content-pane {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 0);
+}
+
+/* ScrollPane personalizado */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #f8f9fa;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: #d0d0d0;
+    -fx-background-radius: 5px;
+}
+
+.scroll-bar:horizontal .thumb:hover, .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #b0b0b0;
+}

@@ -1,0 +1,48 @@
+/* fornecedores.css */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-padding: 10px;
+}
+
+GridPane {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+Label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+TextField {
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+}
+
+TextField:focused {
+    -fx-border-color: #feb733;
+    -fx-border-width: 2px;
+}
+
+Button {
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 16px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+TableView {
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+}

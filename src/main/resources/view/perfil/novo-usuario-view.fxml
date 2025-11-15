@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.8"
+            stylesheets="@novo-usuario.css"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dicasa.estoque.controller.NovoUsuarioController">
+
+    <children>
+        <VBox prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <Label alignment="TOP_CENTER" styleClass="label-titulo" text="Novo usuário " />
+                        <Label styleClass="label-texto" text="Cadastre um usuário novo para acessar o sistema" />
+                        <VBox alignment="CENTER_LEFT" spacing="5.0">
+                            <Label styleClass="label-text" text="Nome" />
+                            <TextField fx:id="textFieldNome" styleClass="rounded-textfield" />
+                            <Label fx:id="labelErrorNome" styleClass="error-label" textFill="RED" />
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" spacing="5.0">
+                            <Label styleClass="label-text" text="E-mail" />
+                            <TextField fx:id="textFieldEmail" styleClass="rounded-textfield" />
+                            <Label fx:id="labelErrorEmail" styleClass="error-label" textFill="RED" />
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Label styleClass="label-textfield" text="Nova senha:" />
+                                <PasswordField fx:id="passwordFieldSenhaNova" />
+                                <Label fx:id="labelErrorSenhaNova" styleClass="error-label" textFill="RED" />
+                            </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Label styleClass="label-textfield" text="Confirmar senha:" />
+                                <PasswordField fx:id="passwordFieldConfirmarSenha" />
+                                <Label fx:id="labelErrorConfirmarSenha" styleClass="error-label" textFill="RED" />
+                            </children>
+                        </VBox>
+                        <CheckBox fx:id="checkBoxEhAdm" mnemonicParsing="false" styleClass="check-box-eh-adm" text="É administrador" />
+                        <Button fx:id="buttonCadastrarUsuário" mnemonicParsing="false"
+                                styleClass="button-cadastrar-usuario"
+                                onAction="#onClickCadastrarUsuario" text="Criar Usuário" />
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
