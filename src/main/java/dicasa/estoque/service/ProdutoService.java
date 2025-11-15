@@ -1,58 +1,68 @@
 package dicasa.estoque.service;
 
-import dicasa.estoque.models.dto.ProdutoResponseDTO;
-import dicasa.estoque.models.entities.Produto;
-import dicasa.estoque.models.mapper.ProductMapper;
+import dicasa.estoque.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Classe que vai fazer ligação entre o controller e o Banco de dados
- * atualmente ele simula, tendo uma lista interna (algo provisório
- */
+import dicasa.estoque.models.Produto;
+import dicasa.estoque.repository.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoService {
-    /**
-     * Lista apenas  para testes
-     */
-    private List<Produto> produtos= new ArrayList<Produto>();
-    private final ProductMapper productMapper;
-    public ProdutoService(ProductMapper productMapper) {
-        this.productMapper = productMapper;
-        produtos.add(
-                new Produto(
-                        1L,
-                        "Macarrão",
-                        new BigDecimal("40.8"),
-                        20,
-                        LocalDateTime.now(),
-                        LocalDateTime.now()
-                )
-        );
-        produtos.add(
-                new Produto(
-                        2L,
-                        "Arroz",
-                        new BigDecimal("23.8"),
-                        40,
-                        LocalDateTime.now(),
-                        LocalDateTime.now()
-                )
-        );
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
+
+    // CREATE - Salvar produto
+    public Produto salvarProduto(Produto produto) {
+        return produtoRepository.save(produto);
     }
 
-    /**
-     * Função que retorna uma lista de dto do produto
-     * @return
-     */
-    public List<ProdutoResponseDTO> findAll(){
-        return produtos.stream()
-                .map(productMapper::toDto)
-                .toList();
+    // READ - Buscar todos os produtos
+    public List<Produto> buscarTodos() {
+        return produtoRepository.findAll();
+    }
+
+    // READ - Buscar por ID
+    public Optional<Produto> buscarPorId(Long id) {
+        return produtoRepository.findById(id);
+    }
+
+    public Optional<Produto> buscarPorNome(String nome) {
+        return produtoRepository.findByNome(nome);
+    }
+    // Busca por nome (parcial, case insensitive)
+    //Pesquisa mapstruck
+    public List<Produto> buscarPorNomeParcial(String nome) {
+        return produtoRepository.findByNomeContainingIgnoreCase(nome);
+    }
+
+    // Busca personalizada
+    public List<Produto> buscarPorNomeSimilar(String nome) {
+        return produtoRepository.buscarPorNomeSimilar(nome);
+    }
+
+    // UPDATE - Atualizar produto
+    public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
+        return produtoRepository.findById(id)
+                .map(produto -> {
+                    produto.setNome(produtoAtualizado.getNome());
+                    produto.setMarca(produtoAtualizado.getMarca());
+                    produto.setTipo(produtoAtualizado.getTipo());
+                    produto.setDataAtualizacao(java.time.LocalDateTime.now());
+                    produto.setIdUsuarioCriador(produtoAtualizado.getIdUsuarioCriador());
+                    return produtoRepository.save(produto);
+                })
+                .orElse(null);
+    }
+
+    // DELETE - Deletar produto
+    public void deletarProduto(Long id) {
+        produtoRepository.deleteById(id);
     }
 }

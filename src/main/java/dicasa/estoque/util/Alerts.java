@@ -39,9 +39,10 @@ public class Alerts {
      */
     public static boolean showConfirmation(
             String title,
-            String content
+            String content,
+            AlertType alertType
     ){
-        Alert alert = new Alert(AlertType.CONFIRMATION);
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);

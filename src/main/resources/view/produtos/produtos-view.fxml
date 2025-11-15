@@ -1,40 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="dicasa.estoque.controller.ProdutoController"
-      prefHeight="400.0" prefWidth="600.0"
-      stylesheets="@produtos.css"
-      styleClass="container">
-    <children>
-        <Label text="Registro de Produtos" styleClass="title-label">
-            <padding>
-                <Insets left="10.0" top="10.0" bottom="5.0"/>
-            </padding>
-        </Label>
+<AnchorPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.produtos.ProdutoController">
 
-        <ToolBar styleClass="toolbar">
-            <items>
-                <Button fx:id="btNovo" mnemonicParsing="false" text="Novo"
-                        onAction="#onBtNovoAction" styleClass="new-button"/>
-            </items>
-        </ToolBar>
+    <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
 
-        <TableView prefHeight="200.0" prefWidth="200.0" fx:id="produtosTableView" styleClass="custom-table">
+    <VBox spacing="15" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+
+        <!-- Título -->
+        <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Cadastro de Produtos" />
+
+        <!-- Formulário -->
+        <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="100.0" />
+                <ColumnConstraints prefWidth="200.0" />
+                <ColumnConstraints prefWidth="100.0" />
+                <ColumnConstraints prefWidth="200.0" />
+                <ColumnConstraints prefWidth="200.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints prefHeight="30" />
+                <RowConstraints prefHeight="30" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" />
+            </rowConstraints>
+
+            <!-- Linha 1 -->
+            <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtNome" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Marca:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <TextField fx:id="txtMarca" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+            <!-- Linha 2 -->
+            <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label text="ID Usuário:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="txtUsuarioCriador" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="txtBusca" layoutX="440.0" layoutY="53.0" prefHeight="25.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label layoutX="330.0" layoutY="57.0" text="Pesquisa:" GridPane.rowIndex="2" />
+            <Button onAction="#carregarTodosProdutos" prefHeight="25.0" prefWidth="190.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Ver Todos" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Button onAction="#buscarPorNome" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #b61014; -fx-text-fill: white;" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="txtTipo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+
+
+        </GridPane>
+
+        <!-- Botões -->
+        <HBox spacing="10">
+            <Button onAction="#salvarProduto" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Salvar" />
+            <Button onAction="#atualizarProduto" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Atualizar" />
+            <Button onAction="#deletarProduto" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Deletar" />
+            <Button onAction="#limparCamposAction" style="-fx-background-color: #FF9800; -fx-text-fill: white;" text="Limpar" />
+
+        </HBox>
+        <!-- Mensagem -->
+        <Label fx:id="lblMensagem" style="-fx-text-fill: #2E7D32; -fx-font-weight: bold;" />
+
+        <!-- Tabela de Produtos -->
+        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Lista de Produtos:" />
+
+        <TableView fx:id="tabelaProdutos" onMouseClicked="#selecionarProduto" prefHeight="300">
             <columns>
-                <TableColumn prefWidth="120.0" text="Nome" fx:id="tableColumnNome"/>
-                <TableColumn prefWidth="100.0" text="Preço" fx:id="tableColumnPreco"/>
-                <TableColumn prefWidth="110.0" text="Quantidade" fx:id="tableColumnQuantidade"/>
-                <TableColumn prefWidth="130.0" text="Criado Em" fx:id="tableColumnCriadoEm"/>
-                <TableColumn prefWidth="80.0" text="Editar" fx:id="tableColumnEdit"/>
-                <TableColumn prefWidth="80.0" text="Deletar" fx:id="tableColumnDelete"/>
+                <TableColumn fx:id="colunaId" prefWidth="50" text="ID" />
+                <TableColumn fx:id="colunaNome" prefWidth="150" text="Nome" />
+                <TableColumn fx:id="colunaMarca" prefWidth="150" text="Marca" />
+                <TableColumn fx:id="colunaTipo" prefWidth="100" text="Tipo" />
             </columns>
         </TableView>
-    </children>
-</VBox>
+
+    </VBox>
+
+</AnchorPane>

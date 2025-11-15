@@ -1,10 +1,16 @@
 .root {
-    -fx-background-color: #feb733;
+    -fx-background-color: #ffe4b5;
 }
 
 .container {
-    -fx-background-color: #feb733;
+    -fx-background-color: #ffe4b5;
     -fx-alignment: center;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
 }
 
 .label-text {
@@ -14,27 +20,21 @@
 }
 
 .rounded-textfield, .rounded-passwordfield {
-    -fx-background-radius: 20px;
-    -fx-border-radius: 20px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
     -fx-padding: 10px 15px;
     -fx-font-size: 14px;
-    -fx-background-color: white;
+    -fx-background-color: #ffe4b5;
     -fx-border-color: #cccccc;
     -fx-border-width: 1px;
     -fx-pref-width: 280px;
 }
 
-.rounded-textfield:focused, .rounded-passwordfield:focused {
-    -fx-border-color: #feb733;
-    -fx-border-width: 2px;
-    -fx-effect: dropshadow(gaussian, rgba(254, 183, 51, 0.3), 10, 0, 0, 0);
-}
-
 .rounded-button {
-    -fx-background-radius: 20px;
-    -fx-border-radius: 20px;
-    -fx-background-color: #333333;
-    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-color: linear-gradient(to right, #ffcc66, #ffa733);
+    -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
     -fx-padding: 10px 20px;
@@ -43,13 +43,7 @@
 }
 
 .rounded-button:hover {
-    -fx-background-color: #555555;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
-}
-
-.rounded-button:pressed {
-    -fx-background-color: #222222;
-    -fx-translate-y: 1px;
+    -fx-background-color: linear-gradient(to right, #ffb84d, #ff9933);
 }
 
 .error-label {

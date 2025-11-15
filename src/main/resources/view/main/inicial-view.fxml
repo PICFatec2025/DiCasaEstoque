@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="604.0" prefWidth="1233.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.main.MainController">
+    <children>
+      <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1233.0">
+         <children>
+             <ImageView fitHeight="134.0" fitWidth="153.0" layoutX="329.0" layoutY="40.0">
+                 <image>
+                     <Image url="@../../static/logo.png" />
+                 </image>
+             </ImageView>
+              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1.0" prefHeight="457.0" prefWidth="1232.0" spacing="60.0">
+                  <children>
+                      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="464.0" prefWidth="586.0" spacing="12.0" style="-fx-border-radius: 0;" styleClass="card">
+                          <children>
+                              <Label styleClass="card-title" text="Saída" />
+                        <VBox alignment="CENTER" prefHeight="111.0" prefWidth="530.0" style="-fx-border-color: 000000; -fx-border-width: 1; -fx-border-style: solid;">
+                           <children>
+                                    <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" prefWidth="512.0" spacing="8.0">
+                                        <Label text="Prato">
+                                    <font>
+                                       <Font name="Arial Bold" size="14.0" />
+                                    </font></Label>
+                                        <ChoiceBox fx:id="choicePrato" prefHeight="30.0" prefWidth="190.0" styleClass="drop-box-prato" stylesheets="@main.css" value="Macarrão">
+                                            <items>
+                                                <FXCollections fx:factory="observableArrayList">
+                                                    <String fx:value="Macarrão" />
+                                                    <String fx:value="Arroz" />
+                                                    <String fx:value="Feijão" />
+                                                </FXCollections>
+                                            </items>
+                                        </ChoiceBox>
+                                        <Label text="Tamanho">
+                                    <font>
+                                       <Font name="Arial Bold" size="14.0" />
+                                    </font></Label>
+                                        <ChoiceBox fx:id="choiceTamanho" prefWidth="60.0" styleClass="drop-box-prato" value="M">
+                                            <items>
+                                                <FXCollections fx:factory="observableArrayList">
+                                                    <String fx:value="P" />
+                                                    <String fx:value="M" />
+                                                    <String fx:value="G" />
+                                                </FXCollections>
+                                            </items>
+                                        </ChoiceBox>
+                                        <Label text="Quantidade">
+                                    <font>
+                                       <Font name="Arial Bold" size="14.0" />
+                                    </font></Label>
+                                        <TextField fx:id="txtQuantidade" prefWidth="50.0" styleClass="drop-box-prato" />
+                                    </HBox>
+                                     <Button fx:id="btnAdicionar" style="-fx-background-color: FEB733;" styleClass="btn-padrao" text="Adicionar">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin></Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+      
+                              <Label styleClass="card-title" text="Total de itens" />
+                              <TableView fx:id="tabelaItens" prefHeight="141.0" prefWidth="548.0" style="-fx-background-color: FFEBC5; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 000000;" styleClass="tabela_itens">
+                                  <columns>
+                                      <TableColumn editable="false" maxWidth="45.0" prefWidth="41.0" style="-fx-background-color: FFFFFF;" text="Qtd" />
+                                      <TableColumn editable="false" prefWidth="410.0" style="-fx-background-color: FFFFFF;" styleClass="tabela_itens" text="Prato" />
+                                      <TableColumn editable="false" minWidth="0.0" prefWidth="94.0" style="-fx-background-color: FFFFFF;" text="Tamanho" />
+                                  </columns>
+                              </TableView>
+      
+                              <Button fx:id="btnFinalizar" style="-fx-background-color: FEB733;" styleClass="btn-padrao" text="Finalizar" />
+                          </children>
+                          <padding>
+                              <Insets left="18.0" right="18.0" top="18.0" />
+                          </padding>
+                      </VBox>
+      
+                      <VBox prefHeight="464.0" prefWidth="504.0" spacing="12.0" styleClass="card">
+                          <children>
+                              <Label styleClass="card-title" text="Avisos" />
+                              <TableView fx:id="tabelaAvisos" prefHeight="283.0" prefWidth="408.0" styleClass="tabela_itens">
+                                  <columns>
+                                      <TableColumn prefWidth="80.0" text="Data" />
+                                      <TableColumn prefWidth="60.0" text="Hora" />
+                                      <TableColumn prefWidth="212.0" text="Aviso" />
+                                      <TableColumn prefWidth="112.0" text="Prioridade" />
+                                  </columns>
+                              </TableView>
+                          </children>
+                          <padding>
+                              <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
+                          </padding>
+                      </VBox>
+                  </children>
+              </HBox>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

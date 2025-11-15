@@ -1,48 +1,124 @@
-/* fornecedores.css */
+/* Estilos principais */
 .root {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #FFE0B2;
     -fx-font-family: "Segoe UI", Arial, sans-serif;
-    -fx-padding: 10px;
+    -fx-padding: 20px;
 }
 
-GridPane {
+#card {
     -fx-background-color: white;
-    -fx-padding: 15px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 2, 2);
 }
 
-Label {
+/* Título */
+#titleLabel {
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-alignment: center;
+}
+
+/* Botões */
+#btnCadastrar, #btnBuscar, #btnLimpar {
+    -fx-background-color: #FFA726;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+}
+
+#btnCadastrar:hover, #btnBuscar:hover, #btnLimpar:hover {
+    -fx-background-color: #FF9800;
+}
+
+/* Campos de texto */
+.text-field {
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px 6px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+}
+
+.text-field:focused {
+    -fx-border-color: #FFA726;
+    -fx-border-width: 2px;
+}
+
+/* ComboBox */
+.combo-box {
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px 6px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+}
+
+.combo-box:focused {
+    -fx-border-color: #FFA726;
+    -fx-border-width: 2px;
+}
+
+/* Labels */
+.label {
+    -fx-font-size: 12px;
     -fx-text-fill: #333333;
 }
 
-TextField {
-    -fx-background-radius: 4px;
+/* Tabela */
+.table-view {
+    -fx-background-color: #FFE0B2;
     -fx-border-radius: 4px;
-    -fx-padding: 5px;
+    -fx-background-radius: 4px;
     -fx-border-color: #cccccc;
     -fx-border-width: 1px;
 }
 
-TextField:focused {
-    -fx-border-color: #feb733;
-    -fx-border-width: 2px;
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(#f6f6f6, #e9e9e9);
+    -fx-border-radius: 4px 4px 0 0;
 }
 
-Button {
-    -fx-background-radius: 4px;
-    -fx-padding: 8px 16px;
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 0 1px 1px 0;
+}
+
+.table-view .column-header .label {
     -fx-font-weight: bold;
-    -fx-cursor: hand;
+    -fx-text-fill: #333333;
+    -fx-alignment: center-left;
 }
 
-Button:hover {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+.table-view .table-row-cell:even {
+    -fx-background-color: #f9f9f9;
 }
 
-TableView {
-    -fx-background-radius: 4px;
-    -fx-border-radius: 4px;
+.table-view .table-row-cell:odd {
+    -fx-background-color: white;
 }
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #FFE0B2;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 8px;
+    -fx-alignment: center-left;
+}
+
+/* Placeholder da tabela (quando vazia) */
+.table-view .placeholder .label {
+    -fx-text-fill: #666666;
+    -fx-font-style: italic;
+}
+
