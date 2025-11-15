@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f9a825;"
+            xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <!-- Título -->
+    <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Controle de Qualidade" />
+
+    <!-- Formulário de registro de qualidade -->
+    <VBox layoutX="20.0" layoutY="50.0" spacing="10" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <HBox spacing="10">
+            <Label minWidth="80" text="Insumo:" />
+            <ComboBox fx:id="cbInsumo" prefWidth="200" />
+            <Label minWidth="100" text="Fornecedor:" />
+            <ComboBox fx:id="cbFornecedor" prefWidth="200" />
+        </HBox>
+
+        <HBox spacing="10">
+            <Label minWidth="80" text="Marca:" />
+            <TextField fx:id="tfMarca" prefWidth="200" />
+            <Label minWidth="100" text="Nota Qualidade:" />
+            <Spinner fx:id="spnNota" editable="true" prefWidth="100" />
+        </HBox>
+
+        <HBox spacing="10">
+            <Label minWidth="120" text="Data Avaliação:" />
+            <DatePicker fx:id="dpData" prefWidth="150" />
+            <Label minWidth="100" text="Observações:" />
+            <TextArea fx:id="taObservacoes" prefHeight="60" prefWidth="300" />
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button fx:id="btnRegistrar" text="Registrar Qualidade" />
+            <Button fx:id="btnRemover" text="Remover Avaliação" />
+            <Button fx:id="btnRelatorio" text="Gerar Relatório" />
+        </HBox>
+    </VBox>
+
+    <!-- Tabela de histórico de qualidade -->
+    <TableView fx:id="tableHistorico" layoutX="20.0" layoutY="220.0" prefHeight="350" prefWidth="760" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <columns>
+            <TableColumn fx:id="colData" prefWidth="100" text="Data" />
+            <TableColumn fx:id="colInsumo" prefWidth="100" text="Insumo" />
+            <TableColumn fx:id="colFornecedor" prefWidth="150" text="Fornecedor" />
+            <TableColumn fx:id="colMarca" prefWidth="150" text="Marca" />
+            <TableColumn fx:id="colNota" prefWidth="80" text="Nota" />
+            <TableColumn fx:id="colObservacoes" prefWidth="180" text="Observações" />
+        </columns>
+    </TableView>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+
+</AnchorPane>

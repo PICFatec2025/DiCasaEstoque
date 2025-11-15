@@ -10,11 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="container"
-            stylesheets="@esqueci-senha.css " xmlns="http://javafx.com/javafx/21.0.8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.EsqueciSenhaController">
+            stylesheets="@esqueci-senha.css" xmlns="http://javafx.com/javafx/21.0.8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.login.EsqueciSenhaController">
     <children>
         <Button fx:id="buttonVoltar" mnemonicParsing="false" onAction="#onClickVoltarButton" styleClass="voltar-button" text="← Voltar" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-        <VBox alignment="CENTER" layoutX="200.0" layoutY="50.0" prefHeight="400.0" prefWidth="400.0" spacing="30.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="50.0">
+        <VBox alignment="CENTER" layoutX="200.0" layoutY="50.0" prefHeight="400.0" prefWidth="400.0" spacing="30.0"
+              styleClass="card"
+              AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="50.0">
             <children>
                 <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                     <image>

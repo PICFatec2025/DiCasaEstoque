@@ -12,172 +12,123 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1366.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.MainController">
+<ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="740.0" prefWidth="1366.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.main.MainController">
     <content>
-        <VBox alignment="CENTER" prefHeight="401.0" prefWidth="599.0" styleClass="main-container">
+        <VBox alignment="TOP_CENTER" spacing="20.0" prefHeight="401.0" prefWidth="1200.0">
             <children>
-                <MenuBar styleClass="custom-menu-bar" VBox.vgrow="ALWAYS">
+                <MenuBar styleClass="custom-menu-bar" prefWidth="1200.0">
                     <menus>
+                        <Menu mnemonicParsing="false" text="Início"/>
                         <Menu mnemonicParsing="false" text="Estoque">
                             <items>
-                                <MenuItem fx:id="menuItemProdutos" mnemonicParsing="false" onAction="#onMenuItemProdutosClick" styleClass="custom-menu-item" text="Produtos" />
-                                <MenuItem fx:id="menuItemLotes" mnemonicParsing="false" onAction="#onMenuItemLotesClick" styleClass="custom-menu-item" text="Lotes" />
-                                <MenuItem fx:id="menuItemInventario" mnemonicParsing="false" onAction="#onMenuItemInventarioClick" styleClass="custom-menu-item" text="Inventário" />
+                                <MenuItem fx:id="menuItemProdutos" mnemonicParsing="false" onAction="#onMenuItemProdutosClick" text="Produtos" />
+                                <MenuItem fx:id="menuItemControleQualidade" mnemonicParsing="false" onAction="#onMenuItemControleQualidadeClick" text="Controle de Qualidade" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Relatórios">
                             <items>
-                                <MenuItem fx:id="menuItemSaidaProdutos" mnemonicParsing="false" onAction="#onMenuItemSaidaProdutosClick" styleClass="custom-menu-item" text="Previsão de compras" />
-                                <MenuItem fx:id="menuItemEntradaProdutos" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutosClick" styleClass="custom-menu-item" text="Histórico do estoque" />
+                                <MenuItem fx:id="menuItemPrevisaoCompras" mnemonicParsing="false" onAction="#onMenuItemPrevisaoComprasClick" text="Previsão de compras" />
+                                <MenuItem fx:id="menuItemHistoricoEstoque" mnemonicParsing="false" onAction="#onMenuItemHistoricoEstoqueClick" text="Histórico de estoque" />
+                                <MenuItem fx:id="menuItemRelatorioConsumo" mnemonicParsing="false" onAction="#onMenuItemRelatorioConsumoClick" text="Relatório de Consumo" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Fornecedores" />
-                  <Menu mnemonicParsing="false" text="Pratos">
-                     <items>
-                        <MenuItem fx:id="menuItemFornecedores1" mnemonicParsing="false" onAction="#onMenuItemFornecedoresClick" styleClass="custom-menu-item" text="Fornecedores" />
-                     </items>
-                  </Menu>
-                        <Menu mnemonicParsing="false" text="Ajuda">
+                        <Menu mnemonicParsing="false" text="Fornecedores">
                             <items>
-                                <MenuItem fx:id="menuItemSobre" mnemonicParsing="false" onAction="#onMenuItemSobreClick" styleClass="custom-menu-item" text="Sobre" />
+                                <MenuItem fx:id="menuItemFornecedores" mnemonicParsing="false" onAction="#onMenuItemFornecedoresClick" text="Fornecedores" />
                             </items>
                         </Menu>
-                  <Menu mnemonicParsing="false" text="Usuário">
-                     <items>
-                        <MenuItem fx:id="menuItemSobre1" mnemonicParsing="false" onAction="#onMenuItemSobreClick" styleClass="custom-menu-item" text="Redefinir senha" />
-                        <MenuItem fx:id="menuItemSobre11" mnemonicParsing="false" onAction="#onMenuItemSobreClick" styleClass="custom-menu-item" text="Configuração do usuário" />
-                     </items>
-                  </Menu>
+                        <Menu mnemonicParsing="false" text="Pratos">
+                            <items>
+                                <MenuItem fx:id="menuItemRelatorioPratos" mnemonicParsing="false" onAction="#onMenuItemRelatorioPratosClick" text="Relatório de Pratos" />
+                                <MenuItem fx:id="menuItemPratos" mnemonicParsing="false" onAction="#onMenuItemPratosClick" text="Cadastrar Pratos" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Usuário">
+                            <items>
+                                <MenuItem fx:id="menuItemPefil" mnemonicParsing="false" onAction="#onMenuItemPerfilClick" text="Perfil" />
+                                <MenuItem fx:id="menuItemNovoUsuario" mnemonicParsing="false" onAction="#onMenuItemNovoUsuarioClick" text="Novo Usuário" />
+                                <MenuItem fx:id="menuItemSair" mnemonicParsing="false" onAction="#onMenuItemSairClick" text="Sair" />
+                            </items>
+                        </Menu>
                     </menus>
                 </MenuBar>
-            <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <VBox prefHeight="326.0" prefWidth="570.0" style="-fx-background-color: #ffffff;">
-                     <children>
-                        <VBox maxWidth="550.0" prefHeight="376.0" prefWidth="550.0" styleClass="inputs_vendas">
-                           <VBox.margin>
-                              <Insets left="100.0" top="150.0" />
-                           </VBox.margin>
-                           <children>
-                              <Label text="Saída">
-                                 <VBox.margin>
-                                    <Insets left="250.0" top="10.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="24.0" />
-                                 </font>
-                              </Label>
-                              <VBox prefHeight="99.0" prefWidth="548.0">
-                                 <children>
-                                    <HBox maxHeight="100.0" minHeight="41.0" prefHeight="41.0" prefWidth="300.0">
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                       <children>
-                                          <Label text="Prato">
-                                             <HBox.margin>
-                                                <Insets left="40.0" top="10.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <ChoiceBox id="choice-box" prefWidth="150.0" value="Macarrão">
-                                             <HBox.margin>
-                                                <Insets left="20.0" top="5.0" />
-                                             </HBox.margin>
-                                              <items>
-                                                  <FXCollections fx:factory="observableArrayList">
-                                                      <String fx:value="Macarrão" />
-                                                      <String fx:value="Arroz" />
-                                                      <String fx:value="Feijão" />
-                                                  </FXCollections>
-                                              </items>
-                                          </ChoiceBox>
-                                          <Label text="Tamanho">
-                                             <HBox.margin>
-                                                <Insets left="10.0" top="10.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <ChoiceBox id="choice-box" prefHeight="28.0" prefWidth="50.0" value="M">
-                                             <items>
-                                                <FXCollections fx:factory="observableArrayList">
-                                                   <String fx:value="P" />
-                                                   <String fx:value="M" />
-                                                   <String fx:value="G" />
-                                                </FXCollections>
-                                             </items>
-                                             <HBox.margin>
-                                                <Insets left="10.0" top="5.0" />
-                                             </HBox.margin>
-                                          </ChoiceBox>
-                                          <Label text="Quantidade">
-                                             <HBox.margin>
-                                                <Insets left="10.0" top="10.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <ChoiceBox id="choice-box" prefHeight="28.0" prefWidth="50.0">
-                                             <items>
-                                                <FXCollections fx:factory="observableArrayList">
-                                                   <String fx:value="P" />
-                                                   <String fx:value="M" />
-                                                   <String fx:value="G" />
-                                                </FXCollections>
-                                             </items>
-                                             <HBox.margin>
-                                                <Insets left="10.0" top="5.0" />
-                                             </HBox.margin>
-                                          </ChoiceBox>
-      
-                                       </children>
-                                    </HBox>
-                                    <Button mnemonicParsing="false" style="-fx-border-color: #000; -fx-border-style: solid;" text="Adicionar">
-                                       <VBox.margin>
-                                          <Insets left="250.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="194.0" prefWidth="548.0">
-                                 <children>
-                                    <Label text="Total de itens">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="200.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TableView prefHeight="110.0" prefWidth="520.0" styleClass="tabela_itens">
-                                      <columns>
-                                        <TableColumn prefWidth="46.0" text="Qtd" />
-                                        <TableColumn prefWidth="410.0" text="Prato" />
-                                          <TableColumn minWidth="0.0" prefWidth="87.0" text="Tamanho" />
-                                      </columns>
-                                    </TableView>
-                                    <Button mnemonicParsing="false" style="-fx-border-color: #000; -fx-border-style: solid;" text="FInalizar">
-                                       <VBox.margin>
-                                          <Insets left="250.0" top="10.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </children></VBox>
-               </children>
-            </StackPane>
+
+                <Label styleClass="logo"/>
+
+                <AnchorPane fx:id="contentContainer" prefHeight="520.0" prefWidth="1200.0" styleClass="content-pane">
+                    <children>
+                        <HBox spacing="60.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" alignment="CENTER">
+                            <children>
+                                <VBox prefWidth="500.0" spacing="12.0" styleClass="card">
+                                    <children>
+                                        <Label text="Saída" styleClass="card-title"/>
+                                        <HBox spacing="8.0" alignment="CENTER">
+                                            <Label text="Prato"/>
+                                            <ChoiceBox fx:id="choicePrato" prefWidth="150.0" value="Macarrão">
+                                                <items>
+                                                    <FXCollections fx:factory="observableArrayList">
+                                                        <String fx:value="Macarrão"/>
+                                                        <String fx:value="Arroz"/>
+                                                        <String fx:value="Feijão"/>
+                                                    </FXCollections>
+                                                </items>
+                                            </ChoiceBox>
+                                            <Label text="Tamanho"/>
+                                            <ChoiceBox fx:id="choiceTamanho" prefWidth="60.0" value="M">
+                                                <items>
+                                                    <FXCollections fx:factory="observableArrayList">
+                                                        <String fx:value="P"/>
+                                                        <String fx:value="M"/>
+                                                        <String fx:value="G"/>
+                                                    </FXCollections>
+                                                </items>
+                                            </ChoiceBox>
+                                            <Label text="Quantidade"/>
+                                            <TextField fx:id="txtQuantidade" prefWidth="50.0"/>
+                                            <Button fx:id="btnAdicionar" text="Adicionar"/>
+                                        </HBox>
+
+                                        <Label text="Total de itens" styleClass="section-subtitle"/>
+                                        <TableView fx:id="tabelaItens" prefHeight="120.0" styleClass="tabela_itens">
+                                            <columns>
+                                                <TableColumn prefWidth="60.0" text="Qtd" />
+                                                <TableColumn prefWidth="260.0" text="Prato" />
+                                                <TableColumn prefWidth="120.0" text="Tamanho" />
+                                            </columns>
+                                        </TableView>
+
+                                        <Button fx:id="btnFinalizar" text="Finalizar" />
+                                    </children>
+                                    <padding>
+                                        <Insets top="18.0" right="18.0" bottom="18.0" left="18.0"/>
+                                    </padding>
+                                </VBox>
+
+                                <VBox prefWidth="500.0" spacing="12.0" styleClass="card">
+                                    <children>
+                                        <Label text="Avisos" styleClass="card-title"/>
+                                        <TableView fx:id="tabelaAvisos" prefHeight="280.0" styleClass="tabela_itens">
+                                            <columns>
+                                                <TableColumn prefWidth="80.0" text="Data" />
+                                                <TableColumn prefWidth="60.0" text="Hora" />
+                                                <TableColumn prefWidth="240.0" text="Aviso" />
+                                                <TableColumn prefWidth="80.0" text="Prioridade" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                    <padding>
+                                        <Insets top="18.0" right="18.0" bottom="18.0" left="18.0"/>
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </AnchorPane>
             </children>
         </VBox>
     </content>

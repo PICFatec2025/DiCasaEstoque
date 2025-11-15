@@ -26,8 +26,20 @@ public class AppLauncher extends Application {
      * @throws Exception
      */
     @Override
-    public void start(Stage stage) throws Exception {
-        ScreenNavigator.initialScreen(stage,springContext);
+    public void start(Stage primaryStage) throws Exception {
+        try {
+            // Configura exception handler global
+            Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+                System.err.println("Exception não tratada: " + throwable.getMessage());
+                throwable.printStackTrace();
+            });
+
+            // Chama o initialScreen passando o primaryStage
+            ScreenNavigator.initialScreen(primaryStage, springContext);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
