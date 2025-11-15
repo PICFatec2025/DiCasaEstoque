@@ -1,3 +1,4 @@
+/* Estilos principais */
 .root {
     -fx-background-color: #FFE0B2;
     -fx-font-family: "Segoe UI", Arial, sans-serif;
@@ -13,6 +14,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 2, 2);
 }
 
+/* Título */
 #titleLabel {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
@@ -20,7 +22,8 @@
     -fx-alignment: center;
 }
 
-#card > HBox > Button, #card > HBox > .button, #btnCadastrar, #btnBuscar, #btnLimpar {
+/* Botões */
+#btnCadastrar, #btnBuscar, #btnLimpar {
     -fx-background-color: #FFA726;
     -fx-text-fill: black;
     -fx-font-weight: bold;
@@ -29,33 +32,93 @@
     -fx-cursor: hand;
 }
 
-#card > HBox > Button:hover, #btnCadastrar:hover, #btnBuscar:hover, #btnLimpar:hover {
+#btnCadastrar:hover, #btnBuscar:hover, #btnLimpar:hover {
     -fx-background-color: #FF9800;
 }
 
-TextField, ComboBox {
+/* Campos de texto */
+.text-field {
     -fx-background-radius: 4px;
     -fx-border-radius: 4px;
     -fx-padding: 4px 6px;
     -fx-border-color: #cccccc;
     -fx-border-width: 1px;
+    -fx-background-color: white;
 }
 
-TextField:focused, ComboBox:focused {
+.text-field:focused {
     -fx-border-color: #FFA726;
     -fx-border-width: 2px;
 }
 
-#card TableView {
+/* ComboBox */
+.combo-box {
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px 6px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+}
+
+.combo-box:focused {
+    -fx-border-color: #FFA726;
+    -fx-border-width: 2px;
+}
+
+/* Labels */
+.label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333333;
+}
+
+/* Tabela */
+.table-view {
     -fx-background-color: #FFE0B2;
     -fx-border-radius: 4px;
     -fx-background-radius: 4px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
 }
 
 .table-view .column-header-background {
     -fx-background-color: linear-gradient(#f6f6f6, #e9e9e9);
+    -fx-border-radius: 4px 4px 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 0 1px 1px 0;
 }
 
 .table-view .column-header .label {
     -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-alignment: center-left;
 }
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: white;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #FFE0B2;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 8px;
+    -fx-alignment: center-left;
+}
+
+/* Placeholder da tabela (quando vazia) */
+.table-view .placeholder .label {
+    -fx-text-fill: #666666;
+    -fx-font-style: italic;
+}
+
