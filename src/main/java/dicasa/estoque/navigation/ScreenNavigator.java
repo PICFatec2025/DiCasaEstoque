@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -136,6 +137,12 @@ public class ScreenNavigator {
             AnchorPane.setBottomAnchor(newScreen, 0.0);
             AnchorPane.setLeftAnchor(newScreen, 0.0);
             AnchorPane.setRightAnchor(newScreen, 0.0);
+
+            if (newScreen instanceof Region region) {
+                region.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                region.prefWidthProperty().bind(anchorPane.widthProperty());
+                region.prefHeightProperty().bind(anchorPane.heightProperty());
+            }
 
         } catch (IOException e) {
             messageError("Erro ao carregar a tela",e);

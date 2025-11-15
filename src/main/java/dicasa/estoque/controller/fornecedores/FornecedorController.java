@@ -1,8 +1,10 @@
 package dicasa.estoque.controller.fornecedores;
 
+import dicasa.estoque.navigation.ScreenNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+
 
 @Component
 public class FornecedorController implements Initializable {
@@ -35,6 +39,8 @@ public class FornecedorController implements Initializable {
     private TableColumn<?, ?> qtdCol;
     @FXML
     private TableColumn<?, ?> totalCol;
+    @FXML
+    private Button btnAddProduto;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,4 +75,6 @@ public class FornecedorController implements Initializable {
     public void onClickLimparFiltros(ActionEvent event) {
 
     }
+
+
 }

@@ -1,135 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="740.0" prefWidth="1366.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.main.MainController">
+<ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="740.0" prefWidth="1366.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.main.MainController">
+
     <content>
-        <VBox alignment="TOP_CENTER" spacing="20.0" prefHeight="401.0" prefWidth="1200.0">
-            <children>
-                <MenuBar styleClass="custom-menu-bar" prefWidth="1200.0">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="Início"/>
-                        <Menu mnemonicParsing="false" text="Estoque">
-                            <items>
-                                <MenuItem fx:id="menuItemProdutos" mnemonicParsing="false" onAction="#onMenuItemProdutosClick" text="Produtos" />
-                                <MenuItem fx:id="menuItemControleQualidade" mnemonicParsing="false" onAction="#onMenuItemControleQualidadeClick" text="Controle de Qualidade" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Relatórios">
-                            <items>
-                                <MenuItem fx:id="menuItemPrevisaoCompras" mnemonicParsing="false" onAction="#onMenuItemPrevisaoComprasClick" text="Previsão de compras" />
-                                <MenuItem fx:id="menuItemHistoricoEstoque" mnemonicParsing="false" onAction="#onMenuItemHistoricoEstoqueClick" text="Histórico de estoque" />
-                                <MenuItem fx:id="menuItemRelatorioConsumo" mnemonicParsing="false" onAction="#onMenuItemRelatorioConsumoClick" text="Relatório de Consumo" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Fornecedores">
-                            <items>
-                                <MenuItem fx:id="menuItemFornecedores" mnemonicParsing="false" onAction="#onMenuItemFornecedoresClick" text="Fornecedores" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Pratos">
-                            <items>
-                                <MenuItem fx:id="menuItemRelatorioPratos" mnemonicParsing="false" onAction="#onMenuItemRelatorioPratosClick" text="Relatório de Pratos" />
-                                <MenuItem fx:id="menuItemPratos" mnemonicParsing="false" onAction="#onMenuItemPratosClick" text="Cadastrar Pratos" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Usuário">
-                            <items>
-                                <MenuItem fx:id="menuItemPefil" mnemonicParsing="false" onAction="#onMenuItemPerfilClick" text="Perfil" />
-                                <MenuItem fx:id="menuItemNovoUsuario" mnemonicParsing="false" onAction="#onMenuItemNovoUsuarioClick" text="Novo Usuário" />
-                                <MenuItem fx:id="menuItemSair" mnemonicParsing="false" onAction="#onMenuItemSairClick" text="Sair" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
+        <VBox fx:id="rootContainer" alignment="TOP_CENTER" fillWidth="true" prefHeight="740.0" prefWidth="1366.0" spacing="10.0">
 
-                <Label styleClass="logo"/>
+            <!-- BARRA DE MENU -->
+            <HBox fx:id="menuRow" alignment="CENTER_LEFT" spacing="8" styleClass="menu-container">
 
-                <AnchorPane fx:id="contentContainer" prefHeight="520.0" prefWidth="1200.0" styleClass="content-pane">
-                    <children>
-                        <HBox spacing="60.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" alignment="CENTER">
-                            <children>
-                                <VBox prefWidth="500.0" spacing="12.0" styleClass="card">
-                                    <children>
-                                        <Label text="Saída" styleClass="card-title"/>
-                                        <HBox spacing="8.0" alignment="CENTER">
-                                            <Label text="Prato"/>
-                                            <ChoiceBox fx:id="choicePrato" prefWidth="150.0" value="Macarrão">
-                                                <items>
-                                                    <FXCollections fx:factory="observableArrayList">
-                                                        <String fx:value="Macarrão"/>
-                                                        <String fx:value="Arroz"/>
-                                                        <String fx:value="Feijão"/>
-                                                    </FXCollections>
-                                                </items>
-                                            </ChoiceBox>
-                                            <Label text="Tamanho"/>
-                                            <ChoiceBox fx:id="choiceTamanho" prefWidth="60.0" value="M">
-                                                <items>
-                                                    <FXCollections fx:factory="observableArrayList">
-                                                        <String fx:value="P"/>
-                                                        <String fx:value="M"/>
-                                                        <String fx:value="G"/>
-                                                    </FXCollections>
-                                                </items>
-                                            </ChoiceBox>
-                                            <Label text="Quantidade"/>
-                                            <TextField fx:id="txtQuantidade" prefWidth="50.0"/>
-                                            <Button fx:id="btnAdicionar" text="Adicionar"/>
-                                        </HBox>
+                <!-- Botão simples -->
+                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#onMenuItemInicioClick" styleClass="menu-button" text="Início" textAlignment="CENTER" />
 
-                                        <Label text="Total de itens" styleClass="section-subtitle"/>
-                                        <TableView fx:id="tabelaItens" prefHeight="120.0" styleClass="tabela_itens">
-                                            <columns>
-                                                <TableColumn prefWidth="60.0" text="Qtd" />
-                                                <TableColumn prefWidth="260.0" text="Prato" />
-                                                <TableColumn prefWidth="120.0" text="Tamanho" />
-                                            </columns>
-                                        </TableView>
+                <!-- Menu Estoque -->
+                <MenuButton alignment="CENTER" cache="true" contentDisplay="CENTER" styleClass="menu-drop-button" text="Estoque" textAlignment="CENTER">
+                    <items>
+                        <MenuItem onAction="#onMenuItemProdutosClick" text="Produtos" />
+                        <MenuItem onAction="#onMenuItemControleQualidadeClick" text="Controle de Qualidade" />
+                    </items>
+                </MenuButton>
 
-                                        <Button fx:id="btnFinalizar" text="Finalizar" />
-                                    </children>
-                                    <padding>
-                                        <Insets top="18.0" right="18.0" bottom="18.0" left="18.0"/>
-                                    </padding>
-                                </VBox>
+                <!-- Menu Relatórios j -->
+                <MenuButton alignment="CENTER" contentDisplay="CENTER" styleClass="menu-drop-button" text="Relatórios" textAlignment="CENTER">
+                    <items>
+                        <MenuItem onAction="#onMenuItemPrevisaoComprasClick" text="Previsão de Compras" />
+                        <MenuItem onAction="#onMenuItemHistoricoEstoqueClick" text="Histórico de Estoque" />
+                        <MenuItem onAction="#onMenuItemRelatorioConsumoClick" text="Relatório de Consumo" />
+                    </items>
+                </MenuButton>
 
-                                <VBox prefWidth="500.0" spacing="12.0" styleClass="card">
-                                    <children>
-                                        <Label text="Avisos" styleClass="card-title"/>
-                                        <TableView fx:id="tabelaAvisos" prefHeight="280.0" styleClass="tabela_itens">
-                                            <columns>
-                                                <TableColumn prefWidth="80.0" text="Data" />
-                                                <TableColumn prefWidth="60.0" text="Hora" />
-                                                <TableColumn prefWidth="240.0" text="Aviso" />
-                                                <TableColumn prefWidth="80.0" text="Prioridade" />
-                                            </columns>
-                                        </TableView>
-                                    </children>
-                                    <padding>
-                                        <Insets top="18.0" right="18.0" bottom="18.0" left="18.0"/>
-                                    </padding>
-                                </VBox>
-                            </children>
-                        </HBox>
-                    </children>
-                </AnchorPane>
-            </children>
+                <!-- Botão simples -->
+                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#onMenuItemFornecedoresClick" styleClass="menu-button" text="Fornecedores" textAlignment="CENTER" />
+
+                <!-- Menu Usuário -->
+                <MenuButton alignment="CENTER" contentDisplay="CENTER" styleClass="menu-drop-button" text="Usuário" textAlignment="CENTER">
+                    <items>
+                        <MenuItem onAction="#onMenuItemPerfilClick" text="Perfil" />
+                        <MenuItem onAction="#onMenuItemNovoUsuarioClick" text="Novo Usuário" />
+                        <MenuItem onAction="#onMenuItemSairClick" text="Sair" />
+                    </items>
+                </MenuButton>
+
+            </HBox>
+
+            <!-- CONTEÚDO PRINCIPAL -->
+            <AnchorPane fx:id="contentContainer" prefHeight="645.0" prefWidth="1348.0" styleClass="content-pane" VBox.vgrow="ALWAYS">
+                <children>
+                    <ImageView fitHeight="580.0" fitWidth="639.0" layoutX="329.0" layoutY="40.0">
+                        <image>
+                            <Image url="@../../static/logo.png"  />
+                        </image>
+                    </ImageView>
+                </children>
+            <opaqueInsets>
+               <Insets top="10.0" />
+            </opaqueInsets>
+            </AnchorPane>
+
         </VBox>
     </content>
 </ScrollPane>

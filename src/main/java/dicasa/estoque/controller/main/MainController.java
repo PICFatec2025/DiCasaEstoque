@@ -5,7 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -48,6 +51,12 @@ public class MainController implements Initializable {
     private MenuItem menuItemSobre;
     @FXML
     private AnchorPane contentContainer;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private VBox rootContainer;
+    @FXML
+    private HBox menuRow;
 
     /**
      * ao clicar no botão de produtos, vai para a tela de produtos
@@ -58,14 +67,26 @@ public class MainController implements Initializable {
     }
 
 
-    @FXML
-    public void onMenuItemSobreClick() {
-        ScreenNavigator.loadView(contentContainer, SOBRE_VIEW);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        if (scrollPane != null) {
+            scrollPane.setFitToWidth(true);
+            scrollPane.setFitToHeight(true);
+            scrollPane.viewportBoundsProperty().addListener((obs, oldBounds, newBounds) -> {
+                if (rootContainer != null) {
+                    rootContainer.setPrefWidth(newBounds.getWidth());
+                    rootContainer.setPrefHeight(newBounds.getHeight());
+                }
+                if (contentContainer != null) {
+                    contentContainer.setPrefWidth(newBounds.getWidth());
+                    double menuHeight = menuRow != null ? menuRow.getHeight() : 0;
+                    double spacing = rootContainer != null ? rootContainer.getSpacing() : 0;
+                    double availableHeight = Math.max(0, newBounds.getHeight() - menuHeight - spacing);
+                    contentContainer.setPrefHeight(availableHeight);
+                }
+            });
+        }
     }
 
     @FXML
@@ -78,6 +99,10 @@ public class MainController implements Initializable {
         ScreenNavigator.loadView(contentContainer, HISTORICO_ESTOQUE_VIEW);
     }
 
+    @FXML
+    public void onMenuItemInicioClick(ActionEvent event) {
+        ScreenNavigator.loadView(contentContainer,INICIAL_VIEW);
+    }
     @FXML
     public void onMenuItemFornecedoresClick(ActionEvent event) {
         ScreenNavigator.loadView(contentContainer,FORNECEDORES_VIEW);
@@ -109,9 +134,16 @@ public class MainController implements Initializable {
     public void onMenuItemPratosClick(ActionEvent event) {
         ScreenNavigator.loadView(contentContainer,CADASTRO_PRATOS_VIEW);
     }
+
     @FXML
     public void onMenuItemRelatorioPratosClick(ActionEvent event) {
         ScreenNavigator.loadView(contentContainer,RELATORIO_PRATOS_VIEW);
     }
+
+    @FXML
+    public void onButtonInicioClick(ActionEvent event) {
+        ScreenNavigator.loadView(contentContainer,INICIAL_VIEW);
+    }
+
 
 }

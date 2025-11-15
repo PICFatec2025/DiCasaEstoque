@@ -3,6 +3,9 @@
     -fx-font-family: "Segoe UI", Arial, sans-serif;
     -fx-font-size: 14px;
 }
+*{
+    -fx-border-radius: 0px;
+}
 
 .custom-menu-bar {
     -fx-background-color: #f6a623;
@@ -15,15 +18,7 @@
     -fx-padding: 6 14;
 }
 
-.logo {
-    -fx-min-height: 100px;
-    -fx-min-width: 120px;
-    -fx-background-image: url("logo.png");
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-background-size: contain;
-    -fx-padding: 20;
-}
+
 
 .content-pane {
     -fx-background-color: transparent;
@@ -55,9 +50,54 @@
 .form-area Label {
     -fx-padding: 0 6 0 6;
 }
+.menu-bar .menu:hover,
+.menu-bar .menu:showing {
+    -fx-background-color: transparent; /* mantém fundo igual */
+    -fx-text-fill: inherit; /* mantém cor do texto */
+    -fx-background-color: #f6a623;
+}
+/* container da "menu bar" */
+.menu-container {
+    -fx-background-color: #f6a623;    /* mesma cor da custom-menu-bar */
+    -fx-padding: 6 12;                /* espaço interno */
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 6;
+}
 
+/* estilo comum para botões e menubuttons para parelhos */
+.menu-button {
+    -fx-background-color: transparent; /* transparente para fundo da barra aparecer */
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+                 /* controla altura/espessura */
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+/* hover */
+.menu-button:hover {
+    -fx-background-color: rgba(255,255,255,0.12);
+}
+
+/* Remove highlight padrão do MenuButton quando aberto */
+.menu-button .arrow { /* seletor para a parte da seta (pode variar por skin) */
+    -fx-background-color: transparent;
+}
+
+/* força altura mínima para consistência */
+.menu-button, .menu-container .button, .menu-container .menu-button {
+    -fx-min-height: 32px;
+    -fx-alignment: CENTER;
+}
+
+
+.menu-itens{
+    -fx-padding:5px;
+}
 .button, .card Button {
-    -fx-background-color: #FFA726;
+    -fx-background-color: #f6a623;
     -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-background-radius: 6px;
@@ -65,9 +105,8 @@
     -fx-cursor: hand;
 }
 
-.button:hover, .card Button:hover {
-    -fx-background-color: #ff9800;
-}
+
+
 
 .tabela_itens {
     -fx-border-color: #d0c3a0;
@@ -90,6 +129,279 @@
     -fx-font-weight: bold;
 }
 
+.scroll-pane .viewport {
+    -fx-background-color: #FFE0B2;
+}
+/* =========================
+   ESTILO GERAL
+   ========================= */
+.root {
+    -fx-background-color: #FFE0B2;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* =========================
+   BARRA DE MENU CUSTOMIZADA
+   ========================= */
+.menu-container {
+    -fx-background-color: #f6a623;
+    -fx-padding: 6 12;
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 8;
+    -fx-border-color: #e6a42d;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Botões e menus da barra */
+.menu-button, .menu-container .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 4;
+    -fx-padding: 6 14;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-min-height: 32px;
+    -fx-alignment: CENTER;
+}
+.scroll-area {
+    -fx-fit-to-width: true;
+    -fx-background-color: transparent;
+}
+
+.menu-drop-button{
+    -fx-padding: 0;
+    -fx-text-fill: #8f15aa;
+}
+/* Hover dos botões e menus */
+.menu-button:hover, .menu-container .button:hover {
+    -fx-background-color: rgba(255,255,255,0.15);
+}
+
+/* Quando o menu está aberto */
+.menu-button:showing {
+    -fx-background-color: rgba(255,255,255,0.25);
+}
+
+/* Remove cor da seta dos MenuButton */
+.menu-button .arrow {
+    -fx-background-color: transparent;
+}
+
+
+/* =========================
+   CONTEÚDO PRINCIPAL
+   ========================= */
+.content-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10 40 40 40;
+    -fx-pref-width: 100%;
+}
+
+/* =========================
+   CARTÕES E COMPONENTES
+   ========================= */
+.card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 2, 2);
+}
+.btn-padrao{
+    -fx-background-color: #FEB733;
+    -fx-border-width: 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #000000;
+    -fx-font-weight: 400;
+}
+/* =========================
+   ESTILO DA TABLEVIEW
+   ========================= */
+.tabela_itens {
+    -fx-background-color: #FFEBC5; /* Fundo da tabela */
+    -fx-border-color: black;
+    -fx-border-width: 1;
+}
+
+.tabela_itens .column-header-background {
+    -fx-background-color: #FFEBC5; /* Fundo do cabeçalho */
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0; /* Borda inferior do cabeçalho */
+}
+
+.tabela_itens .column-header {
+    -fx-background-color: transparent; /* Remove gradiente padrão */
+    -fx-border-color: black;
+    -fx-border-width: 0 1 0 0; /* Bordas entre colunas */
+}
+
+.tabela_itens .column-header .label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+.tabela_itens .table-row-cell {
+    -fx-background-color: #FFEBC5; /* Fundo das linhas */
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0; /* Borda inferior entre linhas */
+}
+
+.tabela_itens .table-row-cell:odd {
+    -fx-background-color: #FFE0B2; /* Cor alternativa para linhas ímpares */
+}
+
+.tabela_itens .table-row-cell:selected {
+    -fx-background-color: #FEB733; /* Cor quando selecionado */
+}
+
+.tabela_itens .cell {
+    -fx-text-fill: black;
+    -fx-border-color: transparent;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 5px;
+}
+
+/* Remove a borda interna da tabela */
+.tabela_itens .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.tabela_itens .scroll-pane .viewport {
+        -fx-background-color: #FFEBC5;
+}
+
+.tabela_itens .scroll-pane .content {
+    -fx-background-color: #FFEBC5;
+}
+
+/* =========================
+   ESTILO DAS CÉLULAS DA TABLEVIEW (igual à ChoiceBox)
+   ========================= */
+.tabela_itens .cell {
+    -fx-background-color: #FFEBC5;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-text-fill: black;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+
+.tabela_itens .table-row-cell {
+    -fx-background-color: #FFEBC5;
+    -fx-border-color: #000000;
+    -fx-border-width: 0 0 1 0;
+}
+
+.tabela_itens .table-row-cell:odd {
+    -fx-background-color: #FFE0B2; /* Cor ligeiramente diferente para linhas ímpares */
+}
+
+.tabela_itens .table-row-cell:empty {
+    -fx-background-color: #FFEBC5;
+    -fx-border-color: transparent;
+}
+
+.tabela_itens .table-row-cell:selected .cell {
+    -fx-background-color: #FEB733; /* Cor quando selecionado */
+}
+
+/* Estilo para o cabeçalho da tabela */
+.tabela_itens .column-header {
+    -fx-background-color: #FFEBC5;
+    -fx-border-color: #000000;
+    -fx-border-width: 0 1 1 0;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+.tabela_itens .column-header-background {
+    -fx-background-color: #FFEBC5;
+    -fx-border-color: #000000;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Remove as linhas de foco padrão */
+.tabela_itens .table-row-cell:filled:selected {
+    -fx-background-color: #FEB733;
+    -fx-table-cell-border-color: #000000;
+}
+
+.tabela_itens .table-row-cell:filled:selected .cell {
+    -fx-background-color: #FEB733;
+}
+
+.drop-box-prato{
+    -fx-background-color: #FFEBC5;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-radius: 0px;
+}
+.card-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 0 8 0;
+    -fx-alignment: center;
+}
+
+.section-subtitle {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 0 6 0;
+}
+
+.form-area Label {
+    -fx-padding: 0 6 0 6;
+}
+
+/* =========================
+   BOTÕES PADRÃO
+   ========================= */
+.button, .card Button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+
+    -fx-cursor: hand;
+}
+
+.button:hover, .card Button:hover {
+    -fx-background-color: #f1f1f1;
+}
+
+/* =========================
+   TABELAS
+   ========================= */
+.tabela_itens {
+    -fx-border-color: #d0c3a0;
+    -fx-border-width: 1px;
+    -fx-background-color: #FFE8C8;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(#f6f6f6, #eaeaea);
+    -fx-background-radius: 6px 6px 0 0;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+}
+
+/* =========================
+   SCROLLPANE
+   ========================= */
 .scroll-pane .viewport {
     -fx-background-color: #FFE0B2;
 }

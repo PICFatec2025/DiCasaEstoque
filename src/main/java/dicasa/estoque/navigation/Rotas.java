@@ -9,8 +9,8 @@ public class Rotas {
             return BASE_PATH+rota;
         }
         public static final String MAIN_VIEW = rota("main/main-view.fxml");
+        public static final String INICIAL_VIEW = rota("main/inicial-view.fxml");
         public static final String LOGIN_VIEW = rota("login/login-view.fxml");
-        public static final String SOBRE_VIEW = rota("sobre/sobre.fxml");
         public static final String PRODUTOS_VIEW = rota("produtos/produtos-view.fxml");
         public static final String ESQUECI_SENHA = rota("login/esqueci-senha-view.fxml");
         public static final String PERFIL_VIEW = rota("perfil/perfil-view.fxml");

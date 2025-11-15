@@ -1,152 +1,187 @@
 package dicasa.estoque.controller.produtos;
 
-import dicasa.estoque.models.dto.ProdutoResponseDTO;
+import dicasa.estoque.models.Produto;
 import dicasa.estoque.service.ProdutoService;
-import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import static dicasa.estoque.util.TableViewUtils.setupColumnString;
-import static dicasa.estoque.util.TableViewUtils.tableViewFillHeight;
+@Controller
+public class ProdutoController {
 
-/**
- * Controller que gerencia a tela de produtos
- */
+    @Autowired
+    private ProdutoService produtoService;
 
-@Component
-public class ProdutoController implements Initializable {
-    @FXML
-    public Button btNovo;
-    @FXML
-    public TableView<ProdutoResponseDTO> produtosTableView;
-    @FXML
-    public TableColumn<ProdutoResponseDTO, String> tableColumnNome;
-    @FXML
-    public TableColumn<ProdutoResponseDTO, String> tableColumnQuantidade;
-    @FXML
-    public TableColumn<ProdutoResponseDTO, String> tableColumnPreco;
-    @FXML
-    public TableColumn<ProdutoResponseDTO, String> tableColumnCriadoEm;
-    @FXML
-    public TableColumn<ProdutoResponseDTO, ProdutoResponseDTO> tableColumnEdit;
-    @FXML
-    public TableColumn<ProdutoResponseDTO, ProdutoResponseDTO> tableColumnDelete;
-    private final ProdutoService produtoService;
+    // Componentes FXML (ajuste os IDs conforme seu arquivo FXML)
+    @FXML private TextField txtNome;
+    @FXML private TextField txtMarca;
+    @FXML private TextField txtTipo;
+    @FXML private TextField txtUsuarioCriador;
+    @FXML private TextField txtBusca;
+    @FXML private TableView<Produto> tabelaProdutos;
+    @FXML private TableColumn<Produto, Long> colunaId;
+    @FXML private TableColumn<Produto, String> colunaNome;
+    @FXML private TableColumn<Produto, String> colunaMarca;
+    @FXML private TableColumn<Produto, String> colunaTipo;
+    @FXML private Label lblMensagem;
 
-    /**
-     * Ele recebe o service pelo Constructor pelo Spring
-     * @param produtoService
-     */
-    public ProdutoController(ProdutoService produtoService) {
-        this.produtoService = produtoService;
+
+    private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+        // Configurar colunas da tabela
+        colunaId.setCellValueFactory(cellData -> cellData.getValue().idProdutoProperty().asObject());
+        colunaNome.setCellValueFactory(cellData -> cellData.getValue().nomeProperty());
+        colunaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaProperty());
+        colunaTipo.setCellValueFactory(cellData -> cellData.getValue().tipoProperty());
+
+        carregarProdutos();
     }
 
-    public void onBtNovoAction(ActionEvent event) {
-        System.out.println(btNovo.getText());
-    }
-
-    /**
-     * Função que executa ao inicializar a tela
-     * @param url
-     * @param resourceBundle
-     */
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        initilizeNodes();
-        atualizaTabela();
-    }
-
-    /**
-     * função que busca os dados no service e insere na tabela da tela
-     */
-
-    private void atualizaTabela() {
-        List<ProdutoResponseDTO> produtos = produtoService.findAll();
-        ObservableList<ProdutoResponseDTO> obervableList = FXCollections.observableList(produtos);
-        produtosTableView.setItems(obervableList);
-        initEditButton();
-        initDeleteButton();
-    }
-
-    /**
-     * Função que carrega os campos da tabela
-     * Além de fazer com que a tabela preencha todo a altura da tela
-     */
-    private void initilizeNodes() {
-        setupColumnString(tableColumnNome, ProdutoResponseDTO::nome);
-        setupColumnString(tableColumnQuantidade, ProdutoResponseDTO::quantidade);
-        setupColumnString(tableColumnPreco, ProdutoResponseDTO::preco);
-        setupColumnString(tableColumnCriadoEm, ProdutoResponseDTO::created_at);
-        tableViewFillHeight(produtosTableView);
-    }
-
-    /**
-     * Função que gera o botão de delete em cada produto
-     */
-
+    // Botão Salvar
     @FXML
-    public void initDeleteButton() {
-        tableColumnDelete.setCellValueFactory(
-                param -> new ReadOnlyObjectWrapper<>(param.getValue())
-        );
-        tableColumnDelete.setCellFactory(
-                param -> new TableCell<ProdutoResponseDTO, ProdutoResponseDTO>() {
-                    private final Button button = new Button("Deletar");
+    private void salvarProduto() {
+        try {
+            Produto produto = new Produto();
+            produto.setNome(txtNome.getText());
+            produto.setMarca(txtMarca.getText());
+            produto.setTipo(txtTipo.getText());
+            produto.setIdUsuarioCriador(Integer.parseInt(txtUsuarioCriador.getText()));
+            produto.setDataCriacao(LocalDateTime.now());
 
-                    @Override
-                    protected void updateItem(ProdutoResponseDTO dto, boolean b) {
-                        super.updateItem(dto, b);
-                        if (dto == null) {
-                            setGraphic(null);
-                            return;
-                        }
-                        setGraphic(button);
-                        button.setOnAction(
-                                event -> System.out.println("Deletar")
-                        );
-                    }
+            produtoService.salvarProduto(produto);
+            limparCampos();
+            carregarProdutos();
+            lblMensagem.setText("Produto salvo com sucesso!");
+        } catch (Exception e) {
+            lblMensagem.setText("Erro ao salvar produto: " + e.getMessage());
+        }
+    }
+
+    // Botão Atualizar
+    @FXML
+    private void atualizarProduto() {
+        Produto produtoSelecionado = tabelaProdutos.getSelectionModel().getSelectedItem();
+        if (produtoSelecionado != null) {
+            try {
+                produtoSelecionado.setNome(txtNome.getText());
+                produtoSelecionado.setMarca(txtMarca.getText());
+                produtoSelecionado.setTipo(txtTipo.getText());
+                produtoSelecionado.setDataAtualizacao(LocalDateTime.now());
+
+                produtoService.salvarProduto(produtoSelecionado);
+                carregarProdutos();
+                lblMensagem.setText("Produto atualizado com sucesso!");
+            } catch (Exception e) {
+                lblMensagem.setText("Erro ao atualizar produto: " + e.getMessage());
+            }
+        }
+    }
+
+    // Botão Deletar
+    @FXML
+    private void deletarProduto() {
+        Produto produtoSelecionado = tabelaProdutos.getSelectionModel().getSelectedItem();
+        if (produtoSelecionado != null) {
+            produtoService.deletarProduto(produtoSelecionado.getIdProduto());
+            carregarProdutos();
+            limparCampos();
+            lblMensagem.setText("Produto deletado com sucesso!");
+        }
+    }
+
+    // Carregar produtos na tabela
+    private void carregarProdutos() {
+        try{
+            listaProdutos.clear();
+            List<Produto> todosProdutos = produtoService.buscarTodos();
+            listaProdutos.addAll(todosProdutos);
+            tabelaProdutos.setItems(listaProdutos);
+
+            if(txtBusca.getText().isEmpty()) {
+                lblMensagem.setText("Total: " + todosProdutos.size() + " produto(s)");
+            }
+        }catch (Exception e){
+            lblMensagem.setText("Erro no1 carregamento: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Limpar campos
+    private void limparCampos() {
+        txtNome.clear();
+        txtMarca.clear();
+        txtTipo.clear();
+        txtUsuarioCriador.clear();
+    }
+    @FXML
+    private void buscarPorNome() {
+        try {
+            String nomeBusca = txtBusca.getText().trim();
+
+
+            // Buscar produtos com nome similar
+            List<Produto> resultados = produtoService.buscarPorNomeParcial(nomeBusca);
+
+            if (resultados.isEmpty()) {
+                lblMensagem.setText("Nenhum produto encontrado com: '" + nomeBusca + "'");
+                lblMensagem.setText("Nenhum resultado encontrado!");
+                // Limpa a tabela se não encontrar resultados
+                listaProdutos.clear();
+                tabelaProdutos.setItems(listaProdutos);
+            } else {
+                // Atualiza a tabela com os resultados da busca
+                listaProdutos.clear();
+                listaProdutos.addAll(resultados);
+                tabelaProdutos.setItems(listaProdutos);
+
+                lblMensagem.setText(resultados.size() + " produto(s) encontrado(s) com: '" + nomeBusca + "'");
+                lblMensagem.setText("Busca realizada com sucesso!");
+
+                // Seleciona o primeiro resultado automaticamente
+                if (!resultados.isEmpty()) {
+                    tabelaProdutos.getSelectionModel().selectFirst();
+                    selecionarProduto(); // Preenche os campos com o primeiro resultado
                 }
-        );
+            }
+
+        } catch (Exception e) {
+            lblMensagem.setText("Erro na busca: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-    /**
-     * Função que gera o botão de edit em cada produto
-     */
 
     @FXML
-    public void initEditButton() {
-        tableColumnEdit.setCellValueFactory(
-                param -> new ReadOnlyObjectWrapper<>(param.getValue())
-        );
-        tableColumnEdit.setCellFactory(
-                param -> new TableCell<ProdutoResponseDTO, ProdutoResponseDTO>() {
-                    private final Button button = new Button("Editar");
+    private void carregarTodosProdutos() {
+        carregarProdutos();
+        txtBusca.clear();
+        lblMensagem.setText("Mostrando todos os produtos");
+        lblMensagem.setText("Lista completa carregada!");
+    }
+    // Quando selecionar um produto na tabela
+    @FXML
+    private void selecionarProduto() {
+        Produto produtoSelecionado = tabelaProdutos.getSelectionModel().getSelectedItem();
+        if (produtoSelecionado != null) {
+            txtNome.setText(produtoSelecionado.getNome());
+            txtMarca.setText(produtoSelecionado.getMarca());
+            txtTipo.setText(produtoSelecionado.getTipo());
+            txtUsuarioCriador.setText(String.valueOf(produtoSelecionado.getIdUsuarioCriador()));
+        }
+    }
 
-                    @Override
-                    protected void updateItem(ProdutoResponseDTO dto, boolean b) {
-                        super.updateItem(dto, b);
-                        if (dto == null) {
-                            setGraphic(null);
-                            return;
-                        }
-                        setGraphic(button);
-                        button.setOnAction(
-                                event -> System.out.println("Editar")
-                        );
-                    }
-                }
-        );
+    // Botão Limpar
+    @FXML
+    private void limparCamposAction() {
+        limparCampos();
+        tabelaProdutos.getSelectionModel().clearSelection();
+        lblMensagem.setText("Campos limpos!");
     }
 }
