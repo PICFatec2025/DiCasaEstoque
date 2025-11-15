@@ -12,8 +12,4 @@ public class Rotas {
         public static final String LOGIN_VIEW = rota("login/login-view.fxml");
         public static final String SOBRE_VIEW = rota("sobre/sobre.fxml");
         public static final String PRODUTOS_VIEW = rota("produtos/produtos-view.fxml");
-        public static final String ESQUECI_SENHA = rota("login/esqueci-senha-view.fxml");
-        public static final String PERFIL_VIEW = rota("perfil/perfil-view.fxml");
-        public static final String NOVO_USUARIO = rota("perfil/novo-usuario-view.fxml");
-        public static final String FORNECEDORES_VIEW = rota("fornecedores/fornecedores-view.fxml");
 }

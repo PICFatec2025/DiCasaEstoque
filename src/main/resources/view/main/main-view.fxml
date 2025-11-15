@@ -1,71 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            stylesheets="@main.css"
-            xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21.0.8"
-            fx:controller="dicasa.estoque.controller.MainController">
+<ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1366.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.MainController">
     <content>
-        <VBox prefHeight="401.0" prefWidth="599.0" styleClass="main-container">
+        <VBox alignment="CENTER" prefHeight="401.0" prefWidth="599.0" styleClass="main-container">
             <children>
-                <MenuBar styleClass="custom-menu-bar">
+                <MenuBar styleClass="custom-menu-bar" VBox.vgrow="ALWAYS">
                     <menus>
                         <Menu mnemonicParsing="false" text="Estoque">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Produtos"
-                                          fx:id="menuItemProdutos" onAction="#onMenuItemProdutosClick" styleClass="custom-menu-item"/>
-                                <MenuItem mnemonicParsing="false" text="Lotes"
-                                          fx:id="menuItemLotes" onAction="#onMenuItemLotesClick" styleClass="custom-menu-item"/>
-                                <MenuItem mnemonicParsing="false" text="Inventário"
-                                          fx:id="menuItemInventario" onAction="#onMenuItemInventarioClick" styleClass="custom-menu-item"/>
+                                <MenuItem fx:id="menuItemProdutos" mnemonicParsing="false" onAction="#onMenuItemProdutosClick" styleClass="custom-menu-item" text="Produtos" />
+                                <MenuItem fx:id="menuItemLotes" mnemonicParsing="false" onAction="#onMenuItemLotesClick" styleClass="custom-menu-item" text="Lotes" />
+                                <MenuItem fx:id="menuItemInventario" mnemonicParsing="false" onAction="#onMenuItemInventarioClick" styleClass="custom-menu-item" text="Inventário" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Relatórios">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Saída de Produtos"
-                                          fx:id="menuItemSaidaProdutos" onAction="#onMenuItemSaidaProdutosClick" styleClass="custom-menu-item"/>
-                                <MenuItem mnemonicParsing="false" text="Entrada de Produtos"
-                                          fx:id="menuItemEntradaProdutos" onAction="#onMenuItemEntradaProdutosClick" styleClass="custom-menu-item"/>
+                                <MenuItem fx:id="menuItemSaidaProdutos" mnemonicParsing="false" onAction="#onMenuItemSaidaProdutosClick" styleClass="custom-menu-item" text="Previsão de compras" />
+                                <MenuItem fx:id="menuItemEntradaProdutos" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutosClick" styleClass="custom-menu-item" text="Histórico do estoque" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Fornecedores">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Fornecedores"
-                                          fx:id="menuItemFornecedores" onAction="#onMenuItemFornecedoresClick" styleClass="custom-menu-item"/>
-                            </items>
-                        </Menu>
+                        <Menu mnemonicParsing="false" text="Fornecedores" />
+                  <Menu mnemonicParsing="false" text="Pratos">
+                     <items>
+                        <MenuItem fx:id="menuItemFornecedores1" mnemonicParsing="false" onAction="#onMenuItemFornecedoresClick" styleClass="custom-menu-item" text="Fornecedores" />
+                     </items>
+                  </Menu>
                         <Menu mnemonicParsing="false" text="Ajuda">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Sobre"
-                                          fx:id="menuItemSobre" onAction="#onMenuItemSobreClick" styleClass="custom-menu-item"/>
+                                <MenuItem fx:id="menuItemSobre" mnemonicParsing="false" onAction="#onMenuItemSobreClick" styleClass="custom-menu-item" text="Sobre" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Usuário">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Perfil"
-                                          fx:id="menuItemPefil" onAction="#onMenuItemPerfilClick" styleClass="custom-menu-item"/>
-                                <MenuItem mnemonicParsing="false" text="Novo Usuário"
-                                          fx:id="menuItemNovoUsuario" onAction="#onMenuItemNovoUsuarioClick" styleClass="custom-menu-item"/>
-                                <MenuItem mnemonicParsing="false" text="Sair"
-                                          fx:id="menuItemSair" onAction="#onMenuItemSairClick" styleClass="custom-menu-item"/>
-                            </items>
-                        </Menu>
+                  <Menu mnemonicParsing="false" text="Usuário">
+                     <items>
+                        <MenuItem fx:id="menuItemSobre1" mnemonicParsing="false" onAction="#onMenuItemSobreClick" styleClass="custom-menu-item" text="Redefinir senha" />
+                        <MenuItem fx:id="menuItemSobre11" mnemonicParsing="false" onAction="#onMenuItemSobreClick" styleClass="custom-menu-item" text="Configuração do usuário" />
+                     </items>
+                  </Menu>
                     </menus>
                 </MenuBar>
-                <!-- Container para o conteúdo dinâmico -->
-                <AnchorPane fx:id="contentContainer"
-                            prefHeight="300.0"
-                            prefWidth="600.0"
-                            styleClass="content-pane"
-                            VBox.vgrow="ALWAYS"/>
+            <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="326.0" prefWidth="570.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <VBox maxWidth="550.0" prefHeight="376.0" prefWidth="550.0" styleClass="inputs_vendas">
+                           <VBox.margin>
+                              <Insets left="100.0" top="150.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label text="Saída">
+                                 <VBox.margin>
+                                    <Insets left="250.0" top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <VBox prefHeight="99.0" prefWidth="548.0">
+                                 <children>
+                                    <HBox maxHeight="100.0" minHeight="41.0" prefHeight="41.0" prefWidth="300.0">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <Label text="Prato">
+                                             <HBox.margin>
+                                                <Insets left="40.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <ChoiceBox id="choice-box" prefWidth="150.0" value="Macarrão">
+                                             <HBox.margin>
+                                                <Insets left="20.0" top="5.0" />
+                                             </HBox.margin>
+                                              <items>
+                                                  <FXCollections fx:factory="observableArrayList">
+                                                      <String fx:value="Macarrão" />
+                                                      <String fx:value="Arroz" />
+                                                      <String fx:value="Feijão" />
+                                                  </FXCollections>
+                                              </items>
+                                          </ChoiceBox>
+                                          <Label text="Tamanho">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <ChoiceBox id="choice-box" prefHeight="28.0" prefWidth="50.0" value="M">
+                                             <items>
+                                                <FXCollections fx:factory="observableArrayList">
+                                                   <String fx:value="P" />
+                                                   <String fx:value="M" />
+                                                   <String fx:value="G" />
+                                                </FXCollections>
+                                             </items>
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="5.0" />
+                                             </HBox.margin>
+                                          </ChoiceBox>
+                                          <Label text="Quantidade">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <ChoiceBox id="choice-box" prefHeight="28.0" prefWidth="50.0">
+                                             <items>
+                                                <FXCollections fx:factory="observableArrayList">
+                                                   <String fx:value="P" />
+                                                   <String fx:value="M" />
+                                                   <String fx:value="G" />
+                                                </FXCollections>
+                                             </items>
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="5.0" />
+                                             </HBox.margin>
+                                          </ChoiceBox>
+      
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" style="-fx-border-color: #000; -fx-border-style: solid;" text="Adicionar">
+                                       <VBox.margin>
+                                          <Insets left="250.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="194.0" prefWidth="548.0">
+                                 <children>
+                                    <Label text="Total de itens">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="200.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TableView prefHeight="110.0" prefWidth="520.0" styleClass="tabela_itens">
+                                      <columns>
+                                        <TableColumn prefWidth="46.0" text="Qtd" />
+                                        <TableColumn prefWidth="410.0" text="Prato" />
+                                          <TableColumn minWidth="0.0" prefWidth="87.0" text="Tamanho" />
+                                      </columns>
+                                    </TableView>
+                                    <Button mnemonicParsing="false" style="-fx-border-color: #000; -fx-border-style: solid;" text="FInalizar">
+                                       <VBox.margin>
+                                          <Insets left="250.0" top="10.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children></VBox>
+               </children>
+            </StackPane>
             </children>
         </VBox>
     </content>
 </ScrollPane>
+

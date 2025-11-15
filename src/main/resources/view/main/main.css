@@ -6,12 +6,12 @@
 
 /* Container principal */
 .main-container {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #fff;
 }
 
 /* Barra de menu personalizada */
 .custom-menu-bar {
-    -fx-background-color: #feb733;
+    -fx-background-color: #feb833;
     -fx-padding: 0px;
     -fx-border-color: #e6a42d;
     -fx-border-width: 0 0 1px 0;
@@ -106,4 +106,15 @@
 
 .scroll-bar:horizontal .thumb:hover, .scroll-bar:vertical .thumb:hover {
     -fx-background-color: #b0b0b0;
+}
+.inputs_vendas{
+    -fx-background-color: #f5f5f5;
+    -fx-border-width: 0.5;
+    -fx-border-style: solid;
+    -fx-border-color: #000;
+}
+.tabela_itens{
+    -fx-border-color: #000;
+    -fx-border-style: solid;
+    -fx-border-width: 0.5;
 }
