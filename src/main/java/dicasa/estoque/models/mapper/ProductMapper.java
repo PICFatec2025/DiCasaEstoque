@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 /**
- * Uma classe exemplo de como o Mapstruck (biblioteca do Java) funciona,
+ * Uma classe de exemplo de como o Mapstruck (biblioteca do Java) funciona,
  * fazendo a conversão da entidade para o DTO
  * assim facilitando a leitura de dados na tela
  */

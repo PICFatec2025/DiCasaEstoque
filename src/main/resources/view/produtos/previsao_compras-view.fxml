@@ -1,0 +1,62 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/11"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="dicasa.estoque.controller.produtos.PrevisaoDeComprasController"
+      spacing="15" style="-fx-padding: 20; -fx-background-color: #FFE0B2;">
+
+    <HBox alignment="CENTER" style="-fx-padding: 10;">
+        <Label text="Previsão de Compras"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: black;"/>
+    </HBox>
+
+    <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: white; -fx-border-color: #cccccc;">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Filtrar:" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="txtFiltro" promptText="Nome do produto" prefWidth="200"/>
+            <ComboBox fx:id="cbCategoria" promptText="Todas categorias" prefWidth="150"/>
+            <ComboBox fx:id="cbUrgencia" promptText="Todos níveis" prefWidth="120"/>
+            <Button text="Atualizar"
+                    style="-fx-background-color: #FFA726; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 6 15;"
+                    onAction="#atualizarDados"/>
+        </HBox>
+    </VBox>
+
+    <VBox spacing="5" style="-fx-padding: 15; -fx-background-color: white; -fx-border-color: #cccccc;">
+        <Label text="Produtos para Repor:" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+        <TableView fx:id="tabelaProdutos" prefHeight="200">
+            <columns>
+                <TableColumn text="Produto" prefWidth="200"/>
+                <TableColumn text="Categoria" prefWidth="100"/>
+                <TableColumn text="Estoque Atual" prefWidth="100"/>
+                <TableColumn text="Mínimo" prefWidth="80"/>
+                <TableColumn text="Comprar" prefWidth="80"/>
+                <TableColumn text="Urgência" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <VBox spacing="5" style="-fx-padding: 15; -fx-background-color: white; -fx-border-color: #cccccc;">
+        <Label text="Fornecedores Disponíveis:" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+        <TableView fx:id="tabelaFornecedores" prefHeight="150">
+            <columns>
+                <TableColumn text="Fornecedor" prefWidth="200"/>
+                <TableColumn text="Produto" prefWidth="150"/>
+                <TableColumn text="Preço (R$)" prefWidth="100"/>
+                <TableColumn text="Prazo Entrega" prefWidth="120"/>
+                <TableColumn text="Contato" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <HBox spacing="15" alignment="CENTER" style="-fx-padding: 10;">
+        <Button text="Gerar Lista de Compras"
+                style="-fx-background-color: #FFA726; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 8 20;"
+                onAction="#gerarListaCompras"/>
+        <Button text="Cancelar"
+                style="-fx-background-color: #FFA726; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 8 20;"/>
+    </HBox>
+
+</VBox>

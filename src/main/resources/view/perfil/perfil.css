@@ -1,66 +1,60 @@
-/* perfil.css */
-
-/* Estilo geral */
 .root {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #ffe4b5;
     -fx-font-family: "Segoe UI", Arial, sans-serif;
 }
 
-/* Container principal */
-AnchorPane {
-    -fx-background-color: #f8f9fa;
+.container {
     -fx-padding: 20px;
+    -fx-spacing: 25px;
+    -fx-alignment: center;
 }
 
-/* VBox principal */
-VBox {
-    -fx-spacing: 30px;
-    -fx-padding: 10px;
-}
-
-/* Sub-VBox */
-VBox > VBox {
-    -fx-spacing: 15px;
-    -fx-padding: 20px;
+.card {
     -fx-background-color: white;
-    -fx-background-radius: 10px;
-    -fx-border-radius: 10px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
     -fx-border-color: #e0e0e0;
     -fx-border-width: 1px;
+    -fx-padding: 20px;
+    -fx-pref-width: 700px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 0);
 }
 
-/* Títulos das seções */
-.label-titulo {
-    -fx-font-size: 18px;
+.page-title {
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
-    -fx-padding: 0 0 10px 0;
 }
 
-/* Textos descritivos */
-.label-texto {
+.page-subtitle {
     -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+}
+
+.label-titulo {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.label-texto {
+    -fx-font-size: 13px;
     -fx-text-fill: #666666;
     -fx-wrap-text: true;
-    -fx-padding: 0 0 15px 0;
 }
 
-/* Labels dos campos */
 .label-textfield {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
-    -fx-padding: 0 0 5px 0;
 }
 
-/* Campos de texto */
 .textfield, .password-field {
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-padding: 10px 15px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px 12px;
     -fx-font-size: 14px;
-    -fx-background-color: white;
+    -fx-background-color: #ffe4b5;
     -fx-border-color: #cccccc;
     -fx-border-width: 1px;
     -fx-pref-width: 300px;
@@ -72,35 +66,23 @@ VBox > VBox {
     -fx-effect: dropshadow(gaussian, rgba(254, 183, 51, 0.3), 10, 0, 0, 0);
 }
 
-/* Botões */
 .button {
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-    -fx-padding: 12px 25px;
+    -fx-padding: 10px 20px;
     -fx-cursor: hand;
-    -fx-pref-width: 200px;
-}
-.error-label {
-    -fx-font-size: 12px;
-    -fx-padding: 5px 0 0 10px;
+    -fx-pref-width: 180px;
 }
 
 /* Botão Atualizar Perfil */
 #buttonAtualizarPerfil {
-    -fx-background-color: #feb733;
-    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to right, #ffcc66, #ffa733);
+    -fx-text-fill: black;
 }
-
 #buttonAtualizarPerfil:hover {
-    -fx-background-color: #e6a42d;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
-}
-
-#buttonAtualizarPerfil:pressed {
-    -fx-background-color: #d5951f;
-    -fx-translate-y: 1px;
+    -fx-background-color: linear-gradient(to right, #ffb84d, #ff9933);
 }
 
 /* Botão Alterar Senha */
@@ -108,15 +90,8 @@ VBox > VBox {
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
 }
-
 #buttonAlterarSenha:hover {
     -fx-background-color: #45a049;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
-}
-
-#buttonAlterarSenha:pressed {
-    -fx-background-color: #3d8b40;
-    -fx-translate-y: 1px;
 }
 
 /* Botão Deletar Perfil */
@@ -124,22 +99,20 @@ VBox > VBox {
     -fx-background-color: #f44336;
     -fx-text-fill: white;
 }
-
 #buttonDeletarPerfil:hover {
     -fx-background-color: #d32f2f;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
 }
 
-#buttonDeletarPerfil:pressed {
-    -fx-background-color: #c62828;
-    -fx-translate-y: 1px;
+.error-label {
+    -fx-font-size: 12px;
+    -fx-padding: 2px 0 0 10px;
 }
 
-/* Ajustes de layout interno */
-VBox > VBox > VBox {
-    -fx-spacing: 5px;
-    -fx-padding: 0;
+.texto-deletar-conta {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
     -fx-background-color: transparent;
-    -fx-effect: none;
-    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-pref-width: 650px;
+    -fx-pref-height: 60px;
 }
