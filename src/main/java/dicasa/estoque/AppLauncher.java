@@ -10,7 +10,6 @@ import org.springframework.context.ConfigurableApplicationContext;
  * Classe de execução do JavaFX
  */
 public class AppLauncher extends Application {
-
     private ConfigurableApplicationContext springContext;
 
     /**
@@ -23,23 +22,12 @@ public class AppLauncher extends Application {
 
     /**
      * Carrega a tela inicial, a tela de Login
-     * @param primaryStage
+     * @param stage
      * @throws Exception
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        javafx.geometry.Rectangle2D screenBounds = javafx.stage.Screen.getPrimary().getVisualBounds();
-
-        primaryStage.setX(screenBounds.getMinX());
-        primaryStage.setY(screenBounds.getMinY());
-        primaryStage.setWidth(screenBounds.getWidth());
-        primaryStage.setHeight(screenBounds.getHeight());
-
-        // 🔒 Impede redimensionamento (sem tela cheia)
-        primaryStage.setResizable(false);
-
         try {
-
             // Configura exception handler global
             Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
                 System.err.println("Exception não tratada: " + throwable.getMessage());
@@ -64,7 +52,5 @@ public class AppLauncher extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
-
     }
 }

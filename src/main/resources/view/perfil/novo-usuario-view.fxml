@@ -55,7 +55,7 @@
 
                         <HBox alignment="CENTER_LEFT" spacing="20.0">
                             <children>
-                                <CheckBox fx:id="checkBoxEhAdm" text="Administrador" styleClass="check-box-eh-adm"/>
+                                <!-- CheckBox fx:id="checkBoxEhAdm" text="Administrador" styleClass="check-box-eh-adm"/> -->
                                 <Button fx:id="buttonCadastrarUsuario" text="Criar usuário"
                                         onAction="#onClickCadastrarUsuario"
                                         styleClass="button-cadastrar-usuario"/>
