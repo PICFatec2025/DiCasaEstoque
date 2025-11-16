@@ -10,13 +10,13 @@
 }
 
 .card {
-    -fx-background-color: white;
+    -fx-background-color:  white;
     -fx-background-radius: 8px;
     -fx-border-radius: 8px;
-    -fx-border-color: #e0e0e0;
+    -fx-border-color:  #e0e0e0;
     -fx-border-width: 1px;
     -fx-padding: 20px;
-    -fx-pref-width: 700px;
+    -fx-pref-width:  700px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 0);
 }
 

@@ -15,8 +15,8 @@
     <children>
         <VBox alignment="TOP_CENTER" spacing="20.0" prefHeight="600.0" prefWidth="800.0" styleClass="container">
             <children>
-                <Label styleClass="page-title" text="Novo usuário" />
-                <Label styleClass="page-subtitle" text="Cadastre um usuário novo para acessar o sistema" />
+                <Label styleClass="page-title" text="Perfil" />
+                <Label styleClass="page-subtitle" text="Atualize informações sobre seu usuário" />
 
                 <VBox spacing="20.0" styleClass="card">
                     <children>

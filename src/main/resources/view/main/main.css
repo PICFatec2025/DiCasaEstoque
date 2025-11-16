@@ -104,18 +104,40 @@
     -fx-padding: 6 12;
     -fx-cursor: hand;
 }
+.combo-box.drop-box-prato {
+    -fx-background-insets: 0;
+}
 
+.combo-box.drop-box-prato .arrow-button {
+    -fx-background-color: FFE0B2;
+    -fx-border-color: transparent;
+}
 
+.combo-box.drop-box-prato .arrow {
+    -fx-background-color: black;
+}
 
+.combo-box.drop-box-prato .list-view {
+    -fx-background-color: #FFE0B2;
+    -fx-border-color: #000000;
+    -fx-border-width: 0 1px 1px 1px;
+}
 
-.tabela_itens {
-    -fx-border-color: #d0c3a0;
-    -fx-border-width: 1px;
-    -fx-background-color: #FFE8C8;
+.combo-box.drop-box-prato .list-cell {
+    -fx-background-color: #FFE0B2;
+    -fx-text-fill: black;
+}
+
+.combo-box.drop-box-prato .list-cell:hover,
+.combo-box.drop-box-prato .list-cell:selected {
+    -fx-background-color: #FFE0B2;
 }
 
 .table-view {
     -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
 }
 
 .table-view .column-header-background {
@@ -261,7 +283,7 @@
 
 .tabela_itens .cell {
     -fx-text-fill: black;
-    -fx-border-color: transparent;
+    -fx-border-color: black;
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 5px;
 }
@@ -284,7 +306,7 @@
    ========================= */
 .tabela_itens .cell {
     -fx-background-color: #FFEBC5;
-    -fx-border-color: #000000;
+    -fx-border-color: black;
     -fx-border-width: 1px;
     -fx-text-fill: black;
     -fx-alignment: CENTER_LEFT;
@@ -294,7 +316,7 @@
 
 .tabela_itens .table-row-cell {
     -fx-background-color: #FFEBC5;
-    -fx-border-color: #000000;
+    -fx-border-color: black;
     -fx-border-width: 0 0 1 0;
 }
 
@@ -304,7 +326,7 @@
 
 .tabela_itens .table-row-cell:empty {
     -fx-background-color: #FFEBC5;
-    -fx-border-color: transparent;
+    -fx-border-color: black;
 }
 
 .tabela_itens .table-row-cell:selected .cell {
@@ -314,7 +336,7 @@
 /* Estilo para o cabeçalho da tabela */
 .tabela_itens .column-header {
     -fx-background-color: #FFEBC5;
-    -fx-border-color: #000000;
+    -fx-border-color: black;
     -fx-border-width: 0 1 1 0;
     -fx-font-weight: bold;
     -fx-alignment: CENTER;
@@ -322,14 +344,14 @@
 
 .tabela_itens .column-header-background {
     -fx-background-color: #FFEBC5;
-    -fx-border-color: #000000;
+    -fx-border-color: black;
     -fx-border-width: 0 0 1 0;
 }
 
 /* Remove as linhas de foco padrão */
 .tabela_itens .table-row-cell:filled:selected {
     -fx-background-color: #FEB733;
-    -fx-table-cell-border-color: #000000;
+    -fx-table-cell-border-color: black;
 }
 
 .tabela_itens .table-row-cell:filled:selected .cell {
@@ -379,8 +401,9 @@
    TABELAS
    ========================= */
 .tabela_itens {
-    -fx-border-color: #d0c3a0;
+    -fx-border-color: black;
     -fx-border-width: 1px;
+    -fx-border-style: solid;
     -fx-background-color: #FFE8C8;
 }
 
