@@ -22,7 +22,7 @@
 .rounded-textfield, .rounded-passwordfield {
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
-    -fx-padding: 10px 15px;
+    -fx-padding: 10px 40px 10px 15px;
     -fx-font-size: 14px;
     -fx-background-color: #ffe4b5;
     -fx-border-color: #cccccc;
@@ -50,3 +50,4 @@
     -fx-font-size: 12px;
     -fx-padding: 5px 0 0 10px;
 }
+

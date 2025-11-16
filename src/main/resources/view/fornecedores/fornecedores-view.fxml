@@ -41,7 +41,7 @@
                     <TableColumn prefWidth="140" text="Pessoa de contato" />
                 </columns>
             </TableView>
-         <Button id="btnCadastrar" fx:id="btnAddProduto" onAction="#onClickAdicionarProduto" text="Adicionar produto" />
+         <Button id="btnCadastrar" fx:id="btnAddProduto"  text="Adicionar produto" />
 
         </VBox>
     </children>

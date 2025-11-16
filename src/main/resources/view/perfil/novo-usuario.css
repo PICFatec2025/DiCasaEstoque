@@ -49,10 +49,10 @@
     -fx-effect: dropshadow(gaussian, rgba(254,183,51,0.3), 10, 0, 0, 0);
 }
 
-.check-box-eh-adm {
+/*.check-box-eh-adm {
     -fx-font-size: 14px;
     -fx-text-fill: #333333;
-}
+} */
 
 .button-cadastrar-usuario {
     -fx-background-radius: 5px;
