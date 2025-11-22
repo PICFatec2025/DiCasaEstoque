@@ -1,28 +1,30 @@
 package dicasa.estoque.controller.produtos;
 
-import dicasa.estoque.models.Produto;
+import dicasa.estoque.models.entities.Produto;
+import dicasa.estoque.navigation.Rotas;
+import dicasa.estoque.navigation.ScreenNavigator;
 import dicasa.estoque.service.ProdutoService;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.springframework.beans.factory.annotation.Autowired;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 public class ProdutoController {
 
-    @Autowired
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
 
-    // Componentes FXML (ajuste os IDs conforme seu arquivo FXML)
-    @FXML private TextField txtNome;
-    @FXML private TextField txtMarca;
-    @FXML private TextField txtTipo;
-    @FXML private TextField txtUsuarioCriador;
+    private final ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
+
     @FXML private TextField txtBusca;
     @FXML private TableView<Produto> tabelaProdutos;
     @FXML private TableColumn<Produto, Long> colunaId;
@@ -31,12 +33,15 @@ public class ProdutoController {
     @FXML private TableColumn<Produto, String> colunaTipo;
     @FXML private Label lblMensagem;
 
+    public ProdutoController(ProdutoService produtoService) {
+        this.produtoService = produtoService;
+    }
 
-    private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
-
+    /**
+     * Configura as colunas da tabela e carrega os produtos ao iniciar a tela.
+     */
     @FXML
     public void initialize() {
-        // Configurar colunas da tabela
         colunaId.setCellValueFactory(cellData -> cellData.getValue().idProdutoProperty().asObject());
         colunaNome.setCellValueFactory(cellData -> cellData.getValue().nomeProperty());
         colunaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaProperty());
@@ -45,143 +50,75 @@ public class ProdutoController {
         carregarProdutos();
     }
 
-    // Botão Salvar
+    /**
+     * Abre a janela de cadastro para criar um novo produto.
+     */
     @FXML
-    private void salvarProduto() {
-        try {
-            Produto produto = new Produto();
-            produto.setNome(txtNome.getText());
-            produto.setMarca(txtMarca.getText());
-            produto.setTipo(txtTipo.getText());
-            produto.setIdUsuarioCriador(Integer.parseInt(txtUsuarioCriador.getText()));
-            produto.setDataCriacao(LocalDateTime.now());
-
-            produtoService.salvarProduto(produto);
-            limparCampos();
-            carregarProdutos();
-            lblMensagem.setText("Produto salvo com sucesso!");
-        } catch (Exception e) {
-            lblMensagem.setText("Erro ao salvar produto: " + e.getMessage());
-        }
+    private void abrirCadastroProduto() {
+        Stage stage = (Stage) tabelaProdutos.getScene().getWindow();
+        ScreenNavigator.loadWindow(stage, Rotas.ADICIONAR_PRODUTO_VIEW, "Adicionar Produto", null);
+        carregarProdutos();
     }
 
-    // Botão Atualizar
+    /**
+     * Abre os detalhes do produto quando o usuário realiza um duplo clique.
+     */
     @FXML
-    private void atualizarProduto() {
+    private void handleTabelaProdutosClique(MouseEvent event) {
+        if (event.getButton() != MouseButton.PRIMARY || event.getClickCount() < 2) {
+            return;
+        }
         Produto produtoSelecionado = tabelaProdutos.getSelectionModel().getSelectedItem();
-        if (produtoSelecionado != null) {
-            try {
-                produtoSelecionado.setNome(txtNome.getText());
-                produtoSelecionado.setMarca(txtMarca.getText());
-                produtoSelecionado.setTipo(txtTipo.getText());
-                produtoSelecionado.setDataAtualizacao(LocalDateTime.now());
-
-                produtoService.salvarProduto(produtoSelecionado);
-                carregarProdutos();
-                lblMensagem.setText("Produto atualizado com sucesso!");
-            } catch (Exception e) {
-                lblMensagem.setText("Erro ao atualizar produto: " + e.getMessage());
-            }
+        if (produtoSelecionado == null) {
+            return;
         }
+        Stage stage = (Stage) tabelaProdutos.getScene().getWindow();
+        ScreenNavigator.loadWindow(stage, Rotas.GERENCIAR_PRODUTO_VIEW, "Detalhes do Produto", produtoSelecionado);
+        carregarProdutos();
     }
 
-    // Botão Deletar
-    @FXML
-    private void deletarProduto() {
-        Produto produtoSelecionado = tabelaProdutos.getSelectionModel().getSelectedItem();
-        if (produtoSelecionado != null) {
-            produtoService.deletarProduto(produtoSelecionado.getIdProduto());
-            carregarProdutos();
-            limparCampos();
-            lblMensagem.setText("Produto deletado com sucesso!");
-        }
-    }
-
-    // Carregar produtos na tabela
-    private void carregarProdutos() {
-        try{
-            listaProdutos.clear();
-            List<Produto> todosProdutos = produtoService.buscarTodos();
-            listaProdutos.addAll(todosProdutos);
-            tabelaProdutos.setItems(listaProdutos);
-
-            if(txtBusca.getText().isEmpty()) {
-                lblMensagem.setText("Total: " + todosProdutos.size() + " produto(s)");
-            }
-        }catch (Exception e){
-            lblMensagem.setText("Erro no1 carregamento: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    // Limpar campos
-    private void limparCampos() {
-        txtNome.clear();
-        txtMarca.clear();
-        txtTipo.clear();
-        txtUsuarioCriador.clear();
-    }
+    /**
+     * Executa uma busca pelo nome informado no campo de texto.
+     */
     @FXML
     private void buscarPorNome() {
-        try {
-            String nomeBusca = txtBusca.getText().trim();
+        String nomeBusca = txtBusca.getText().trim();
+        if (nomeBusca.isEmpty()) {
+            carregarTodosProdutos();
+            return;
+        }
 
+        List<Produto> resultados = produtoService.buscarPorNomeParcial(nomeBusca);
 
-            // Buscar produtos com nome similar
-            List<Produto> resultados = produtoService.buscarPorNomeParcial(nomeBusca);
+        listaProdutos.setAll(resultados);
+        tabelaProdutos.setItems(listaProdutos);
 
-            if (resultados.isEmpty()) {
-                lblMensagem.setText("Nenhum produto encontrado com: '" + nomeBusca + "'");
-                lblMensagem.setText("Nenhum resultado encontrado!");
-                // Limpa a tabela se não encontrar resultados
-                listaProdutos.clear();
-                tabelaProdutos.setItems(listaProdutos);
-            } else {
-                // Atualiza a tabela com os resultados da busca
-                listaProdutos.clear();
-                listaProdutos.addAll(resultados);
-                tabelaProdutos.setItems(listaProdutos);
-
-                lblMensagem.setText(resultados.size() + " produto(s) encontrado(s) com: '" + nomeBusca + "'");
-                lblMensagem.setText("Busca realizada com sucesso!");
-
-                // Seleciona o primeiro resultado automaticamente
-                if (!resultados.isEmpty()) {
-                    tabelaProdutos.getSelectionModel().selectFirst();
-                    selecionarProduto(); // Preenche os campos com o primeiro resultado
-                }
-            }
-
-        } catch (Exception e) {
-            lblMensagem.setText("Erro na busca: " + e.getMessage());
-            e.printStackTrace();
+        if (resultados.isEmpty()) {
+            lblMensagem.setText("Nenhum produto encontrado para '" + nomeBusca + "'.");
+        } else {
+            lblMensagem.setText(resultados.size() + " produto(s) encontrado(s) para '" + nomeBusca + "'.");
         }
     }
 
+    /**
+     * Limpa filtros e recupera a lista completa de produtos.
+     */
     @FXML
     private void carregarTodosProdutos() {
-        carregarProdutos();
         txtBusca.clear();
-        lblMensagem.setText("Mostrando todos os produtos");
+        carregarProdutos();
         lblMensagem.setText("Lista completa carregada!");
     }
-    // Quando selecionar um produto na tabela
-    @FXML
-    private void selecionarProduto() {
-        Produto produtoSelecionado = tabelaProdutos.getSelectionModel().getSelectedItem();
-        if (produtoSelecionado != null) {
-            txtNome.setText(produtoSelecionado.getNome());
-            txtMarca.setText(produtoSelecionado.getMarca());
-            txtTipo.setText(produtoSelecionado.getTipo());
-            txtUsuarioCriador.setText(String.valueOf(produtoSelecionado.getIdUsuarioCriador()));
-        }
-    }
 
-    // Botão Limpar
-    @FXML
-    private void limparCamposAction() {
-        limparCampos();
-        tabelaProdutos.getSelectionModel().clearSelection();
-        lblMensagem.setText("Campos limpos!");
+    /**
+     * Atualiza a tabela com todos os produtos disponíveis.
+     */
+    private void carregarProdutos() {
+        listaProdutos.clear();
+        List<Produto> todosProdutos = produtoService.buscarTodos();
+        listaProdutos.addAll(todosProdutos);
+        tabelaProdutos.setItems(listaProdutos);
+
+        lblMensagem.setText("Total: " + todosProdutos.size() + " produto(s)");
     }
 }

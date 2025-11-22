@@ -1,167 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import java.lang.String?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21.0.8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="dicasa.estoque.controller.estoque.HistoricoEstoqueController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dicasa.estoque.controller.estoque.HistoricoEstoqueController"
+            stylesheets="@historico-estoque.css">
     <BorderPane>
 
         <!-- TOPO -->
         <top>
-            <VBox spacing="10" style="-fx-background-color: #FFA726; -fx-padding: 15;">
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="Histórico de Estoque"
-                           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;" />
+            <VBox spacing="10" styleClass="caixa-topo">
+                <HBox alignment="CENTER" spacing="10">
+                    <Label styleClass="titulo-label" text="Relatório de Estoque" />
                 </HBox>
 
                 <!-- FILTROS - VERSÃO SIMPLIFICADA -->
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Período:" style="-fx-font-weight: bold; -fx-text-fill: #333;" />
-                    <DatePicker fx:id="dataInicioFilter" promptText="Data início" />
-                    <Label text="até" style="-fx-text-fill: #333;" />
-                    <DatePicker fx:id="dataFimFilter" promptText="Data fim" />
-                    <Button text="Buscar" style="-fx-background-color: #1976D2; -fx-text-fill: white;" />
-
-                    <Label text="Filtrar por:" style="-fx-font-weight: bold; -fx-text-fill: #333;" />
-
+                <HBox alignment="CENTER_LEFT" spacing="10" styleClass="caixa-filtro-pesquisa">
+                    <Label styleClass="filtro-label" text="Filtrar por:" />
                     <!-- ComboBox vazios - serão preenchidos no controller -->
-                    <ComboBox fx:id="categoriaFilter" promptText="Categoria" prefWidth="150"/>
-                    <ComboBox fx:id="produtoFilter" promptText="Produto" prefWidth="150"/>
+                    <ComboBox fx:id="categoriaFilter" prefWidth="150" promptText="Categoria" />
+                    <ComboBox fx:id="produtoFilter" prefWidth="150" promptText="Produto" />
 
-                    <Button text="Limpar Filtros" style="-fx-background-color: #E64A19; -fx-text-fill: white;" />
+                    <Button styleClass="clear-filters-button" text="Limpar Filtros" />
                 </HBox>
             </VBox>
         </top>
 
         <!-- LADO ESQUERDO (Resumo Estoque) -->
         <left>
-            <VBox spacing="10" style="-fx-background-color: #f9f9f9; -fx-padding: 15;" prefWidth="250">
-                <Label text="Resumo por Produto" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <VBox prefWidth="250" spacing="10" styleClass="caixa-resumo-produtos">
+                <Label styleClass="titulo-resumo-produtos" text="Resumo por Produto" />
 
-                <VBox spacing="5">
+                <VBox spacing="5" styleClass="caixa-menor-resumo-produtos">
                     <HBox>
-                        <Label text="Produto A:" style="-fx-font-weight: bold;" />
+                        <Label styleClass="nome-produto-resumo-label" text="Produto A:" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Label text="350 un" style="-fx-text-fill: #4CAF50;" />
+                        <Label styleClass="quantidade-produto-resumo-label" text="350 un" />
                     </HBox>
-                    <ProgressBar progress="0.7" prefWidth="200" />
+                    <ProgressBar prefWidth="200" progress="0.7" />
                 </VBox>
-
-                <VBox spacing="5">
-                    <HBox>
-                        <Label text="Produto B:" style="-fx-font-weight: bold;" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label text="210 un" style="-fx-text-fill: #4CAF50;" />
-                    </HBox>
-                    <ProgressBar progress="0.42" prefWidth="200" />
-                </VBox>
-
-                <VBox spacing="5">
-                    <HBox>
-                        <Label text="Produto C:" style="-fx-font-weight: bold;" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label text="480 un" style="-fx-text-fill: #4CAF50;" />
-                    </HBox>
-                    <ProgressBar progress="0.96" prefWidth="200" />
-                </VBox>
-
-                <VBox spacing="5">
-                    <HBox>
-                        <Label text="Produto D:" style="-fx-font-weight: bold;" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label text="120 un" style="-fx-text-fill: #4CAF50;" />
-                    </HBox>
-                    <ProgressBar progress="0.24" prefWidth="200" />
-                </VBox>
-
-                <VBox spacing="5">
-                    <HBox>
-                        <Label text="Produto E:" style="-fx-font-weight: bold;" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label text="90 un" style="-fx-text-fill: #4CAF50;" />
-                    </HBox>
-                    <ProgressBar progress="0.18" prefWidth="200" />
-                </VBox>
-
                 <Separator />
 
-                <Button text="Gerar Relatório"
-                        style="-fx-background-color: #9C27B0; -fx-text-fill: white; -fx-max-width: infinity;" />
+                <Button styleClass="botao-gerar-relatorio" text="Gerar Relatório" />
             </VBox>
         </left>
 
         <!-- CENTRO (Tabela Consumo + Estoque) -->
         <center>
-            <VBox spacing="10" style="-fx-padding: 10;">
+            <VBox spacing="10" styleClass="caixa-principal-estoque">
 
                 <!-- RESUMO CONSUMO -->
-                <HBox spacing="20" alignment="CENTER" style="-fx-background-color: #FFE0B2; -fx-padding: 10; -fx-background-radius: 10;">
-                    <Label text="Total Consumido: 0 unidades" style="-fx-font-weight: bold;" />
-                    <Label text="Valor Total: R$ 0,00" style="-fx-font-weight: bold;" />
-                    <Label text="Produto Mais Consumido: Nenhum" style="-fx-font-weight: bold;" />
+                <HBox alignment="CENTER" spacing="20" styleClass="consumption-summary">
+                    <Label styleClass="label-produtos-mais-consumidos" text="Total Consumido: 0 unidades" />
+                    <Label styleClass="label-produtos-mais-consumidos" text="Valor Total: R$ 0,00" />
+                    <Label styleClass="label-produtos-mais-consumidos" text="Produto Mais Consumido: Nenhum" />
                 </HBox>
 
                 <!-- TABELA -->
-                <TableView fx:id="historicoTable" style="-fx-padding: 10;">
+                <TableView fx:id="produtoTableView" styleClass="tabela-produtos-principal">
                     <columns>
-                        <TableColumn text="Data" prefWidth="100">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="data" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Produto" prefWidth="200">
+                        <TableColumn prefWidth="200" text="Produto">
                             <cellValueFactory>
                                 <PropertyValueFactory property="produto" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Categoria" prefWidth="120">
+                        <TableColumn prefWidth="200" text="Marca">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="marca" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="120" text="Tipo">
                             <cellValueFactory>
                                 <PropertyValueFactory property="categoria" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Tipo" prefWidth="80">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="tipo" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Quantidade" prefWidth="100">
+                        <TableColumn prefWidth="100" text="Quantidade">
                             <cellValueFactory>
                                 <PropertyValueFactory property="quantidade" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Valor Unitário" prefWidth="120">
+                        <TableColumn prefWidth="120" text="Valor Unitário">
                             <cellValueFactory>
                                 <PropertyValueFactory property="valorUnitario" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Valor Total" prefWidth="120">
+                        <TableColumn prefWidth="120" text="Valor Total">
                             <cellValueFactory>
                                 <PropertyValueFactory property="valorTotal" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Estoque Atual" prefWidth="120">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="estoqueAtual" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Fornecedor" prefWidth="150">
+                        <TableColumn prefWidth="150" text="Fornecedor">
                             <cellValueFactory>
                                 <PropertyValueFactory property="fornecedor" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Usuário" prefWidth="120">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="usuario" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Observações" prefWidth="200">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="observacoes" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
@@ -171,22 +102,20 @@
                 </TableView>
 
                 <!-- BOTÕES -->
-                <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
-                    <Button text="Exportar para PDF" style="-fx-background-color: #E53935; -fx-text-fill: white;" />
-                    <Button text="Exportar para Excel" style="-fx-background-color: #43A047; -fx-text-fill: white;" />
-                    <Button text="Imprimir" style="-fx-background-color: #1E88E5; -fx-text-fill: white;" />
+                <HBox alignment="CENTER" spacing="10" styleClass="buttons-hbox">
+                    <Button styleClass="botao-gerar-pdf" text="Exportar para PDF" />
+                    <Button styleClass="botao-gerar-excel" text="Exportar para Excel" />
+                    <Button styleClass="botao-imprimir-relatorio" text="Imprimir" />
                 </HBox>
             </VBox>
         </center>
 
         <!-- RODAPÉ -->
         <bottom>
-            <HBox spacing="10" style="-fx-background-color: #e0e0e0; -fx-padding: 10;" alignment="CENTER_RIGHT">
-                <Label text="Estoque Total Atual:" style="-fx-font-weight: bold;" />
-                <Label text="1.250 unidades" style="-fx-font-weight: bold; -fx-text-fill: #4CAF50;" />
+            <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="bottom-hbox">
+                <Label styleClass="label-texto-baixo-estoque-total" text="Estoque Total Atual:" />
+                <Label styleClass="label-valor-baixo-estoque-total" text="1.250 unidades" />
                 <Region HBox.hgrow="ALWAYS" />
-                <Label text="Movimentações no período:" style="-fx-font-weight: bold;" />
-                <Label text="85 entradas | 62 saídas" />
             </HBox>
         </bottom>
 

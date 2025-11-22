@@ -1,27 +1,68 @@
 package dicasa.estoque.models.entities;
 
-import lombok.*;
+import jakarta.persistence.*;
+import javafx.beans.property.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Entidade usada apenas como exemplo
- * Coloquei as anotações do Lombok (biblioteca do Java)
- * para automatizar a criação Getter e Setter, Constructor e etc. para evitar Boilerplate
+ * Entidade que armazena Produto
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor
+
+@Entity
+@Table(name = "produto")
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Produto {
-    @Setter(AccessLevel.NONE)
-    private Long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_produto")
+    private Long idProduto;
+
+    @Column(name = "nome", length = 50, nullable = false)
     private String nome;
-    private BigDecimal preco;
-    private int quantidade;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+
+    @Column(name = "marca", length = 50)
+    private String marca;
+
+    @Column(name = "tipo", length = 30, nullable = false)
+    private String tipo;
+
+    @Column(name = "observacao")
+    private String observacao;
+
+    @Column(name = "data_criacao", nullable = false)
+    private LocalDateTime dataCriacao = LocalDateTime.now();
+
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario_criador")
+    private Usuario usuario;
+
+    @OneToOne(mappedBy = "produto", fetch = FetchType.EAGER)
+    private EstoqueProduto estoqueProduto;
+
+    // JavaFX Properties (para a TableView)
+    public LongProperty idProdutoProperty() {
+        return new SimpleLongProperty(idProduto);
+    }
+
+    public StringProperty nomeProperty() {
+        return new SimpleStringProperty(nome);
+    }
+
+    public StringProperty marcaProperty() {
+        return new SimpleStringProperty(marca);
+    }
+
+    public StringProperty tipoProperty() {
+        return new SimpleStringProperty(tipo);
+    }
 }
