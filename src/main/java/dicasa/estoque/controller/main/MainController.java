@@ -130,15 +130,7 @@ public class MainController implements Initializable {
     public void onMenuItemRelatorioConsumoClick(ActionEvent event) {
         ScreenNavigator.loadView(contentContainer,RELATORIO_CONSUMO_VIEW);
     }
-    @FXML
-    public void onMenuItemPratosClick(ActionEvent event) {
-        ScreenNavigator.loadView(contentContainer,CADASTRO_PRATOS_VIEW);
-    }
 
-    @FXML
-    public void onMenuItemRelatorioPratosClick(ActionEvent event) {
-        ScreenNavigator.loadView(contentContainer,RELATORIO_PRATOS_VIEW);
-    }
 
     @FXML
     public void onButtonInicioClick(ActionEvent event) {

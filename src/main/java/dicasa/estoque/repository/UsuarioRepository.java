@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Inteface que conecta uma tabela do Supabase com o programa
+ * Busca a tabela usuario
+ */
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
@@ -21,3 +25,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     boolean existsByNomeIgnoreCaseAndIdNot(String nome, Long id);
 }
+
+
+
+

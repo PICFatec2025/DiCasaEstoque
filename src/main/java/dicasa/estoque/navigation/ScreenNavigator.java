@@ -1,6 +1,5 @@
 package dicasa.estoque.navigation;
 
-import dicasa.estoque.EstoqueApplication;
 import dicasa.estoque.controller.DataFormController;
 import dicasa.estoque.util.SpringFXManager;
 import javafx.event.ActionEvent;
@@ -110,19 +109,46 @@ public class ScreenNavigator {
      */
     public static void loadView(AnchorPane anchorPane, String nomeRota) {
         try {
+            System.out.println("🚀 ========== INICIANDO CARREGAMENTO DE TELA ==========");
+            System.out.println("📁 Rota solicitada: " + nomeRota);
+            System.out.println("🔧 AnchorPane: " + (anchorPane != null ? "OK" : "NULL"));
+
+            // Verifica se a rota existe
+            if (nomeRota == null || nomeRota.isEmpty()) {
+                System.err.println("❌ ERRO: Rota está vazia ou nula");
+                return;
+            }
+
+            System.out.println("🔄 Criando FXMLLoader...");
             FXMLLoader fxmlLoader = loadFXML(nomeRota);
+
+            System.out.println("🔧 Configurando Controller Factory...");
             fxmlLoader.setControllerFactory(springContext::getBean);
+
+            System.out.println("📦 Carregando FXML...");
             Parent newScreen = fxmlLoader.load();
 
+            System.out.println("✅ FXML carregado com sucesso!");
+            System.out.println("🎯 Controller: " + fxmlLoader.getController().getClass().getSimpleName());
+
+            System.out.println("🖼️ Configurando layout na AnchorPane...");
             anchorPane.getChildren().setAll(newScreen);
             AnchorPane.setTopAnchor(newScreen, 0.0);
             AnchorPane.setBottomAnchor(newScreen, 0.0);
             AnchorPane.setLeftAnchor(newScreen, 0.0);
             AnchorPane.setRightAnchor(newScreen, 0.0);
 
-        } catch (IOException e) {
-            // Apenas log no console; não mostra alerta
-            System.out.println("Tela não carregada: " + nomeRota + " - " + e.getMessage());
+            System.out.println("🎉 Tela carregada com SUCESSO: " + nomeRota);
+            System.out.println("======================================================");
+
+        } catch (Exception e) {
+            System.err.println("❌ ========== ERRO AO CARREGAR TELA ==========");
+            System.err.println("❌ Rota: " + nomeRota);
+            System.err.println("❌ Tipo de erro: " + e.getClass().getSimpleName());
+            System.err.println("❌ Mensagem: " + e.getMessage());
+            System.err.println("❌ Causa: " + (e.getCause() != null ? e.getCause().getMessage() : "Nenhuma"));
+            e.printStackTrace();
+            System.err.println("=============================================");
         }
     }
 
@@ -182,7 +208,9 @@ public class ScreenNavigator {
     }
 
     private static FXMLLoader loadFXML(String nomeRota) {
-        return new FXMLLoader(EstoqueApplication.class.getResource(nomeRota));
+        System.out.println("📂 Carregando FXML da rota: " + nomeRota);
+        System.out.println("🔍 Resource URL: " + ScreenNavigator.class.getResource(nomeRota));
+        return new FXMLLoader(ScreenNavigator.class.getResource(nomeRota));
     }
 
     private static void messageError(String message, Exception e) {

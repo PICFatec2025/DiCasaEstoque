@@ -22,10 +22,6 @@ public class UsuarioInserter implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Exemplo de inserção
-        criarUsuario("usuario1", "usuario1@teste.com", "senha123");
-        criarUsuario("usuario2", "usuario2@teste.com", "senha123");
-        criarUsuario("usuario3", "usuario3@teste.com", "senha123");
     }
 
     /**

@@ -1,18 +1,24 @@
 package dicasa.estoque.controller.fornecedores;
 
 import dicasa.estoque.navigation.ScreenNavigator;
+import dicasa.estoque.service.FornecedorService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 
 
 @Component
@@ -42,9 +48,15 @@ public class FornecedorController implements Initializable {
     @FXML
     private Button btnAddProduto;
 
+    private final FornecedorService fornecedorService;
+
+    public FornecedorController(FornecedorService fornecedorService) {
+        this.fornecedorService = fornecedorService;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        fornecedorService.listarFornecedoresCompleto();
     }
 
     @FXML
@@ -75,6 +87,22 @@ public class FornecedorController implements Initializable {
     public void onClickLimparFiltros(ActionEvent event) {
 
     }
+    public void onClickAdicionarProduto(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/produtos/adicionar-produto.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Adicionar Produto");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void onClickExportar(ActionEvent event) {
+
+    }
+
 
 
 }
