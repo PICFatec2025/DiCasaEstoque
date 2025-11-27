@@ -67,6 +67,7 @@ public class AdicionarProdutoController implements DataFormController {
             estoqueProduto.setQuantidade(Integer.parseInt(textoObrigatorio(txtQuantidade, "a quantidade")));
             estoqueProduto.setQuantidadeMinima(Integer.parseInt(textoObrigatorio(txtQuantidadeMinima, "a quantidade mínima")));
             estoqueProduto.setEstoqueEmergencial(Integer.parseInt(textoObrigatorio(txtEstoqueEmergencial, "o estoque emergencial")));
+            estoqueProduto.setData_criacao(LocalDateTime.now());
             produto.setObservacao(txtObservacao.getText());
             produto.setDataCriacao(LocalDateTime.now());
 
@@ -75,6 +76,8 @@ public class AdicionarProdutoController implements DataFormController {
                 throw new IllegalStateException("Nenhum usuário logado.");
             }
             produto.setUsuario(usuario);
+            estoqueProduto.setProduto(produto);
+            produto.setEstoqueProduto(estoqueProduto);
 
             produtoService.salvarProduto(produto);
 

@@ -46,7 +46,7 @@ public class Produto {
     @JoinColumn(name = "id_usuario_criador")
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "produto", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private EstoqueProduto estoqueProduto;
 
     // JavaFX Properties (para a TableView)

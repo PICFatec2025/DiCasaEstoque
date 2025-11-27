@@ -36,7 +36,7 @@ public class PedidoProduto {
     @JoinColumn(name = "id_fornecedor")
     private Fornecedor fornecedor;
     @JoinColumn(name = "id_produto")
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Produto produto;
     @JoinColumn(name = "id_pedido")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
