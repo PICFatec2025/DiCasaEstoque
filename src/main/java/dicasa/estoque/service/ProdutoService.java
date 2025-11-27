@@ -1,14 +1,12 @@
 package dicasa.estoque.service;
 
 import dicasa.estoque.repository.EstoqueProdutoRepository;
-import dicasa.estoque.repository.FornecedorRepository;
 import dicasa.estoque.repository.PedidoProdutoRepository;
 import dicasa.estoque.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 
 import dicasa.estoque.models.entities.Produto;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +21,15 @@ public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
     private final PedidoProdutoRepository pedidoProdutoRepository;
+    private final EstoqueProdutoRepository estoqueProdutoRepository;
 
     public ProdutoService(
             ProdutoRepository produtoRepository,
-            PedidoProdutoRepository pedidoProdutoRepository) {
+            PedidoProdutoRepository pedidoProdutoRepository,
+            EstoqueProdutoRepository estoqueProdutoRepository) {
         this.produtoRepository = produtoRepository;
         this.pedidoProdutoRepository = pedidoProdutoRepository;
+        this.estoqueProdutoRepository = estoqueProdutoRepository;
     }
 
     // CREATE - Salvar produto
@@ -76,6 +77,17 @@ public class ProdutoService {
 
     // DELETE - Deletar produto
     public void deletarProduto(Long id) {
-        produtoRepository.deleteById(id);
+
+        if (pedidoProdutoRepository.existsByProduto_IdProduto(id)) {
+            throw new IllegalStateException("Produto vinculado a pedidos e não pode ser deletado.");
+        }
+
+        produtoRepository.findByIdWithEstoqueAndUsuario(id)
+                .ifPresent(produto -> {
+                    if (produto.getEstoqueProduto() != null) {
+                        estoqueProdutoRepository.delete(produto.getEstoqueProduto());
+                    }
+                    produtoRepository.delete(produto);
+                });
     }
 }

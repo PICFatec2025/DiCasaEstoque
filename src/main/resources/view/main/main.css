@@ -70,7 +70,7 @@
     -fx-text-fill: black;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-                 /* controla altura/espessura */
+    /* controla altura/espessura */
     -fx-background-radius: 4;
     -fx-cursor: hand;
     -fx-border-color: transparent;
@@ -244,21 +244,23 @@
    ESTILO DA TABLEVIEW
    ========================= */
 .tabela_itens {
-    -fx-background-color: #FFEBC5; /* Fundo da tabela */
-    -fx-border-color: black;
-    -fx-border-width: 1;
+    -fx-background-color: #FFEBC5;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
 }
 
 .tabela_itens .column-header-background {
-    -fx-background-color: #FFEBC5; /* Fundo do cabeçalho */
-    -fx-border-color: black;
-    -fx-border-width: 0 0 1 0; /* Borda inferior do cabeçalho */
+    -fx-background-color: #FFEBC5;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent transparent black transparent;
+    -fx-border-width: 0 0 1 0;
 }
 
 .tabela_itens .column-header {
-    -fx-background-color: transparent; /* Remove gradiente padrão */
-    -fx-border-color: black;
-    -fx-border-width: 0 1 0 0; /* Bordas entre colunas */
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 8px 0;
 }
 
 .tabela_itens .column-header .label {
@@ -268,94 +270,31 @@
 }
 
 .tabela_itens .table-row-cell {
-    -fx-background-color: #FFEBC5; /* Fundo das linhas */
-    -fx-border-color: black;
-    -fx-border-width: 0 0 1 0; /* Borda inferior entre linhas */
-}
-
-.tabela_itens .table-row-cell:odd {
-    -fx-background-color: #FFE0B2; /* Cor alternativa para linhas ímpares */
-}
-
-.tabela_itens .table-row-cell:selected {
-    -fx-background-color: #FEB733; /* Cor quando selecionado */
-}
-
-.tabela_itens .cell {
-    -fx-text-fill: black;
-    -fx-border-color: black;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 5px;
-}
-
-/* Remove a borda interna da tabela */
-.tabela_itens .scroll-pane {
-    -fx-background-color: transparent;
-}
-
-.tabela_itens .scroll-pane .viewport {
-        -fx-background-color: #FFEBC5;
-}
-
-.tabela_itens .scroll-pane .content {
     -fx-background-color: #FFEBC5;
-}
-
-/* =========================
-   ESTILO DAS CÉLULAS DA TABLEVIEW (igual à ChoiceBox)
-   ========================= */
-.tabela_itens .cell {
-    -fx-background-color: #FFEBC5;
-    -fx-border-color: black;
-    -fx-border-width: 1px;
-    -fx-text-fill: black;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 5px;
-    -fx-font-size: 14px;
-}
-
-.tabela_itens .table-row-cell {
-    -fx-background-color: #FFEBC5;
-    -fx-border-color: black;
+    -fx-border-color: transparent transparent black transparent;
     -fx-border-width: 0 0 1 0;
 }
 
 .tabela_itens .table-row-cell:odd {
-    -fx-background-color: #FFE0B2; /* Cor ligeiramente diferente para linhas ímpares */
+    -fx-background-color: #FFE0B2;
 }
 
 .tabela_itens .table-row-cell:empty {
     -fx-background-color: #FFEBC5;
-    -fx-border-color: black;
+    -fx-border-width: 0;
 }
 
-.tabela_itens .table-row-cell:selected .cell {
-    -fx-background-color: #FEB733; /* Cor quando selecionado */
-}
-
-/* Estilo para o cabeçalho da tabela */
-.tabela_itens .column-header {
-    -fx-background-color: #FFEBC5;
-    -fx-border-color: black;
-    -fx-border-width: 0 1 1 0;
-    -fx-font-weight: bold;
-    -fx-alignment: CENTER;
-}
-
-.tabela_itens .column-header-background {
-    -fx-background-color: #FFEBC5;
-    -fx-border-color: black;
-    -fx-border-width: 0 0 1 0;
-}
-
-/* Remove as linhas de foco padrão */
-.tabela_itens .table-row-cell:filled:selected {
+.tabela_itens .table-row-cell:selected {
     -fx-background-color: #FEB733;
-    -fx-table-cell-border-color: black;
 }
 
-.tabela_itens .table-row-cell:filled:selected .cell {
-    -fx-background-color: #FEB733;
+.tabela_itens .cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
 }
 
 .drop-box-prato{
@@ -400,13 +339,6 @@
 /* =========================
    TABELAS
    ========================= */
-.tabela_itens {
-    -fx-border-color: black;
-    -fx-border-width: 1px;
-    -fx-border-style: solid;
-    -fx-background-color: #FFE8C8;
-}
-
 .table-view {
     -fx-background-color: transparent;
 }

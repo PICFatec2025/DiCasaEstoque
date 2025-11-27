@@ -37,3 +37,20 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### ============================
+### Security / Sensitive Files
+### ============================
+# Arquivos com senhas ou configs locais
+.env
+.env.properties
+application.properties
+
+# Caso use versões de exemplo
+!application-example.properties
+
+### CSV Files ###
+# Ignorar arquivos CSV gerados automaticamente
+estoque*.csv
+*.csv

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class EstoqueService {
      * @return lista de estoque com produto
      */
     public List<EstoqueProdutoCompletoResponseDTO> listarEstoques(){
-        List<Produto> produtos = produtoRepository.findAll();
+        List<Produto> produtos = produtoRepository.findAllWithEstoqueAndUsuario();
         return produtoEstoqueMapper.toDtoList(produtos);
     }
 
@@ -80,8 +81,8 @@ public class EstoqueService {
      */
     private EstoqueProduto acharEstoqueProdutoPorId(Long id){
         return estoqueProdutoRepository
-                        .findById(id)
-                        .orElseThrow(EstoqueNaoEncotradoException::new);
+                .findById(id)
+                .orElseThrow(EstoqueNaoEncotradoException::new);
     }
 
     /**
@@ -98,5 +99,35 @@ public class EstoqueService {
         EstoqueProduto saved = estoqueProdutoRepository.save(estoqueProduto);
         return saved;
 
+    }
+
+    /**
+     * Realiza a saída de itens do estoque de um produto específico.
+     *
+     * @param idProduto  identificador do produto
+     * @param quantidade quantidade a ser retirada
+     * @return estoque atualizado após a retirada
+     */
+    public EstoqueProduto retirarDoEstoque(Long idProduto, int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
+        }
+
+        Produto produto = produtoRepository.findByIdWithEstoqueAndUsuario(idProduto)
+                .orElseThrow(EstoqueNaoEncotradoException::new);
+
+        EstoqueProduto estoqueProduto = produto.getEstoqueProduto();
+        if (estoqueProduto == null) {
+            throw new EstoqueNaoEncotradoException();
+        }
+
+        if (quantidade > estoqueProduto.getQuantidade()) {
+            throw new IllegalArgumentException("Quantidade solicitada maior que o estoque disponível.");
+        }
+
+        estoqueProduto.setQuantidade(estoqueProduto.getQuantidade() - quantidade);
+        estoqueProduto.setData_atualizacao(LocalDateTime.now());
+
+        return estoqueProdutoRepository.save(estoqueProduto);
     }
 }

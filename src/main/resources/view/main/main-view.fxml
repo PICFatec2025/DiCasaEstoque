@@ -20,7 +20,7 @@
                 <MenuButton alignment="CENTER" cache="true" contentDisplay="CENTER" styleClass="menu-drop-button" text="Estoque" textAlignment="CENTER">
                     <items>
                         <MenuItem onAction="#onMenuItemProdutosClick" text="Produtos" />
-                        <MenuItem onAction="#onMenuItemControleQualidadeClick" text="Controle de Qualidade" />
+                        <MenuItem onAction="#onMenuItemHistoricoEstoqueClick" text="Histórico Atual" />
                     </items>
                 </MenuButton>
 
@@ -28,8 +28,6 @@
                 <MenuButton alignment="CENTER" contentDisplay="CENTER" styleClass="menu-drop-button" text="Relatórios" textAlignment="CENTER">
                     <items>
                         <MenuItem onAction="#onMenuItemPrevisaoComprasClick" text="Previsão de Compras" />
-                        <MenuItem onAction="#onMenuItemHistoricoEstoqueClick" text="Histórico de Estoque" />
-                        <MenuItem onAction="#onMenuItemRelatorioConsumoClick" text="Relatório de Consumo" />
                     </items>
                 </MenuButton>
 
@@ -52,13 +50,13 @@
                 <children>
                     <ImageView fitHeight="580.0" fitWidth="639.0" layoutX="329.0" layoutY="40.0">
                         <image>
-                            <Image url="@../../static/logo.png"  />
+                            <Image url="@../../static/logo.png" />
                         </image>
                     </ImageView>
                 </children>
-            <opaqueInsets>
-               <Insets top="10.0" />
-            </opaqueInsets>
+                <opaqueInsets>
+                    <Insets top="10.0" />
+                </opaqueInsets>
             </AnchorPane>
 
         </VBox>
