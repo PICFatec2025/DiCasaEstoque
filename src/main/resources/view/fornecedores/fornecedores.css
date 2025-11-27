@@ -1,124 +1,158 @@
-/* Estilos principais */
+/* ======= ESTILO GERAL ======= */
 .root {
-    -fx-background-color: #FFE0B2;
+    -fx-background-color: #ffe4b5;
     -fx-font-family: "Segoe UI", Arial, sans-serif;
-    -fx-padding: 20px;
 }
 
+/* ======= CONTAINER PRINCIPAL ======= */
 #card {
     -fx-background-color: white;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
-    -fx-padding: 18px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 2, 2);
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 0, 2);
 }
 
-/* Título */
-#titleLabel {
+/* ======= TÍTULO ======= */
+#titleLabel, .title-label {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: black;
-    -fx-alignment: center;
+    -fx-text-fill: #333333;
 }
 
-/* Botões */
-#btnCadastrar, #btnBuscar, #btnLimpar {
-    -fx-background-color: #FFA726;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-background-radius: 6px;
-    -fx-padding: 6px 12px;
-    -fx-cursor: hand;
+/* ======= LABELS ======= */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
 }
 
-#btnCadastrar:hover, #btnBuscar:hover, #btnLimpar:hover {
-    -fx-background-color: #FF9800;
-}
-
-/* Campos de texto */
+/* ======= CAMPOS DE TEXTO ======= */
 .text-field {
-    -fx-background-radius: 4px;
-    -fx-border-radius: 4px;
-    -fx-padding: 4px 6px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
     -fx-border-color: #cccccc;
     -fx-border-width: 1px;
-    -fx-background-color: white;
+    -fx-padding: 6px 10px;
+    -fx-font-size: 14px;
+    -fx-background-color: #fff7e6;
 }
 
 .text-field:focused {
-    -fx-border-color: #FFA726;
-    -fx-border-width: 2px;
+    -fx-border-color: #ff9933;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,153,51,0.3), 5, 0, 0, 0);
 }
 
-/* ComboBox */
+/* ======= COMBOBOX ======= */
 .combo-box {
-    -fx-background-radius: 4px;
-    -fx-border-radius: 4px;
-    -fx-padding: 4px 6px;
+    -fx-background-color: #fff7e6;
     -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
-    -fx-background-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-padding: 4px;
 }
 
 .combo-box:focused {
-    -fx-border-color: #FFA726;
-    -fx-border-width: 2px;
+    -fx-border-color: #ff9933;
 }
 
-/* Labels */
-.label {
-    -fx-font-size: 12px;
-    -fx-text-fill: #333333;
+/* ======= BOTÕES ======= */
+.button {
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-background-color: linear-gradient(to right, #ffcc66, #ffa733);
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 18px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 3, 0, 0, 1);
 }
 
-/* Tabela */
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #ffb84d, #ff9933);
+}
+
+.button:pressed {
+    -fx-background-color: #ff9933;
+}
+
+/* ======= BOTÕES ESPECÍFICOS ======= */
+#btnCadastrar {
+    -fx-background-color: linear-gradient(to right, #ff9933, #ff6600);
+    -fx-text-fill: white;
+}
+
+#btnCadastrar:hover {
+    -fx-background-color: linear-gradient(to right, #ff6600, #e65c00);
+}
+
+#btnAddProduto {
+    -fx-background-color: linear-gradient(to right, #66cc66, #33aa33);
+    -fx-text-fill: white;
+}
+
+#btnAddProduto:hover {
+    -fx-background-color: linear-gradient(to right, #55bb55, #299929);
+}
+
+#btnExportar {
+    -fx-background-color: linear-gradient(to right, #3399ff, #0077cc);
+    -fx-text-fill: white;
+}
+
+#btnExportar:hover {
+    -fx-background-color: linear-gradient(to right, #2288ee, #0066bb);
+}
+
+/* ======= TABELA ======= */
 .table-view {
-    -fx-background-color: #FFE0B2;
-    -fx-border-radius: 4px;
-    -fx-background-radius: 4px;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-table-cell-border-color: #f0f0f0;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: linear-gradient(#f6f6f6, #e9e9e9);
-    -fx-border-radius: 4px 4px 0 0;
+    -fx-background-color: linear-gradient(to right, #ffcc66, #ffa733);
+    -fx-background-radius: 5px 5px 0 0;
 }
 
-.table-view .column-header {
-    -fx-background-color: transparent;
-    -fx-border-color: #dddddd;
-    -fx-border-width: 0 1px 1px 0;
+.table-view .column-header, 
+.table-view .filler {
+    -fx-size: 35px;
+    -fx-border-color: transparent;
 }
 
 .table-view .column-header .label {
-    -fx-font-weight: bold;
     -fx-text-fill: #333333;
-    -fx-alignment: center-left;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
 }
 
-.table-view .table-row-cell:even {
-    -fx-background-color: #f9f9f9;
+.table-row-cell {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
 }
 
-.table-view .table-row-cell:odd {
-    -fx-background-color: white;
+.table-row-cell:filled:hover {
+    -fx-background-color: #fff0cc;
 }
 
-.table-view .table-row-cell:selected {
-    -fx-background-color: #FFE0B2;
+.table-row-cell:selected {
+    -fx-background-color: #ffcc80;
+    -fx-text-fill: black;
 }
 
-.table-view .table-cell {
-    -fx-border-color: transparent;
-    -fx-padding: 8px;
-    -fx-alignment: center-left;
+/* ======= SCROLLBAR ======= */
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
 }
 
-/* Placeholder da tabela (quando vazia) */
-.table-view .placeholder .label {
-    -fx-text-fill: #666666;
-    -fx-font-style: italic;
+.scroll-bar .thumb {
+    -fx-background-color: #ffa733;
+    -fx-background-radius: 4px;
 }
-

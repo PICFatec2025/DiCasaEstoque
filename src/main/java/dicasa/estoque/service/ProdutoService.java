@@ -1,22 +1,35 @@
 package dicasa.estoque.service;
 
+import dicasa.estoque.repository.EstoqueProdutoRepository;
+import dicasa.estoque.repository.FornecedorRepository;
+import dicasa.estoque.repository.PedidoProdutoRepository;
 import dicasa.estoque.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 
-import dicasa.estoque.models.Produto;
-import dicasa.estoque.repository.ProdutoRepository;
+import dicasa.estoque.models.entities.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe de service para Produto
+ * Conecta os Repositories relacionados a Produto com os controllers de telas de fornecedores
+ */
+
 @Service
 public class ProdutoService {
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
+    private final PedidoProdutoRepository pedidoProdutoRepository;
+
+    public ProdutoService(
+            ProdutoRepository produtoRepository,
+            PedidoProdutoRepository pedidoProdutoRepository) {
+        this.produtoRepository = produtoRepository;
+        this.pedidoProdutoRepository = pedidoProdutoRepository;
+    }
 
     // CREATE - Salvar produto
     public Produto salvarProduto(Produto produto) {
@@ -25,12 +38,12 @@ public class ProdutoService {
 
     // READ - Buscar todos os produtos
     public List<Produto> buscarTodos() {
-        return produtoRepository.findAll();
+        return produtoRepository.findAllWithEstoqueAndUsuario();
     }
 
     // READ - Buscar por ID
     public Optional<Produto> buscarPorId(Long id) {
-        return produtoRepository.findById(id);
+        return produtoRepository.findByIdWithEstoqueAndUsuario(id);
     }
 
     public Optional<Produto> buscarPorNome(String nome) {
@@ -55,7 +68,7 @@ public class ProdutoService {
                     produto.setMarca(produtoAtualizado.getMarca());
                     produto.setTipo(produtoAtualizado.getTipo());
                     produto.setDataAtualizacao(java.time.LocalDateTime.now());
-                    produto.setIdUsuarioCriador(produtoAtualizado.getIdUsuarioCriador());
+                    produto.setUsuario(produtoAtualizado.getUsuario());
                     return produtoRepository.save(produto);
                 })
                 .orElse(null);

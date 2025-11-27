@@ -26,6 +26,25 @@ public class Constraints {
             return null;
         }));
     }
+    /**
+     * Com essa classe, o TextField só recebe número inteiros
+     * @param textField o textField que vai ter essa validação
+     * @param limiteDigitos o limite de dígitos a receber
+     */
+    public static void textFieldRecebeApenasNumerosInteiros(
+            TextField textField,
+            int limiteDigitos
+    ) {
+        textField.setTextFormatter(new TextFormatter<>(change -> {
+            String novoTexto = change.getControlNewText();
+
+            // Aceita apenas dígitos (0-9) e não vazio se for delete/backspace
+            if (novoTexto.matches("\\d*") && novoTexto.length() <= limiteDigitos) {
+                return change;
+            }
+            return null;
+        }));
+    }
 
     /**
      * Função que limita quantos caracteres 1 TextField pode receber
@@ -61,6 +80,13 @@ public class Constraints {
             return false;
         }
     }
+
+    /**
+     * Função que valida se o campo de data está em branco
+     * @param datePicker o campo de data
+     * @param label o campo de mensagem para alertar em caso de erro
+     * @return se está em branco (true) ou não (false)
+     */
     public static boolean isDatePickerBlank(
             DatePicker datePicker,
             Label label
@@ -73,6 +99,13 @@ public class Constraints {
             return false;
         }
     }
+
+    /**
+     * Verifica se a caixa de opções está em branco
+     * @param comboBox o campo do combobox
+     * @param label o campo de mensagem para alertar em caso de erro
+     * @return se está em branco (true) ou não (false)
+     */
     public static boolean isComboBoxBlank(
             ComboBox<?> comboBox,
             Label label
