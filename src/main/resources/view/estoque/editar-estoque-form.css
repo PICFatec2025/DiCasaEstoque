@@ -1,0 +1,99 @@
+/* Estilo principal do painel de edição */
+.tabela-edicao {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+/* Estilo para os labels */
+.texto-edicao {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center-left;
+    -fx-wrap-text: true;
+}
+
+/* Estilo para os campos de texto */
+.text-field {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+    -fx-pref-height: 35;
+    -fx-max-width: infinity;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ecf0f1;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.3), 5, 0, 0, 1);
+}
+
+/* Estilo para as mensagens de erro */
+.texto-erro {
+    -fx-font-size: 11px;
+    -fx-font-weight: normal;
+    -fx-text-fill: #e74c3c;
+    -fx-wrap-text: true;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5;
+}
+
+/* Estilo para os botões */
+.botao-salvar {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-max-width: infinity;
+    -fx-pref-width: 200;
+}
+
+.botao-salvar:hover {
+    -fx-background-color: #219653;
+    -fx-effect: dropshadow(gaussian, rgba(39, 174, 96, 0.4), 8, 0, 0, 2);
+}
+
+.botao-salvar:pressed {
+    -fx-background-color: #1e8449;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.botao-cancelar {
+    -fx-background-color: #95a5a6;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-max-width: infinity;
+    -fx-pref-width: 200;
+}
+
+.botao-cancelar:hover {
+    -fx-background-color: #7f8c8d;
+    -fx-effect: dropshadow(gaussian, rgba(149, 165, 166, 0.4), 8, 0, 0, 2);
+}
+
+.botao-cancelar:pressed {
+    -fx-background-color: #6c7b7d;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Estilo para o HBox dos botões */
+.hbox {
+    -fx-alignment: center-left;
+    -fx-spacing: 15;
+}

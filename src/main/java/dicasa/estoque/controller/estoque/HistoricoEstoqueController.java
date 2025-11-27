@@ -1,21 +1,24 @@
 package dicasa.estoque.controller.estoque;
 
+import dicasa.estoque.models.entities.Produto;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import org.springframework.stereotype.Component;
 
+/**
+ * Classe que provavelmente não existirá mais
+ */
 @Component
 public class HistoricoEstoqueController {
-    @FXML
-    public DatePicker dataInicioFilter;
-    @FXML
-    public DatePicker dataFimFilter;
     @FXML
     private ComboBox<String> categoriaFilter;
 
     @FXML
     private ComboBox<String> produtoFilter;
+
+    @FXML
+    private TableView<Produto> produtoTableView;
 
     @FXML
     public void initialize() {

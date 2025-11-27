@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dicasa.estoque.controller.estoque.RelatorioEstoqueController"
+            stylesheets="@relatorio-estoque.css">
+    <BorderPane>
+        <!-- Área central com fundo laranja -->
+        <center>
+            <VBox spacing="20" styleClass="center-vbox" BorderPane.alignment="CENTER">
+
+                <!-- Título -->
+                <Label text="Estoque Atual" styleClass="center-title" maxWidth="Infinity"/>
+
+                <!-- Caixa branca com bordas arredondadas -->
+                <VBox spacing="15" styleClass="content-box" VBox.vgrow="ALWAYS">
+
+                    <!-- ScrollPane envolvendo a tabela -->
+                    <ScrollPane styleClass="table-scroll-pane" fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <TableView VBox.vgrow="ALWAYS" styleClass="estoque-table" fx:id="estoqueTableView">
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                            <columns>
+                                <TableColumn text="Produto" fx:id="tableColumnNome" prefWidth="200"/>
+                                <TableColumn text="Categoria" fx:id="tableColumnCategoria" prefWidth="150"/>
+                                <TableColumn text="Estoque Atual" fx:id="tableColumnQuantidade" prefWidth="120"/>
+                                <TableColumn text="Mínimo" fx:id="tableColumnQuantidadeMinima" prefWidth="120"/>
+                                <TableColumn text="Status" fx:id="tableColumnStatus" prefWidth="120"/>
+                                <TableColumn text="Editar" fx:id="tableColumnEditar" prefWidth="120"/>
+                            </columns>
+                            <placeholder>
+                                <Label text="Não há produtos disponíveis" styleClass="table-placeholder"/>
+                            </placeholder>
+                        </TableView>
+                    </ScrollPane>
+                </VBox>
+
+                <!-- Botões de ação -->
+                <HBox spacing="20" alignment="CENTER" styleClass="buttons-hbox">
+                    <Button text="Exportar para CSV" styleClass="export-csv-button" fx:id="onClickButtonExportar"
+                    onAction="#onClickButtonExportar"/>
+                </HBox>
+            </VBox>
+        </center>
+    </BorderPane>
+</AnchorPane>

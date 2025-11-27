@@ -1,0 +1,109 @@
+/* Estilos para a área central */
+.center-vbox {
+    -fx-background-color: #f39c12;
+    -fx-padding: 30;
+    -fx-alignment: top-center;
+}
+
+.center-title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.content-box {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-background-radius: 10;
+    -fx-max-width: infinity;
+}
+
+/* Estilos para o ScrollPane da tabela */
+.table-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-fit-to-width: true;
+}
+
+.table-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Estilos para a tabela */
+.estoque-table {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-table-cell-border-color: transparent;
+}
+
+.estoque-table .column-header {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-size: 35px;
+    -fx-border-color: #2980b9;
+}
+
+.estoque-table .column-header-background {
+    -fx-background-color: #2980b9;
+    -fx-background-radius: 5 5 0 0;
+}
+
+.estoque-table .filler {
+    -fx-background-color: #2980b9;
+    -fx-border-color: #2980b9;
+}
+
+.estoque-table .column-header-background .nested-column-header .table-column {
+    -fx-background-color: #3498db;
+}
+
+.estoque-table .table-row-cell {
+    -fx-border-color: transparent;
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+}
+
+.estoque-table .table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.estoque-table .table-row-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.estoque-table .table-cell {
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 8 12 8 12;
+}
+
+.table-placeholder {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 14px;
+}
+
+/* Estilos para os botões de ação */
+.buttons-hbox {
+    -fx-spacing: 20;
+    -fx-alignment: center;
+}
+
+.export-csv-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-padding: 8 20;
+}
+
+.export-csv-button:hover {
+    -fx-background-color: #219653;
+}
+
+.export-csv-button:pressed {
+    -fx-background-color: #1e8449;
+}

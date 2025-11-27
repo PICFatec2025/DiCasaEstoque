@@ -8,68 +8,31 @@
 
     <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
 
-    <VBox spacing="15" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+    <VBox alignment="CENTER" spacing="15" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
         <!-- Título -->
-        <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Cadastro de Produtos" />
+        <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Gerenciar Produtos" />
 
-        <!-- Formulário -->
-        <GridPane hgap="10" vgap="10">
-            <columnConstraints>
-                <ColumnConstraints prefWidth="100.0" />
-                <ColumnConstraints prefWidth="200.0" />
-                <ColumnConstraints prefWidth="100.0" />
-                <ColumnConstraints prefWidth="200.0" />
-                <ColumnConstraints prefWidth="200.0" />
-            </columnConstraints>
-
-            <rowConstraints>
-                <RowConstraints prefHeight="30" />
-                <RowConstraints prefHeight="30" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            </rowConstraints>
-
-            <!-- Linha 1 -->
-            <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="txtNome" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-            <Label text="Marca:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <TextField fx:id="txtMarca" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-
-            <!-- Linha 2 -->
-            <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <Label text="ID Usuário:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="txtUsuarioCriador" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField fx:id="txtBusca" layoutX="440.0" layoutY="53.0" prefHeight="25.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label layoutX="330.0" layoutY="57.0" text="Pesquisa:" GridPane.rowIndex="2" />
-            <Button onAction="#carregarTodosProdutos" prefHeight="25.0" prefWidth="190.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Ver Todos" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Button onAction="#buscarPorNome" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #b61014; -fx-text-fill: white;" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="txtTipo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-
-
-        </GridPane>
-
-        <!-- Botões -->
-        <HBox spacing="10">
-            <Button onAction="#salvarProduto" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Salvar" />
-            <Button onAction="#atualizarProduto" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Atualizar" />
-            <Button onAction="#deletarProduto" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Deletar" />
-            <Button onAction="#limparCamposAction" style="-fx-background-color: #FF9800; -fx-text-fill: white;" text="Limpar" />
-
+        <!-- Barra de ações -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Pesquisa:" />
+            <TextField fx:id="txtBusca" promptText="Digite o nome do produto" HBox.hgrow="ALWAYS" />
+            <Button onAction="#buscarPorNome" prefHeight="30" style="-fx-background-color: #b61014; -fx-text-fill: white;" text="Buscar" />
+            <Button onAction="#carregarTodosProdutos" prefHeight="30" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Mostrar todos" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#abrirCadastroProduto" prefHeight="30" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Adicionar Produto" />
         </HBox>
+
         <!-- Mensagem -->
         <Label fx:id="lblMensagem" style="-fx-text-fill: #2E7D32; -fx-font-weight: bold;" />
 
         <!-- Tabela de Produtos -->
-        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Lista de Produtos:" />
-
-        <TableView fx:id="tabelaProdutos" onMouseClicked="#selecionarProduto" prefHeight="300">
+        <TableView fx:id="tabelaProdutos" onMouseClicked="#handleTabelaProdutosClique" prefHeight="450" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colunaId" prefWidth="50" text="ID" />
-                <TableColumn fx:id="colunaNome" prefWidth="150" text="Nome" />
-                <TableColumn fx:id="colunaMarca" prefWidth="150" text="Marca" />
-                <TableColumn fx:id="colunaTipo" prefWidth="100" text="Tipo" />
+                <TableColumn fx:id="colunaId" editable="false" prefWidth="80" text="ID" />
+                <TableColumn fx:id="colunaNome" prefWidth="314.0" text="Nome" />
+                <TableColumn fx:id="colunaMarca" prefWidth="189.0" text="Marca" />
+                <TableColumn fx:id="colunaTipo" prefWidth="155.0" text="Tipo" />
             </columns>
         </TableView>
 

@@ -4,6 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Entidade que cuida do usuário logado no sistema
+ */
 
 @Entity
 @Table(name = "usuario", schema = "dicasa_estoque",
@@ -41,4 +47,16 @@ public class Usuario {
     private LocalDateTime created_at = LocalDateTime.now();
 
     private LocalDateTime updated_at;
+
+    // Relação com Produto (um usuário cria muitos produtos)
+    @OneToMany(mappedBy = "usuario")
+    private List<Produto> produtos = new ArrayList<>();
+
+    // Relação com Fornecedor (um usuário cria muitos fornecedores)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private List<Fornecedor> fornecedores = new ArrayList<>();
+
+    // Relação com Pedido (um usuário faz muitos pedidos)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private List<Pedido> pedidos = new ArrayList<>();
 }
