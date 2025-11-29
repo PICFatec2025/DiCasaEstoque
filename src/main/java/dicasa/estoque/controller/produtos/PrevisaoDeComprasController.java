@@ -1,5 +1,6 @@
 package dicasa.estoque.controller.produtos;
 
+import dicasa.estoque.csv.CSVPrevisaoComprasExporter;
 import dicasa.estoque.models.dto.PrevisaoCompraDTO;
 import dicasa.estoque.service.EstoqueService;
 import dicasa.estoque.service.FornecedorService;
@@ -25,6 +26,7 @@ public class PrevisaoDeComprasController implements Initializable {
 
     private final EstoqueService estoqueService;
     private final FornecedorService fornecedorService;
+    private final CSVPrevisaoComprasExporter csvExporter;
 
     // Componentes FXML
     @FXML private ComboBox<String> cbCategoria;
@@ -38,9 +40,12 @@ public class PrevisaoDeComprasController implements Initializable {
     private ObservableList<String> categorias = FXCollections.observableArrayList();
     private ObservableList<String> niveisUrgencia = FXCollections.observableArrayList("TODOS", "CRÍTICO", "ALTO", "MÉDIO", "BAIXO");
 
-    public PrevisaoDeComprasController(EstoqueService estoqueService, FornecedorService fornecedorService) {
+    public PrevisaoDeComprasController(EstoqueService estoqueService,
+                                       FornecedorService fornecedorService,
+                                       CSVPrevisaoComprasExporter csvExporter) {
         this.estoqueService = estoqueService;
         this.fornecedorService = fornecedorService;
+        this.csvExporter = csvExporter;
     }
 
     /**
@@ -110,7 +115,7 @@ public class PrevisaoDeComprasController implements Initializable {
                                 "Fornecedores disponíveis" // Placeholder - pode ser expandido
                         );
                     })
-                    .filter(previsao -> previsao.getQuantidadeComprar() > 0) // CORRIGIDO: quantidadeComprar() -> getQuantidadeComprar()
+                    .filter(previsao -> previsao.getQuantidadeComprar() > 0)
                     .collect(Collectors.toList());
 
             produtosData.setAll(previsoes);
@@ -130,9 +135,9 @@ public class PrevisaoDeComprasController implements Initializable {
 
         List<PrevisaoCompraDTO> filtrados = produtosData.stream()
                 .filter(produto ->
-                        (filtroTexto.isEmpty() || produto.getNomeProduto().toLowerCase().contains(filtroTexto)) && // CORRIGIDO: nomeProduto() -> getNomeProduto()
-                                ("TODAS".equals(categoriaSelecionada) || produto.getCategoria().equals(categoriaSelecionada)) && // CORRIGIDO: categoria() -> getCategoria()
-                                ("TODOS".equals(urgenciaSelecionada) || produto.getNivelUrgencia().equals(urgenciaSelecionada)) // CORRIGIDO: nivelUrgencia() -> getNivelUrgencia()
+                        (filtroTexto.isEmpty() || produto.getNomeProduto().toLowerCase().contains(filtroTexto)) &&
+                                ("TODAS".equals(categoriaSelecionada) || produto.getCategoria().equals(categoriaSelecionada)) &&
+                                ("TODOS".equals(urgenciaSelecionada) || produto.getNivelUrgencia().equals(urgenciaSelecionada))
                 )
                 .collect(Collectors.toList());
 
@@ -163,10 +168,37 @@ public class PrevisaoDeComprasController implements Initializable {
         StringBuilder listaCompras = new StringBuilder("LISTA DE COMPRAS SUGERIDA:\n\n");
         for (PrevisaoCompraDTO produto : produtosSelecionados) {
             listaCompras.append(String.format("- %s: %d unidades\n",
-                    produto.getNomeProduto(), produto.getQuantidadeComprar())); // CORRIGIDO: nomeProduto() -> getNomeProduto(), quantidadeComprar() -> getQuantidadeComprar()
+                    produto.getNomeProduto(), produto.getQuantidadeComprar()));
         }
 
         exibirAlertaInformacao("Lista de Compras Gerada", listaCompras.toString());
+    }
+
+    /**
+     * Exporta os dados da tabela para CSV
+     */
+    @FXML
+    void exportarParaCSV(ActionEvent event) {
+        List<PrevisaoCompraDTO> produtosParaExportar = tabelaProdutos.getItems();
+
+        if (produtosParaExportar.isEmpty()) {
+            exibirAlertaInformacao("Nenhum dado", "Não há dados para exportar.");
+            return;
+        }
+
+        String resultado = csvExporter.exportarPrevisaoComprasCSV(produtosParaExportar);
+        exibirAlertaInformacao("Exportação CSV", resultado);
+    }
+
+    /**
+     * Limpa todos os filtros aplicados
+     */
+    @FXML
+    void limparFiltros(ActionEvent event) {
+        txtFiltro.clear();
+        cbCategoria.setValue("TODAS");
+        cbUrgencia.setValue("TODOS");
+        // Os listeners irão automaticamente aplicar os filtros "limpos"
     }
 
     // Métodos auxiliares para exibição de alertas
