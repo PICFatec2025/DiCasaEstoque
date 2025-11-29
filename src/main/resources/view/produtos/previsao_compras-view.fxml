@@ -75,11 +75,12 @@
         <Button text="Gerar Lista de Compras"
                 style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20;"
                 onAction="#gerarListaCompras"/>
-        <Button text="Exportar Relatório"
-                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20;"/>
+        <Button text="Exportar CSV"
+                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20;"
+                onAction="#exportarParaCSV"/>
         <Button text="Limpar Filtros"
                 style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20;"
-                onAction="#atualizarDados"/>
+                onAction="#limparFiltros"/>
     </HBox>
 
 </VBox>
