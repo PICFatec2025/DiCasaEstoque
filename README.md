@@ -1,52 +1,34 @@
-Para rodar o projeto precisamos instalar o Scene Builder, link:
-</br>
-https://gluonhq.com/products/scene-builder/
+# Dicasa Estoque
+<img width="500"  height="500" alt="logo" src="https://github.com/user-attachments/assets/bbbfa736-b854-4c4e-9d7d-507a7031bf47" />
 
-Ao baixar, veja em que pasta o Scene Builder foi instalado
+Aplicação desktop de gerenciamento de estoque construída com **Java 21**, **JavaFX** e **Spring Boot**. O projeto integra a interface rica do JavaFX com a injeção de dependência do Spring para oferecer um fluxo completo de autenticação, cadastro e controle de produtos.
 
-Baixe a versão 21 do Java (a última versão estável)
-</br>
-https://www.oracle.com/br/java/technologies/downloads/#java21
+## Visão geral
 
-E o JavaFX (21.0.8), versões acima não são compatíveis com o Java 21:
-</br>
-https://gluonhq.com/products/javafx/
+- Tela de login inicial (usuário padrão: `admin` / senha: `admin`).
+- Navegação entre telas JavaFX utilizando `ScreenNavigator`.
+- Inicialização do Spring Boot antes do JavaFX para disponibilizar serviços e repositórios.
+- Estrutura modular para controllers, serviços, repositórios e modelos, facilitando manutenção e extensões futuras.
 
-Extraia o javaFx em alguma pasta, como em:
-</br>
-C:\java-libs\
+## Galeria de telas (placeholders)
 
-Para rodar o JavaFX no intelliJ, tem que baixar a versão Ultimate e não a community:
-</br>
-https://www.jetbrains.com/idea/download/?section=windows
+Substitua os caminhos abaixo pelas capturas de tela quando estiverem disponíveis:
 
-Ative uma licença de estudante para o JetBrains:
-</br>
-https://www.jetbrains.com/academy/student-pack/
+- Tela de login:</br>
+   <img width="787" height="642" alt="image" src="https://github.com/user-attachments/assets/43aad721-df3e-4ea2-ad71-a8bab543cb8d" />
 
-E depois instale a biblioteca do JavaFX em:
-</br>
-File ≥ Settings.. ≥ Plugins ≥ Marketplace ≥ JavaFX
+- Dashboard/visão geral:</br>
+  <img width="1366" height="715" alt="image" src="https://github.com/user-attachments/assets/fc94c76c-f651-4f1c-af59-a4790169c03b" />
 
-E depois indique o endereço do Scene Builder para o IntelliJ:
-</br>
-File ≥ Settings ≥ Languages & Frameworks ≥ JavaFx
-</br>
+- Cadastro de produto:</br>
+  <img width="1366" height="715" alt="image" src="https://github.com/user-attachments/assets/f827e29a-53dd-45e9-b978-ff16a475f0fc" />
 
-E insira a pasta em que o Scene Builder está:
-</br>
-C:\Users\User\AppData\Local\SceneBuilder\SceneBuilder.exe
+- Movimentação de estoque:</br>
+  <img width="774" height="405" alt="image" src="https://github.com/user-attachments/assets/fa2d6328-4b00-4333-a159-5c63328b9f7d" />
 
-Para rodar o projeto, em cima escolha a opção do AppLauncher:
-</br>
-3 pontos ≥ Edit... ≥ Modify Options ≥ Add VM Options (Alt+v)
-</br>
-E no VM Options, cole o comando:
-</br>
---module-path "C:\java-libs\javafx-sdk-21.0.8\lib" --add-modules javafx.controls,javafx.fxml
+## Credenciais padrão
 
-Veja em que pasta que você colocou o javafx
+Para acesso inicial ao sistema:
 
-Para logar no programa, esses são os dados:
- - Login: admin
- - Senha: admin
+- **Login:** `Admin`
+- **Senha:** `admin`
