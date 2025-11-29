@@ -43,7 +43,7 @@ build/
 ### Security / Sensitive Files
 ### ============================
 # Arquivos com senhas ou configs locais
-.env
+.env.properties
 .env.properties
 application.properties
 
