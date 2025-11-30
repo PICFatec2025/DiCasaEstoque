@@ -54,6 +54,16 @@ public class EstoqueService {
     }
 
     /**
+     * Função que lista o Produto pelo nome vinculado com o estoque
+     * @param nome do produto
+     * @return lista de produtos com estoque com esse nome
+     */
+    public List<EstoqueProdutoCompletoResponseDTO> listarEstoquePorNome(String nome){
+        List<Produto> produtos = produtoRepository.findAllByNomeContainingIgnoreCaseWithEstoqueAndUsuario(nome);
+        return produtoEstoqueMapper.toDtoList(produtos);
+    }
+
+    /**
      * Exporta a lista de estoque para CSV
      * @return a mensagem de êxito ou de erro
      */
