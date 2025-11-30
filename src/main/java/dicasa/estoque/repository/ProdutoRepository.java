@@ -31,4 +31,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     @Query("SELECT p FROM Produto p LEFT JOIN FETCH p.estoqueProduto LEFT JOIN FETCH p.usuario WHERE p.idProduto = :id")
     Optional<Produto> findByIdWithEstoqueAndUsuario(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT p FROM Produto p LEFT JOIN FETCH p.estoqueProduto LEFT JOIN FETCH p.usuario WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
+    List<Produto> findAllByNomeContainingIgnoreCaseWithEstoqueAndUsuario(@Param("nome") String nome);
 }

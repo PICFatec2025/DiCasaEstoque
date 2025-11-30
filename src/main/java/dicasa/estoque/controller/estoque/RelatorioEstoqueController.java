@@ -13,11 +13,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +36,8 @@ import static dicasa.estoque.util.TableViewUtils.*;
  */
 @Component
 public class RelatorioEstoqueController implements Initializable {
+    @FXML
+    public TextField textFieldBusca;
     @FXML
     private Button onClickButtonExportar;
     @FXML
@@ -69,6 +71,7 @@ public class RelatorioEstoqueController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeNodes();
         Platform.runLater(this::updateEstoqueTableView);
+        configurarBuscaComEnter();
     }
 
     /**
@@ -158,5 +161,51 @@ public class RelatorioEstoqueController implements Initializable {
         Platform.runLater(this::updateEstoqueTableView);
     }
 
+    /**
+     * Função que faz a busca de produtos pelo nome, alterando a lista mostrado na tela
+     * @param mouseEvent
+     */
+    @FXML
+    public void onClickButtonBuscar(MouseEvent mouseEvent) {
+        String nome = textFieldBusca.getText().trim();
+        if (nome.isEmpty()) {
+            updateEstoqueTableView(); // Se estiver vazio, recarrega todos
+        } else {
+            buscarProdutosPorNome(nome);
+        }
+    }
+
+    /**
+     * Função que carrega a lista de produtos pelo nome
+     * @param nome do produto
+     */
+    private void buscarProdutosPorNome(String nome) {
+        try {
+            List<EstoqueProdutoCompletoResponseDTO> produtos = estoqueService.listarEstoquePorNome(nome);
+            ObservableList<EstoqueProdutoCompletoResponseDTO> observableList = FXCollections.observableList(produtos);
+            estoqueTableView.setItems(observableList);
+            initEditButton(); // Re-inicializa os botões de edição para os novos itens
+        } catch (Exception e) {
+            Alerts.messageError("Erro na busca","Ocorreu um erro ao buscar os produtos.");
+        }
+    }
+
+    /**
+     * Função que permite que busca seja feita se for pressionado o botão enter
+     */
+    private void configurarBuscaComEnter() {
+        textFieldBusca.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                // Dispara a busca quando Enter for pressionado
+                String termoBusca = textFieldBusca.getText().trim();
+
+                if (termoBusca.isEmpty()) {
+                    updateEstoqueTableView();
+                } else {
+                    buscarProdutosPorNome(termoBusca);
+                }
+            }
+        });
+    }
 }
 
