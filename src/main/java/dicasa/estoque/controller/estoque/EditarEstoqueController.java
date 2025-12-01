@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -65,17 +66,20 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
     /**
      * Função que roda ao inicializar a tela
      * Ele prepara o formulário e carrega os itens do banco de dados
+     *
      * @param url
      * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        initializeNodes();
+        configuraTeclaEnter();
     }
+
     /**
      * Função que configura os formulários para receber os dados do banco de dados
      */
-    public void initializeNodes(){
+    public void initializeNodes() {
         textFieldRecebeApenasNumerosInteiros(textQuantidadeForm, 9);
         textFieldRecebeApenasNumerosInteiros(textMinimoForm, 9);
         textFieldRecebeApenasNumerosInteiros(textEmergencialForm, 9);
@@ -84,6 +88,7 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
     /**
      * Função que gera a ação ao clicar no Botão de Salvar
      * A ação é delegada para a função editarEstoque
+     *
      * @param event
      */
     @FXML
@@ -94,6 +99,7 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
     /**
      * Função que gera a ação ao clicar no Botão de Cancelar
      * Ele volta para a tela anterior, de lista de estoque
+     *
      * @param event
      */
     public void onClickButtonCancel(ActionEvent event) {
@@ -103,6 +109,7 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
 
     /**
      * Função que recebe o objeto da tela anterior e joga na tela atual
+     *
      * @param data Objeto do tipo EstoqueProdutoCompletoResponseDTO que vai ser recebido da tela anterior
      */
     @Override
@@ -144,6 +151,7 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
     /**
      * Função para ver se o formulário não tem nenhum dado em Branco
      * Se tiver, aparecerá uma label indicando mensagem de erro
+     *
      * @return Se o formulário está preenchido
      */
     private boolean validateForm() {
@@ -159,6 +167,7 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
      * Se tiverem válidas, ele salva as alterações na tabela
      * Dando certo, ele fecha a janela
      * Dando errado em alguma etapa, aparecerá um alert com mensagem de erro
+     *
      * @param event
      */
     private void editarEstoque(ActionEvent event) {
@@ -206,9 +215,50 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
     /**
      * Função que avisa ao sistema que o estoque foi alterado
      * Assim a tela de relatório de estoque se atualiza com essa nova alteração
+     *
      * @param estoqueProduto estoque que vai ser alterado
      */
     public void publicaEvento(EstoqueProduto estoqueProduto) {
-        applicationContext.publishEvent(new EstoqueProdutoSavedEvent(this,estoqueProduto));
+        applicationContext.publishEvent(new EstoqueProdutoSavedEvent(this, estoqueProduto));
+    }
+
+    private void configuraTeclaEnter() {
+        // Configuração para o campo de Quantidade Atual
+        textQuantidadeForm.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                textMinimoForm.requestFocus(); // Move o foco para o próximo campo
+            }
+        });
+
+        // Configuração para o campo de Quantidade Mínima
+        textMinimoForm.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                // Quando pressionar ENTER no campo Mínimo, move para Emergencial
+                textEmergencialForm.requestFocus(); // Move o foco para o próximo campo
+            }
+        });
+
+        // Configuração para o campo de Quantidade Emergencial
+        textEmergencialForm.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                // Quando pressionar ENTER no campo Emergencial, simula clique no botão Salvar
+                buttonSave.fire();
+            }
+        });
+
+        // Configuração adicional: pressionar ESC no botão Cancelar
+        buttonCancel.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.ESCAPE) {
+                buttonCancel.fire();
+            }
+        });
+
+        // Configuração adicional: pressionar ENTER no botão Salvar
+        buttonSave.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                buttonSave.fire();
+            }
+        });
+
     }
 }
