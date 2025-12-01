@@ -3,14 +3,18 @@ package dicasa.estoque.controller.login;
 import dicasa.estoque.models.entities.Usuario;
 import dicasa.estoque.navigation.ScreenNavigator;
 import dicasa.estoque.service.UsuarioService;
+import dicasa.estoque.util.LoginHistory;
 import dicasa.estoque.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static dicasa.estoque.navigation.Rotas.ESQUECI_SENHA;
@@ -59,6 +63,9 @@ public class LoginController implements Initializable {
     @FXML
     private CheckBox checkboxExibirSenha;
 
+    /** Menu de contexto para exibir sugestões de autocomplete */
+    private ContextMenu autoCompleteMenu;
+
     /** Serviço responsável pela autenticação e manipulação de dados de usuários. */
     private final UsuarioService usuarioService;
 
@@ -82,6 +89,8 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciaNodes();
         sincronizaSenha();
+        configuraAutoComplete();
+        configuraAcoesTecla();
     }
 
     /**
@@ -95,6 +104,10 @@ public class LoginController implements Initializable {
         defineTamanhoMaximoTextField(textFieldUsuario, 50);
         defineTamanhoMaximoTextField(textFieldSenha, 20);
         defineTamanhoMaximoTextField(textFieldSenhaVisible, 20);
+
+        // Inicializa o menu de autocomplete
+        autoCompleteMenu = new ContextMenu();
+        autoCompleteMenu.setAutoHide(true);
     }
 
     /**
@@ -105,6 +118,55 @@ public class LoginController implements Initializable {
     private void sincronizaSenha() {
         textFieldSenha.textProperty().addListener((obs, oldText, newText) -> textFieldSenhaVisible.setText(newText));
         textFieldSenhaVisible.textProperty().addListener((obs, oldText, newText) -> textFieldSenha.setText(newText));
+    }
+
+    /**
+     * Configura o sistema de autocomplete para o campo de usuário
+     */
+    private void configuraAutoComplete() {
+        textFieldUsuario.textProperty().addListener((obs, oldText, typed) -> {
+            if (typed == null || typed.isBlank()) {
+                autoCompleteMenu.hide();
+                return;
+            }
+
+            List<String> sugestoes = LoginHistory.getFilteredHistory(typed);
+
+            if (sugestoes.isEmpty()) {
+                autoCompleteMenu.hide();
+                return;
+            }
+
+            criarDropdown(sugestoes);
+
+            if (!autoCompleteMenu.isShowing()) {
+                autoCompleteMenu.show(textFieldUsuario, Side.BOTTOM, 0, 0);
+            }
+        });
+
+        // Fecha o menu ao perder o foco
+        textFieldUsuario.focusedProperty().addListener((obs, oldV, focused) -> {
+            if (!focused) autoCompleteMenu.hide();
+        });
+    }
+
+    /**
+     * Cria o menu dropdown com as sugestões de autocomplete
+     * @param sugestoes Lista de sugestões para exibir
+     */
+    private void criarDropdown(List<String> sugestoes) {
+        autoCompleteMenu.getItems().clear();
+
+        for (String sugestao : sugestoes) {
+            MenuItem item = new MenuItem(sugestao);
+            item.setStyle("-fx-padding: 8px 12px; -fx-font-size: 14px;");
+            item.setOnAction(e -> {
+                textFieldUsuario.setText(sugestao);
+                autoCompleteMenu.hide();
+                textFieldSenha.requestFocus();
+            });
+            autoCompleteMenu.getItems().add(item);
+        }
     }
 
     /**
@@ -146,6 +208,9 @@ public class LoginController implements Initializable {
         boolean login = usuarioService.login(textFieldUsuario.getText(), senha);
 
         if (login) {
+            // Adiciona ao histórico de logins
+            LoginHistory.addToHistory(textFieldUsuario.getText());
+
             Usuario usuario = usuarioService.buscarPorNomeOuEmail(textFieldUsuario.getText());
             if (usuario != null) {
                 SessionManager.setUsuarioLogado(usuario);
@@ -178,5 +243,44 @@ public class LoginController implements Initializable {
     @FXML
     public void onClickEsqueciSenha(ActionEvent event) {
         ScreenNavigator.loadLoginView(ESQUECI_SENHA, event);
+    }
+
+    /**
+     * Configura ações de teclado para campos de login
+     */
+    private void configuraAcoesTecla() {
+        // No campo de usuário, pressionar Enter move o foco para o campo de senha
+        textFieldUsuario.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                // Fecha o autocomplete se estiver aberto
+                if (autoCompleteMenu.isShowing()) {
+                    autoCompleteMenu.hide();
+                }
+
+                // Mover o foco para o campo de senha
+                if (checkboxExibirSenha.isSelected()) {
+                    textFieldSenhaVisible.requestFocus();
+                } else {
+                    textFieldSenha.requestFocus();
+                }
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                // Fecha o autocomplete com ESC
+                autoCompleteMenu.hide();
+            }
+        });
+
+        // No campo de senha (oculto), pressionar Enter executa o login
+        textFieldSenha.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                onCLickButtonLogin(new ActionEvent());
+            }
+        });
+
+        // No campo de senha (visível), pressionar Enter executa o login
+        textFieldSenhaVisible.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                onCLickButtonLogin(new ActionEvent());
+            }
+        });
     }
 }
