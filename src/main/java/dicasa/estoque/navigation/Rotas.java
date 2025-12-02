@@ -18,6 +18,8 @@ package dicasa.estoque.navigation;
             public static final String PERFIL_VIEW = rota("perfil/perfil-view.fxml");
             public static final String NOVO_USUARIO = rota("perfil/novo-usuario-view.fxml");
             public static final String FORNECEDORES_VIEW = rota("fornecedores/fornecedores-view.fxml");
+            public static final String CADASTRO_FORNECEDOR_VIEW = rota("fornecedores/cadastro-fornecedor-view.fxml");
+            public static final String EDITAR_FORNECEDOR_VIEW = rota("fornecedores/editar-fornecedor-view.fxml");
             public static final String RELATORIO_CONSUMO_VIEW = rota("estoque/historico-estoque-view.fxml");
             public static final String HISTORICO_ESTOQUE_VIEW = rota("estoque/relatorio-estoque-view.fxml");
             public static final String PREVISAO_COMPRAS_VIEW = rota("produtos/previsao_compras-view.fxml");

@@ -1,16 +1,18 @@
 package dicasa.estoque.service;
 
-import dicasa.estoque.models.dto.EnderecoRequestDTO;
 import dicasa.estoque.models.dto.FornecedorRequestDTO;
 import dicasa.estoque.models.dto.FornecedorResponseDTO;
 import dicasa.estoque.models.entities.EnderecoFornecedor;
 import dicasa.estoque.models.entities.Fornecedor;
 import dicasa.estoque.models.entities.TelefoneFornecedor;
+import dicasa.estoque.models.entities.Usuario;
 import dicasa.estoque.models.mapper.FornecedorMapper;
 import dicasa.estoque.repository.EnderecoFornecedorRepository;
 import dicasa.estoque.repository.FornecedorRepository;
 import dicasa.estoque.repository.TelefoneFornecedorRepository;
+import dicasa.estoque.util.SessionManager;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,11 +62,17 @@ public class FornecedorService {
     @Transactional
     public FornecedorResponseDTO salvarFornecedor(FornecedorRequestDTO dto) {
         try {
+            Usuario usuario = SessionManager.getUsuarioLogado();
+            if (usuario == null || usuario.getId() == null) {
+                throw new IllegalStateException("Usuário não encontrado na sessão. Faça login novamente.");
+            }
+
             Fornecedor fornecedor = new Fornecedor();
             fornecedor.setCnpj(dto.cnpj());
             fornecedor.setNomeFantasia(dto.nomeFantasia());
             fornecedor.setRazaoSocial(dto.razaoSocial());
             fornecedor.setDataCriacao(LocalDateTime.now());
+            fornecedor.setUsuario(usuario);
 
             Fornecedor fornecedorSalvo = fornecedorRepository.save(fornecedor);
 
@@ -90,12 +98,16 @@ public class FornecedorService {
                 }
             }
 
-            // CORREÇÃO AQUI: Use toDto em vez de toDtoList para um único fornecedor
             return fornecedorMapper.toDto(fornecedorSalvo);
 
+        } catch (DataIntegrityViolationException e) {
+            String mensagem = obterMensagemCurta(e);
+            log.warn("Falha de integridade ao salvar fornecedor: {}", mensagem);
+            throw new IllegalArgumentException("Dados inválidos ao salvar fornecedor: " + mensagem, e);
         } catch (Exception e) {
-            log.error("Erro ao salvar fornecedor: {}", e.getMessage(), e);
-            throw new RuntimeException("Erro ao salvar fornecedor", e);
+            String mensagem = obterMensagemCurta(e);
+            log.error("Erro ao salvar fornecedor: {}", mensagem, e);
+            throw new IllegalStateException("Erro ao salvar fornecedor: " + mensagem, e);
         }
     }
 
@@ -199,12 +211,16 @@ public class FornecedorService {
             }
 
             Fornecedor fornecedorAtualizado = fornecedorRepository.save(fornecedor);
-            // CORREÇÃO AQUI TAMBÉM: Use toDto em vez de toDtoList
             return fornecedorMapper.toDto(fornecedorAtualizado);
 
+        } catch (DataIntegrityViolationException e) {
+            String mensagem = obterMensagemCurta(e);
+            log.warn("Falha de integridade ao atualizar fornecedor: {}", mensagem);
+            throw new IllegalArgumentException("Dados inválidos ao atualizar fornecedor: " + mensagem, e);
         } catch (Exception e) {
-            log.error("Erro ao atualizar fornecedor: {}", e.getMessage(), e);
-            throw new RuntimeException("Erro ao atualizar fornecedor", e);
+            String mensagem = obterMensagemCurta(e);
+            log.error("Erro ao atualizar fornecedor: {}", mensagem, e);
+            throw new IllegalStateException("Erro ao atualizar fornecedor: " + mensagem, e);
         }
     }
 
@@ -260,5 +276,19 @@ public class FornecedorService {
         } catch (Exception e) {
             log.error("Erro no debug: {}", e.getMessage(), e);
         }
+    }
+
+    private String obterMensagemCurta(Exception e) {
+        Throwable causa = e;
+        while (causa.getCause() != null && causa.getCause() != causa) {
+            causa = causa.getCause();
+        }
+
+        String mensagem = causa.getMessage();
+        if (mensagem == null || mensagem.isBlank()) {
+            return e.getClass().getSimpleName();
+        }
+
+        return mensagem.split("\n")[0].trim();
     }
 }
