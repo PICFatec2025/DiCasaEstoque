@@ -16,6 +16,9 @@ import org.springframework.stereotype.Controller;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static dicasa.estoque.util.Constraints.textFieldRecebeApenasNumerosInteiros;
+import static dicasa.estoque.util.NumberValidatorUtil.ehUmNumeroInteiroPositivo;
+
 @Controller
 public class AdicionarProdutoController implements DataFormController {
 
@@ -51,6 +54,7 @@ public class AdicionarProdutoController implements DataFormController {
     @FXML
     public void initialize() {
         configurarModoCriacao();
+        configurarCamposNumericos();
     }
 
     /**
@@ -64,9 +68,9 @@ public class AdicionarProdutoController implements DataFormController {
             produto.setNome(textoObrigatorio(txtNome, "o nome"));
             produto.setMarca(txtMarca.getText());
             produto.setTipo(textoObrigatorio(txtTipo, "o tipo"));
-            estoqueProduto.setQuantidade(Integer.parseInt(textoObrigatorio(txtQuantidade, "a quantidade")));
-            estoqueProduto.setQuantidadeMinima(Integer.parseInt(textoObrigatorio(txtQuantidadeMinima, "a quantidade mínima")));
-            estoqueProduto.setEstoqueEmergencial(Integer.parseInt(textoObrigatorio(txtEstoqueEmergencial, "o estoque emergencial")));
+            estoqueProduto.setQuantidade(ehUmNumeroInteiroPositivo(textoObrigatorio(txtQuantidade, "a quantidade")));
+            estoqueProduto.setQuantidadeMinima(ehUmNumeroInteiroPositivo(textoObrigatorio(txtQuantidadeMinima, "a quantidade mínima")));
+            estoqueProduto.setEstoqueEmergencial(ehUmNumeroInteiroPositivo(textoObrigatorio(txtEstoqueEmergencial, "o estoque emergencial")));
             estoqueProduto.setData_criacao(LocalDateTime.now());
             produto.setObservacao(txtObservacao.getText());
             produto.setDataCriacao(LocalDateTime.now());
@@ -260,6 +264,12 @@ public class AdicionarProdutoController implements DataFormController {
     private void fecharJanela() {
         Stage janela = (Stage) txtNome.getScene().getWindow();
         janela.close();
+    }
+
+    private void configurarCamposNumericos() {
+        textFieldRecebeApenasNumerosInteiros(txtQuantidade, 9);
+        textFieldRecebeApenasNumerosInteiros(txtQuantidadeMinima, 9);
+        textFieldRecebeApenasNumerosInteiros(txtEstoqueEmergencial, 9);
     }
 
     /**

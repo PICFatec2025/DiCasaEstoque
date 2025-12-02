@@ -33,6 +33,8 @@ import java.util.ResourceBundle;
 import javafx.util.StringConverter;
 
 import static dicasa.estoque.util.Alerts.messageError;
+import static dicasa.estoque.util.Constraints.textFieldRecebeApenasNumerosInteiros;
+import static dicasa.estoque.util.NumberValidatorUtil.ehUmNumeroInteiroPositivo;
 
 import static dicasa.estoque.navigation.Rotas.*;
 
@@ -216,6 +218,13 @@ public class MainController implements Initializable {
         if (lblMensagemSaida != null) {
             lblMensagemSaida.setText("");
         }
+        configurarCampoQuantidadeSaida();
+    }
+
+    private void configurarCampoQuantidadeSaida() {
+        if (txtQuantidadeSaida != null) {
+            textFieldRecebeApenasNumerosInteiros(txtQuantidadeSaida, 9);
+        }
     }
 
     private void carregarAvisosEstoque() {
@@ -348,7 +357,7 @@ public class MainController implements Initializable {
         int quantidade;
         try {
             String quantidadeTexto = txtQuantidadeSaida != null ? txtQuantidadeSaida.getText().trim() : "";
-            quantidade = Integer.parseInt(quantidadeTexto);
+            quantidade = ehUmNumeroInteiroPositivo(quantidadeTexto);
         } catch (NumberFormatException e) {
             messageError("Quantidade inválida", "Informe um número válido para a quantidade a ser retirada.");
             return;
