@@ -24,4 +24,5 @@ package dicasa.estoque.navigation;
             public static final String CONTROLE_QUALIDADE_VIEW = rota("produtos/controle-qualidade-view.fxml");
             public static final String EDIT_ESTOQUE_FORM = rota("estoque/editar-estoque-form.fxml");
             public static final String PREVISAO_COMPRAS_SIMPLE = rota("produtos/previsao-compras-simple.fxml");
+            public static final String ERROR_VIEW = rota("error/tela-erro.fxml");
     }
