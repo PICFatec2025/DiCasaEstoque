@@ -29,7 +29,7 @@
                                                         <Font name="Arial Bold" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="choiceProduto" onAction="#onProdutoSelecionado" prefHeight="30.0" prefWidth="260.0" styleClass="drop-box-prato" stylesheets="@main.css" />
+                                                <ComboBox fx:id="choiceProduto" onAction="#onProdutoSelecionado" prefHeight="30.0" prefWidth="260.0" styleClass="drop-box-prato" stylesheets="@main.css" visibleRowCount="5" />
                                                 <Label text="Quantidade">
                                                     <font>
                                                         <Font name="Arial Bold" size="14.0" />
