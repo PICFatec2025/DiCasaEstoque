@@ -27,7 +27,10 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.ResourceBundle;
+
+import javafx.util.StringConverter;
 
 import static dicasa.estoque.util.Alerts.messageError;
 
@@ -252,6 +255,7 @@ public class MainController implements Initializable {
 
     private void configurarComboBoxProduto() {
         choiceProduto.setItems(produtosDisponiveis);
+        choiceProduto.setVisibleRowCount(5);
         choiceProduto.setCellFactory(listView -> new javafx.scene.control.ListCell<>() {
             @Override
             protected void updateItem(Produto item, boolean empty) {
@@ -266,6 +270,21 @@ public class MainController implements Initializable {
                 setText(empty || item == null ? "Selecione um produto" : item.getNome());
             }
         });
+        choiceProduto.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Produto produto) {
+                return produto != null ? produto.getNome() : "";
+            }
+
+            @Override
+            public Produto fromString(String nomeProduto) {
+                return produtosDisponiveis.stream()
+                        .filter(produto -> produto.getNome() != null)
+                        .filter(produto -> produto.getNome().equalsIgnoreCase(nomeProduto))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
     }
 
     private void carregarProdutosSaida() {
@@ -276,6 +295,7 @@ public class MainController implements Initializable {
         Long produtoSelecionadoId = choiceProduto.getValue() != null ? choiceProduto.getValue().getIdProduto() : null;
 
         produtosDisponiveis.setAll(produtoService.buscarTodos());
+        produtosDisponiveis.sort(Comparator.comparing(Produto::getNome, Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER)));
 
         if (produtosDisponiveis.isEmpty()) {
             choiceProduto.setValue(null);
