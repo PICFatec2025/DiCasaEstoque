@@ -190,6 +190,11 @@ public class EditarEstoqueController implements Initializable, DataFormControlle
             );
             return;
         }
+        if(minimo<emergencial){
+            messageError("Erro ao cadastrar","Estoque mínimo não pode ser menor que o emergencial");
+            errorNameLabelMinimo.setText("Mínimo tem que ser maior que o emergencial");
+            return;
+        }
 
         try {
             EstoqueProdutoRequestDTO estoqueAlterado = new EstoqueProdutoRequestDTO(

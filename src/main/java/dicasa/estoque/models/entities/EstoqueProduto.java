@@ -33,6 +33,10 @@ public class EstoqueProduto {
     @JoinColumn(name = "id_produto")
     private Produto produto;
 
+    /**
+     * Função que calcula o nível de estoque baseado na quantidade atual com a quantidade mínima e emergencial
+     * @return o nível de estoque de zero à 5
+     */
     public int status(){
         if(this.quantidade==0){
             return 0;
@@ -48,6 +52,11 @@ public class EstoqueProduto {
             return 5;
         }
     }
+
+    /**
+     * Baseado na função status(), ele retorna um texto do nível do estoque
+     * @return o nível de estoque
+     */
     public String statusTexto(){
         return switch (status()) {
             case 0 -> "Zerado";
