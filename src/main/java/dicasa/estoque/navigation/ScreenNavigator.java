@@ -1,7 +1,10 @@
 package dicasa.estoque.navigation;
 
+import dicasa.estoque.EstoqueApplication;
 import dicasa.estoque.controller.DataFormController;
+import dicasa.estoque.controller.error.TelaErrorController;
 import dicasa.estoque.util.SpringFXManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,12 +18,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
 
 import static dicasa.estoque.navigation.Rotas.*;
 import static dicasa.estoque.util.Alerts.showAlerts;
+
 
 /**
  * Classe responsável por gerenciar a navegação entre telas e janelas do sistema.
@@ -32,22 +38,31 @@ public class ScreenNavigator {
     private static Scene scene;
     private static Stage primaryStage;
 
+    // Método para configurar o contexto após inicialização
     // Contexto principal do Spring, inicializado no startup
-    private static final ConfigurableApplicationContext springContext =
+    private static ConfigurableApplicationContext springContext =
             SpringFXManager.getContext();
 
-    public static void initialScreen(Stage stage, ConfigurableApplicationContext springContext) throws IOException {
-        primaryStage = stage;
-        FXMLLoader fxmlLoader = loadFXML(LOGIN_VIEW);
-        fxmlLoader.setControllerFactory(springContext::getBean);
-        AnchorPane anchorPane = fxmlLoader.load();
+    public static void initialScreen(Stage stage, ConfigurableApplicationContext springContext){
+        try {
+            primaryStage = stage;
+            FXMLLoader fxmlLoader = loadFXML(LOGIN_VIEW);
+            fxmlLoader.setControllerFactory(springContext::getBean);
+            AnchorPane anchorPane = fxmlLoader.load();
 
-        scene = new Scene(anchorPane, 800, 650);
-        stage.setResizable(false);
-        stage.setTitle("Di Casa - Estoque");
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+            scene = new Scene(anchorPane, 800, 650);
+            stage.setResizable(false);
+            stage.setTitle("Di Casa - Estoque");
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    // Método para configurar o contexto após inicialização
+    public static void setSpringContext(ConfigurableApplicationContext context) {
+        springContext = context;
     }
 
     public static void loadMainView(String nomeRota) {
@@ -142,13 +157,7 @@ public class ScreenNavigator {
             System.out.println("======================================================");
 
         } catch (Exception e) {
-            System.err.println("❌ ========== ERRO AO CARREGAR TELA ==========");
-            System.err.println("❌ Rota: " + nomeRota);
-            System.err.println("❌ Tipo de erro: " + e.getClass().getSimpleName());
-            System.err.println("❌ Mensagem: " + e.getMessage());
-            System.err.println("❌ Causa: " + (e.getCause() != null ? e.getCause().getMessage() : "Nenhuma"));
-            e.printStackTrace();
-            System.err.println("=============================================");
+            messageError("Erro ao carregar a tela", e);
         }
     }
 
