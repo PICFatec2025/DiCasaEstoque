@@ -4,6 +4,7 @@ import dicasa.estoque.models.entities.Produto;
 import dicasa.estoque.navigation.Rotas;
 import dicasa.estoque.navigation.ScreenNavigator;
 import dicasa.estoque.service.ProdutoService;
+import dicasa.estoque.util.TableViewUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -42,10 +43,12 @@ public class ProdutoController {
      */
     @FXML
     public void initialize() {
-        colunaId.setCellValueFactory(cellData -> cellData.getValue().idProdutoProperty().asObject());
-        colunaNome.setCellValueFactory(cellData -> cellData.getValue().nomeProperty());
-        colunaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaProperty());
-        colunaTipo.setCellValueFactory(cellData -> cellData.getValue().tipoProperty());
+        TableViewUtils.setupColumnLong(colunaId, Produto::getIdProduto);
+        TableViewUtils.setupColumnString(colunaNome, Produto::getNome);
+        TableViewUtils.setupColumnString(colunaMarca, Produto::getMarca);
+        TableViewUtils.setupColumnString(colunaTipo, Produto::getTipo);
+        TableViewUtils.tableViewFillHeight(tabelaProdutos);
+        TableViewUtils.tableViewFillWidth(tabelaProdutos);
 
         carregarProdutos();
     }
