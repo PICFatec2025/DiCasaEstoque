@@ -2,23 +2,6 @@ package dicasa.estoque.models.dto;
 
 import java.util.Map;
 
-/**
- * DTO que mostra os dados completos do Fornecedor, exibindo telefone e endereço juntos, para ser exibidos em tela
- * @param idFornecedor
- * @param cnpj
- * @param nomeFantasia
- * @param razaoSocial
- * @param dataCriacao
- * @param dataAtualizacao
- * @param idEndereco
- * @param logradouro
- * @param complemento
- * @param bairro
- * @param cidade
- * @param uf
- * @param cep
- * @param telefones
- */
 public record FornecedorResponseDTO(
         Long idFornecedor,
         String cnpj,
@@ -33,7 +16,7 @@ public record FornecedorResponseDTO(
         String cidade,
         String uf,
         String cep,
+        // REMOVA: String numero,
         Map<Long, String> telefones
 ) {
 }
-
