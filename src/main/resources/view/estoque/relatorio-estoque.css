@@ -19,6 +19,32 @@
     -fx-max-width: infinity;
 }
 
+/* Estilos para a barra de busca */
+.busca-box {
+    -fx-max-height: 35px;
+    -fx-pref-height: 35px;
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+}
+
+.text-field-busca {
+    -fx-pref-height: 35px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 0 10 0 10;
+}
+
+.texto-busca {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 0 5 0 0;
+}
+
+.search-icon {
+    -fx-cursor: hand;
+    -fx-padding: 0 5 0 0;
+}
+
 /* Estilos para o ScrollPane da tabela */
 .table-scroll-pane {
     -fx-background-color: transparent;
@@ -106,4 +132,12 @@
 
 .export-csv-button:pressed {
     -fx-background-color: #1e8449;
+}
+.search-icon {
+    -fx-cursor: hand;
+    -fx-padding: 0 0 0 10px;
+}
+
+.search-icon:hover {
+    -fx-opacity: 0.8;
 }
