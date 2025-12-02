@@ -1,7 +1,12 @@
 package dicasa.estoque.controller.fornecedores;
 
 import dicasa.estoque.models.dto.FornecedorResponseDTO;
+import dicasa.estoque.navigation.Rotas;
 import dicasa.estoque.service.FornecedorService;
+import dicasa.estoque.util.SpringFXManager;
+import dicasa.estoque.controller.fornecedores.CadastroFornecedorController;
+import dicasa.estoque.controller.fornecedores.EditarFornecedorController;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.stage.Modality;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -26,6 +32,7 @@ public class FornecedorController implements Initializable {
     // Elementos do FXML
     @FXML private Label lblTitulo;
     @FXML private Button btnCadastrar;
+    @FXML private Button btnExcluir;
     @FXML private ComboBox<String> cbTipoBusca;
     @FXML private TextField txtBusca;
     @FXML private Button btnBuscar;
@@ -35,9 +42,13 @@ public class FornecedorController implements Initializable {
     @FXML private TableColumn<FornecedorResponseDTO, String> colRazaoSocial;
     @FXML private TableColumn<FornecedorResponseDTO, String> colNomeFantasia;
     @FXML private TableColumn<FornecedorResponseDTO, String> colCnpj;
-    @FXML private TableColumn<FornecedorResponseDTO, String> colEndereco;
-    @FXML private TableColumn<FornecedorResponseDTO, String> colTelefone;
+    @FXML private TableColumn<FornecedorResponseDTO, String> colLogradouro;
+    @FXML private TableColumn<FornecedorResponseDTO, String> colComplemento;
+    @FXML private TableColumn<FornecedorResponseDTO, String> colBairro;
     @FXML private TableColumn<FornecedorResponseDTO, String> colCidade;
+    @FXML private TableColumn<FornecedorResponseDTO, String> colUf;
+    @FXML private TableColumn<FornecedorResponseDTO, String> colCep;
+    @FXML private TableColumn<FornecedorResponseDTO, String> colTelefones;
 
     @FXML private Button btnAddProduto;
     @FXML private Button btnExportar;
@@ -55,6 +66,7 @@ public class FornecedorController implements Initializable {
             configurarComboBoxBusca();
             configurarTabela();
             carregarFornecedores();
+            configurarEventosDeLinha();
             debugDados(); // Adicionado para debug
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,63 +116,61 @@ public class FornecedorController implements Initializable {
         try {
             System.out.println("Configurando tabela...");
 
-            // Configurar as colunas para corresponder ao DTO
-            // IMPORTANTE: O nome no PropertyValueFactory deve corresponder EXATAMENTE ao nome do campo no DTO
-            colRazaoSocial.setCellValueFactory(new PropertyValueFactory<>("razaoSocial"));
-            colNomeFantasia.setCellValueFactory(new PropertyValueFactory<>("nomeFantasia"));
-            colCnpj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
+            colRazaoSocial.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().razaoSocial() : "")
+            ));
+            colNomeFantasia.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().nomeFantasia() : "")
+            ));
+            colCnpj.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().cnpj() : "")
+            ));
 
-            System.out.println("Colunas básicas configuradas");
-
-            // Configurar coluna de endereço (logradouro)
-            colEndereco.setCellValueFactory(cellData -> {
-                FornecedorResponseDTO fornecedor = cellData.getValue();
-                if (fornecedor == null) {
-                    return new javafx.beans.property.SimpleStringProperty("");
-                }
-                String endereco = fornecedor.logradouro() != null ? fornecedor.logradouro() : "";
-                return new javafx.beans.property.SimpleStringProperty(endereco);
-            });
-
-            // Configurar coluna de telefone
-            colTelefone.setCellValueFactory(cellData -> {
+            colLogradouro.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().logradouro() : "")
+            ));
+            colComplemento.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().complemento() : "")
+            ));
+            colBairro.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().bairro() : "")
+            ));
+            colCidade.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().cidade() : "")
+            ));
+            colUf.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().uf() : "")
+            ));
+            colCep.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    valorSeguro(cellData.getValue() != null ? cellData.getValue().cep() : "")
+            ));
+            colTelefones.setCellValueFactory(cellData -> {
                 FornecedorResponseDTO fornecedor = cellData.getValue();
                 if (fornecedor == null || fornecedor.telefones() == null || fornecedor.telefones().isEmpty()) {
-                    return new javafx.beans.property.SimpleStringProperty("");
+                    return new SimpleStringProperty("");
                 }
-                // Pegar o primeiro telefone da lista
-                String primeiroTelefone = fornecedor.telefones().values().iterator().next();
-                return new javafx.beans.property.SimpleStringProperty(primeiroTelefone);
+                String telefonesConcatenados = String.join(", ", fornecedor.telefones().values());
+                return new SimpleStringProperty(telefonesConcatenados);
             });
 
-            // Configurar coluna de cidade/UF
-            colCidade.setCellValueFactory(cellData -> {
-                FornecedorResponseDTO fornecedor = cellData.getValue();
-                if (fornecedor == null) {
-                    return new javafx.beans.property.SimpleStringProperty("");
-                }
-
-                StringBuilder cidadeUf = new StringBuilder();
-                if (fornecedor.cidade() != null && !fornecedor.cidade().isEmpty()) {
-                    cidadeUf.append(fornecedor.cidade());
-                }
-                if (fornecedor.uf() != null && !fornecedor.uf().isEmpty()) {
-                    if (cidadeUf.length() > 0) cidadeUf.append("/");
-                    cidadeUf.append(fornecedor.uf());
-                }
-
-                return new javafx.beans.property.SimpleStringProperty(cidadeUf.toString());
-            });
-
-            // Configurar a tabela
             tabelaFornecedores.setItems(fornecedoresData);
-
-            System.out.println("Tabela configurada com sucesso!");
 
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Erro ao configurar tabela: " + e.getMessage());
         }
+    }
+
+    private void configurarEventosDeLinha() {
+        tabelaFornecedores.setRowFactory(tv -> {
+            TableRow<FornecedorResponseDTO> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    abrirEdicaoFornecedor(row.getItem());
+                }
+            });
+            return row;
+        });
     }
 
     private void carregarFornecedores() {
@@ -217,11 +227,45 @@ public class FornecedorController implements Initializable {
     @FXML
     public void onClickCadastrarFornecedor(ActionEvent event) {
         try {
-            mostrarAlerta("Cadastro", "Funcionalidade de cadastro em desenvolvimento.");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Rotas.CADASTRO_FORNECEDOR_VIEW));
+            loader.setControllerFactory(SpringFXManager.getContext()::getBean);
+            Parent root = loader.load();
+
+            CadastroFornecedorController controller = loader.getController();
+            controller.setOnSaveSuccess(this::carregarFornecedores);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initOwner(btnCadastrar.getScene().getWindow());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Cadastro de Fornecedor");
+            stage.showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Erro", "Erro inesperado: " + e.getMessage());
+        }
+    }
+
+    private void abrirEdicaoFornecedor(FornecedorResponseDTO fornecedor) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Rotas.EDITAR_FORNECEDOR_VIEW));
+            loader.setControllerFactory(SpringFXManager.getContext()::getBean);
+            Parent root = loader.load();
+
+            EditarFornecedorController controller = loader.getController();
+            controller.setFormData(fornecedor);
+            controller.setOnSaveSuccess(this::carregarFornecedores);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initOwner(tabelaFornecedores.getScene().getWindow());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Editar Fornecedor");
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Erro ao abrir edição: " + e.getMessage());
         }
     }
 
@@ -259,6 +303,35 @@ public class FornecedorController implements Initializable {
         }
     }
 
+    @FXML
+    public void onClickExcluirFornecedor(ActionEvent event) {
+        try {
+            FornecedorResponseDTO fornecedorSelecionado = tabelaFornecedores.getSelectionModel().getSelectedItem();
+            if (fornecedorSelecionado == null) {
+                mostrarAlerta("Excluir", "Selecione um fornecedor para excluir.");
+                return;
+            }
+
+            Alert alertaConfirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+            alertaConfirmacao.setTitle("Confirmar exclusão");
+            alertaConfirmacao.setHeaderText("Deseja realmente excluir o fornecedor selecionado?");
+            alertaConfirmacao.setContentText(String.format("Fornecedor: %s (%s)",
+                    valorSeguro(fornecedorSelecionado.nomeFantasia()),
+                    valorSeguro(fornecedorSelecionado.cnpj())));
+
+            if (alertaConfirmacao.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+                return;
+            }
+
+            fornecedorService.excluirFornecedor(fornecedorSelecionado.idFornecedor());
+            carregarFornecedores();
+            mostrarAlerta("Excluir", "Fornecedor excluído com sucesso.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Erro ao excluir fornecedor: " + e.getMessage());
+        }
+    }
+
     private void mostrarAlerta(String titulo, String mensagem) {
         try {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -270,5 +343,9 @@ public class FornecedorController implements Initializable {
             e.printStackTrace();
             System.err.println("Erro ao mostrar alerta: " + e.getMessage());
         }
+    }
+
+    private String valorSeguro(String valor) {
+        return valor != null ? valor : "";
     }
 }

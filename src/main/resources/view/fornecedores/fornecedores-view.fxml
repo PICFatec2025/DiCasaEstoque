@@ -2,53 +2,52 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0"
-            stylesheets="@fornecedores.css"
-            xmlns="http://javafx.com/javafx/21.0.8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="dicasa.estoque.controller.fornecedores.FornecedorController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@fornecedores.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dicasa.estoque.controller.fornecedores.FornecedorController">
 
     <children>
         <!-- Card Principal -->
-        <VBox id="card" alignment="TOP_CENTER" spacing="15"
-              prefWidth="950"
-              AnchorPane.topAnchor="25.0"
-              AnchorPane.bottomAnchor="25.0"
-              AnchorPane.leftAnchor="25.0"
-              AnchorPane.rightAnchor="25.0">
+        <VBox id="card" alignment="TOP_CENTER" prefWidth="950" spacing="15" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
 
             <!-- Cabeçalho -->
-            <HBox alignment="CENTER" spacing="10" prefWidth="900">
-                <Label fx:id="lblTitulo" id="titleLabel" text="Fornecedores" styleClass="title-label" HBox.hgrow="ALWAYS"/>
-                <Button fx:id="btnCadastrar" id="btnCadastrar" text="Cadastrar" onAction="#onClickCadastrarFornecedor" />
+            <HBox alignment="CENTER" prefWidth="900" spacing="10">
+                <Label id="titleLabel" fx:id="lblTitulo" styleClass="title-label" text="Fornecedores" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font></Label>
             </HBox>
 
             <!-- Sistema de Busca -->
-            <HBox alignment="CENTER_LEFT" spacing="10" prefWidth="900">
+            <HBox alignment="CENTER_LEFT" prefWidth="900" spacing="10">
                 <Label text="Buscar por:" />
                 <ComboBox fx:id="cbTipoBusca" prefWidth="150" />
-                <TextField fx:id="txtBusca" promptText="Digite para buscar..." prefWidth="250" />
-                <Button fx:id="btnBuscar" id="btnBuscar" text="Buscar" onAction="#onClickBuscar" />
-                <Button fx:id="btnLimpar" id="btnLimpar" text="Limpar Busca" onAction="#onClickLimparBusca" />
+                <TextField fx:id="txtBusca" prefWidth="250" promptText="Digite para buscar..." />
+                <Button id="btnBuscar" fx:id="btnBuscar" onAction="#onClickBuscar" text="Buscar" />
+                <Button id="btnLimpar" fx:id="btnLimpar" onAction="#onClickLimparBusca" text="Limpar Busca" />
             </HBox>
 
             <!-- Tabela de Fornecedores -->
             <TableView fx:id="tabelaFornecedores" prefHeight="400">
                 <columns>
-                    <TableColumn fx:id="colRazaoSocial" text="Razão Social" prefWidth="180" />
-                    <TableColumn fx:id="colNomeFantasia" text="Nome Fantasia" prefWidth="150" />
-                    <TableColumn fx:id="colCnpj" text="CNPJ" prefWidth="130" />
-                    <TableColumn fx:id="colEndereco" text="Endereço" prefWidth="200" />
-                    <TableColumn fx:id="colTelefone" text="Telefone" prefWidth="120" />
-                    <TableColumn fx:id="colCidade" text="Cidade/UF" prefWidth="120" />
+                    <TableColumn fx:id="colRazaoSocial" prefWidth="150" text="Razão Social" />
+                    <TableColumn fx:id="colNomeFantasia" prefWidth="140" text="Nome Fantasia" />
+                    <TableColumn fx:id="colCnpj" prefWidth="120" text="CNPJ" />
+                    <TableColumn fx:id="colLogradouro" prefWidth="180" text="Logradouro" />
+                    <TableColumn fx:id="colComplemento" prefWidth="110" text="Complemento" />
+                    <TableColumn fx:id="colBairro" prefWidth="110" text="Bairro" />
+                    <TableColumn fx:id="colCidade" prefWidth="120" text="Cidade" />
+                    <TableColumn fx:id="colUf" prefWidth="60" text="UF" />
+                    <TableColumn fx:id="colCep" prefWidth="90" text="CEP" />
+                    <TableColumn fx:id="colTelefones" prefWidth="150" text="Telefones" />
                 </columns>
             </TableView>
 
             <!-- Ações adicionais -->
             <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button fx:id="btnAddProduto" id="btnAddProduto" text="Adicionar Produto" onAction="#onClickAdicionarProduto" />
-                <Button fx:id="btnExportar" id="btnExportar" text="Exportar Dados" onAction="#onClickExportar" />
+                <Button id="btnCadastrar" fx:id="btnCadastrar" onAction="#onClickCadastrarFornecedor" text="Cadastrar" />
+                <Button id="btnExcluir" fx:id="btnExcluir" onAction="#onClickExcluirFornecedor" text="Excluir" />
+                <Button id="btnExportar" fx:id="btnExportar" onAction="#onClickExportar" text="Exportar Dados" />
             </HBox>
         </VBox>
     </children>
