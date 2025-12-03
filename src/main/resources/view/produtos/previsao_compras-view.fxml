@@ -5,6 +5,20 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
+<!--
+    ARQUITETURA MVC (Model-View-Controller):
+    View (FXML) - Interface visual
+    Controller - Lógica de controle (definido em fx:controller)
+    Model - Dados (DTOs e Services)
+
+    CONCEITOS DE POO NO FXML:
+    1. COMPOSIÇÃO: Elementos contidos em containers (VBox, HBox)
+    2. HIERARQUIA: Estrutura em árvore de elementos visuais
+    3. IDENTIFICAÇÃO: Elementos com fx:id para referência no Controller
+    4. BINDING: PropertyValueFactory conecta colunas da tabela aos métodos do DTO
+    5. EVENT DRIVEN: Ações (onAction) disparam métodos no Controller
+-->
+
 <VBox xmlns="http://javafx.com/javafx/17.0.12"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="dicasa.estoque.controller.produtos.PrevisaoDeComprasController"
@@ -21,23 +35,32 @@
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Filtrar:" style="-fx-font-weight: bold;"/>
             <TextField fx:id="txtFiltro" promptText="Nome do produto" prefWidth="200"/>
+
             <Label text="Categoria:" style="-fx-font-weight: bold;"/>
+            <!-- COMBOBOX: Componente reutilizável para seleção -->
             <ComboBox fx:id="cbCategoria" promptText="Todas categorias" prefWidth="150"/>
+
             <Label text="Urgência:" style="-fx-font-weight: bold;"/>
             <ComboBox fx:id="cbUrgencia" promptText="Todos níveis" prefWidth="120"/>
-            <Button text="Atualizar"
-                    style="-fx-background-color: #FFA726; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 6 15;"
-                    onAction="#atualizarDados"/>
         </HBox>
     </VBox>
 
     <!-- Tabela de Produtos para Repor -->
     <VBox spacing="5" style="-fx-padding: 15; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 5;">
-        <Label text="Produtos para Repor:" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Produtos para Repor:" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+            <!-- LABEL DINÂMICO: Atualizado via binding do Controller -->
+            <Label fx:id="lblContador" text="Produtos encontrados: 0"
+                   style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+        </HBox>
+
+        <!-- TABLEVIEW: Componente complexo com colunas e dados bindados -->
         <TableView fx:id="tabelaProdutos" prefHeight="300">
             <columns>
+                <!-- COLUNA: Cada TableColumn usa PropertyValueFactory para binding -->
                 <TableColumn prefWidth="150" text="Produto">
                     <cellValueFactory>
+                        <!-- BINDING: Conecta coluna ao método nomeProdutoProperty() do DTO -->
                         <PropertyValueFactory property="nomeProduto" />
                     </cellValueFactory>
                 </TableColumn>
@@ -72,6 +95,7 @@
 
     <!-- Área de Ações -->
     <HBox spacing="15" alignment="CENTER" style="-fx-padding: 10;">
+        <!-- BUTTON: Componentes de ação com eventos definidos -->
         <Button text="Gerar Lista de Compras"
                 style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20;"
                 onAction="#gerarListaCompras"/>

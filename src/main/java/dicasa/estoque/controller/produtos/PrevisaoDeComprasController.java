@@ -3,9 +3,9 @@ package dicasa.estoque.controller.produtos;
 import dicasa.estoque.csv.CSVPrevisaoComprasExporter;
 import dicasa.estoque.models.dto.PrevisaoCompraDTO;
 import dicasa.estoque.service.EstoqueService;
-import dicasa.estoque.service.FornecedorService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,80 +13,113 @@ import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Controller para a tela de Previsão de Compras
- * Exibe produtos com estoque baixo e sugere compras
+ * Controller responsável pela tela de Previsão de Compras.
+ *
+ * Aqui acontece toda a lógica de exibição dos produtos que precisam ser comprados,
+ * junto da aplicação dos filtros, geração de lista e exportação para CSV.
+ *
+ * PRINCIPAIS CONCEITOS DE POO UTILIZADOS:
+ * - INJEÇÃO DE DEPENDÊNCIA (via construtor - Spring)
+ * - ENCAPSULAMENTO (componentes @FXML privados)
+ * - RESPONSABILIDADE ÚNICA (cada método executa uma tarefa específica)
+ * - POLIMORFISMO (uso de ObservableList e FilteredList)
+ * - OBSERVER PATTERN (listeners nos campos de filtro)
+ * - COMPOSIÇÃO (uso de DTOs, Services, Exporter)
  */
 @Component
 public class PrevisaoDeComprasController implements Initializable {
 
     private final EstoqueService estoqueService;
-    private final FornecedorService fornecedorService;
     private final CSVPrevisaoComprasExporter csvExporter;
 
-    // Componentes FXML
+    // Componentes da interface vinculados via FXML.
     @FXML private ComboBox<String> cbCategoria;
     @FXML private ComboBox<String> cbUrgencia;
     @FXML private TableView<PrevisaoCompraDTO> tabelaProdutos;
-    @FXML private TableView<?> tabelaFornecedores;
     @FXML private TextField txtFiltro;
+    @FXML private Label lblContador;
 
-    // Lista de dados
+    // Dados exibidos na tabela
     private ObservableList<PrevisaoCompraDTO> produtosData = FXCollections.observableArrayList();
-    private ObservableList<String> categorias = FXCollections.observableArrayList();
-    private ObservableList<String> niveisUrgencia = FXCollections.observableArrayList("TODOS", "CRÍTICO", "ALTO", "MÉDIO", "BAIXO");
 
+    // Lista filtrável (permite filtros em tempo real)
+    private FilteredList<PrevisaoCompraDTO> produtosFiltrados;
+
+    // Opções de categoria e urgência
+    private ObservableList<String> categorias = FXCollections.observableArrayList();
+    private ObservableList<String> niveisUrgencia = FXCollections.observableArrayList(
+            "TODOS", "CRÍTICO", "ALTO", "MÉDIO", "BAIXO"
+    );
+
+    /**
+     * Construtor com injeção de dependências do Spring.
+     *
+     * @param estoqueService  serviço responsável pelos dados de estoque
+     * @param csvExporter     serviço para exportar dados em CSV
+     */
     public PrevisaoDeComprasController(EstoqueService estoqueService,
-                                       FornecedorService fornecedorService,
                                        CSVPrevisaoComprasExporter csvExporter) {
         this.estoqueService = estoqueService;
-        this.fornecedorService = fornecedorService;
         this.csvExporter = csvExporter;
     }
 
     /**
-     * Inicializa a tela com dados dos produtos e configurações
+     * Método executado automaticamente ao carregar a tela (JavaFX).
+     *
+     * Responsável por:
+     * - inicializar filtros
+     * - carregar dados
+     * - configurar os ComboBox
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarCombobox();
+        configurarFiltros();
         carregarDados();
-        configurarTabelas();
     }
 
     /**
-     * Configura os ComboBox com opções de filtro
+     * Configura os ComboBox de categoria e urgência.
+     * Define valores padrão.
      */
     private void configurarCombobox() {
-        // Configura ComboBox de Urgência
         cbUrgencia.setItems(niveisUrgencia);
-        cbUrgencia.setValue("TODOS");
+        cbUrgencia.setValue("TODOS"); // valor inicial
 
-        // Configura ComboBox de Categoria (será preenchido com dados reais)
-        categorias.addAll("TODAS", "Grãos", "Óleos", "Limpeza", "Bebidas", "Laticínios", "Massas", "Farináceos");
         cbCategoria.setItems(categorias);
-        cbCategoria.setValue("TODAS");
-
-        // Listeners para filtros automáticos
-        cbCategoria.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
-        cbUrgencia.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
-        txtFiltro.textProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
+        cbCategoria.setValue("TODAS"); // valor inicial (adicionado dinamicamente depois)
     }
 
     /**
-     * Configura as colunas das tabelas
+     * Configura filtros em tempo real usando FilteredList.
+     *
+     * Os listeners observam mudanças nos campos de texto e combobox,
+     * e chamam o método aplicarFiltros().
      */
-    private void configurarTabelas() {
-        // A configuração das colunas será feita via FXML
-        tabelaProdutos.setItems(produtosData);
+    private void configurarFiltros() {
+        produtosFiltrados = new FilteredList<>(produtosData, p -> true);
+        tabelaProdutos.setItems(produtosFiltrados);
+
+        txtFiltro.textProperty().addListener((obs, oldValue, newValue) -> aplicarFiltros());
+        cbCategoria.valueProperty().addListener((obs, oldValue, newValue) -> aplicarFiltros());
+        cbUrgencia.valueProperty().addListener((obs, oldValue, newValue) -> aplicarFiltros());
     }
 
     /**
-     * Carrega os dados dos produtos do serviço de estoque
+     * Carrega os dados do estoque a partir do serviço.
+     *
+     * Aqui ocorre:
+     * - cálculo da quantidade a comprar
+     * - determinação do nível de urgência
+     * - exclusão de itens que não precisam ser comprados
+     * - conversão para DTO de exibição
      */
     private void carregarDados() {
         try {
@@ -94,16 +127,21 @@ public class PrevisaoDeComprasController implements Initializable {
 
             List<PrevisaoCompraDTO> previsoes = estoques.stream()
                     .map(estoque -> {
+                        // Calcula quanto precisa comprar
                         Integer quantidadeComprar = PrevisaoCompraDTO.calcularQuantidadeComprar(
-                                estoque.quantidade(),
-                                estoque.quantidadeMinima()
+                                estoque.quantidade(), estoque.quantidadeMinima()
                         );
 
+                        if (quantidadeComprar <= 0) {
+                            return null; // ignora produtos que não precisam compra
+                        }
+
+                        // Determina urgência
                         String urgencia = PrevisaoCompraDTO.determinarUrgencia(
-                                estoque.quantidade(),
-                                estoque.quantidadeMinima()
+                                estoque.quantidade(), estoque.quantidadeMinima()
                         );
 
+                        // Cria DTO para a tabela
                         return new PrevisaoCompraDTO(
                                 estoque.idProduto(),
                                 estoque.nome(),
@@ -111,97 +149,180 @@ public class PrevisaoDeComprasController implements Initializable {
                                 estoque.quantidade(),
                                 estoque.quantidadeMinima(),
                                 quantidadeComprar,
-                                urgencia,
-                                "Fornecedores disponíveis" // Placeholder - pode ser expandido
+                                urgencia
                         );
                     })
-                    .filter(previsao -> previsao.getQuantidadeComprar() > 0)
+                    .filter(dto -> dto != null)
                     .collect(Collectors.toList());
 
-            produtosData.setAll(previsoes);
+            produtosData.clear();
+            produtosData.addAll(previsoes);
+
+            atualizarCategorias();
+            atualizarContagemProdutos();
 
         } catch (Exception e) {
-            exibirAlertaErro("Erro ao carregar dados", "Não foi possível carregar os dados de previsão de compras.");
+            exibirAlertaErro("Erro ao carregar dados",
+                    "Não foi possível carregar os dados: " + e.getMessage());
         }
     }
 
     /**
-     * Aplica os filtros selecionados na tabela
+     * Atualiza dinamicamente o ComboBox de categorias com base nos produtos carregados.
+     * Inclui a opção "TODAS".
+     */
+    private void atualizarCategorias() {
+        Set<String> categoriasUnicas = new HashSet<>();
+        categoriasUnicas.add("TODAS");
+
+        for (PrevisaoCompraDTO produto : produtosData) {
+            if (produto.getCategoria() != null) {
+                categoriasUnicas.add(produto.getCategoria().trim());
+            }
+        }
+
+        String selecaoAtual = cbCategoria.getValue();
+
+        categorias.clear();
+        categorias.addAll(categoriasUnicas.stream().sorted().collect(Collectors.toList()));
+
+        // Mantém categoria selecionada se ainda existir
+        if (categorias.contains(selecaoAtual)) {
+            cbCategoria.setValue(selecaoAtual);
+        } else {
+            cbCategoria.setValue("TODAS");
+        }
+    }
+
+    /**
+     * Aplica os filtros:
+     * - Texto (nome do produto)
+     * - Categoria
+     * - Urgência
      */
     private void aplicarFiltros() {
-        String filtroTexto = txtFiltro.getText().toLowerCase();
-        String categoriaSelecionada = cbCategoria.getValue();
-        String urgenciaSelecionada = cbUrgencia.getValue();
+        produtosFiltrados.setPredicate(produto -> {
 
-        List<PrevisaoCompraDTO> filtrados = produtosData.stream()
-                .filter(produto ->
-                        (filtroTexto.isEmpty() || produto.getNomeProduto().toLowerCase().contains(filtroTexto)) &&
-                                ("TODAS".equals(categoriaSelecionada) || produto.getCategoria().equals(categoriaSelecionada)) &&
-                                ("TODOS".equals(urgenciaSelecionada) || produto.getNivelUrgencia().equals(urgenciaSelecionada))
-                )
-                .collect(Collectors.toList());
+            // Filtro por texto
+            String filtroTexto = txtFiltro.getText().toLowerCase();
+            if (filtroTexto != null && !filtroTexto.isEmpty()) {
+                if (!produto.getNomeProduto().toLowerCase().contains(filtroTexto)) {
+                    return false;
+                }
+            }
 
-        tabelaProdutos.setItems(FXCollections.observableArrayList(filtrados));
+            // Filtro por categoria
+            String categoria = cbCategoria.getValue();
+            if (!"TODAS".equals(categoria)) {
+                if (!categoria.equals(produto.getCategoria())) {
+                    return false;
+                }
+            }
+
+            // Filtro por urgência
+            String urgencia = cbUrgencia.getValue();
+            if (!"TODOS".equals(urgencia)) {
+                if (!urgencia.equals(produto.getNivelUrgencia())) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        atualizarContagemProdutos();
     }
 
     /**
-     * Atualiza os dados da tela (chamado pelo botão Atualizar)
+     * Atualiza a quantidade de produtos mostrados na tela.
+     * Exemplo: "Produtos encontrados: 5 de 12"
      */
-    @FXML
-    void atualizarDados(ActionEvent event) {
-        carregarDados();
-        exibirMensagemSucesso("Dados atualizados com sucesso!");
+    private void atualizarContagemProdutos() {
+        if (lblContador != null) {
+            lblContador.setText(
+                    String.format("Produtos encontrados: %d de %d",
+                            produtosFiltrados.size(),
+                            produtosData.size())
+            );
+        }
     }
 
     /**
-     * Gera lista de compras (funcionalidade básica)
+     * Gera e exibe uma lista de compras em texto.
+     * Mostra um Alert contendo todos os produtos que precisam ser comprados.
      */
     @FXML
     void gerarListaCompras(ActionEvent event) {
-        List<PrevisaoCompraDTO> produtosSelecionados = tabelaProdutos.getItems();
 
-        if (produtosSelecionados.isEmpty()) {
-            exibirAlertaInformacao("Lista Vazia", "Não há produtos para comprar no momento.");
+        List<PrevisaoCompraDTO> itens = tabelaProdutos.getItems();
+
+        if (itens.isEmpty()) {
+            exibirAlertaInformacao("Lista Vazia", "Não há produtos para comprar.");
             return;
         }
 
-        StringBuilder listaCompras = new StringBuilder("LISTA DE COMPRAS SUGERIDA:\n\n");
-        for (PrevisaoCompraDTO produto : produtosSelecionados) {
-            listaCompras.append(String.format("- %s: %d unidades\n",
-                    produto.getNomeProduto(), produto.getQuantidadeComprar()));
+        StringBuilder lista = new StringBuilder("LISTA DE COMPRAS:\n\n");
+
+        int totalUnidades = 0;
+
+        for (PrevisaoCompraDTO produto : itens) {
+            lista.append(String.format("- %s: %d unidades (%s)\n",
+                    produto.getNomeProduto(),
+                    produto.getQuantidadeComprar(),
+                    produto.getNivelUrgencia()));
+
+            totalUnidades += produto.getQuantidadeComprar();
         }
 
-        exibirAlertaInformacao("Lista de Compras Gerada", listaCompras.toString());
+        lista.append(String.format(
+                "\nTOTAL: %d produtos / %d unidades",
+                itens.size(), totalUnidades
+        ));
+
+        TextArea area = new TextArea(lista.toString());
+        area.setEditable(false);
+        area.setWrapText(true);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Lista de Compras");
+        alert.setHeaderText("Itens necessários para reposição:");
+        alert.getDialogPane().setContent(area);
+        alert.showAndWait();
     }
 
     /**
-     * Exporta os dados da tabela para CSV
+     * Exporta os dados mostrados na tabela para um arquivo CSV.
      */
     @FXML
     void exportarParaCSV(ActionEvent event) {
-        List<PrevisaoCompraDTO> produtosParaExportar = tabelaProdutos.getItems();
+        List<PrevisaoCompraDTO> dados = tabelaProdutos.getItems();
 
-        if (produtosParaExportar.isEmpty()) {
+        if (dados.isEmpty()) {
             exibirAlertaInformacao("Nenhum dado", "Não há dados para exportar.");
             return;
         }
 
-        String resultado = csvExporter.exportarPrevisaoComprasCSV(produtosParaExportar);
+        String resultado = csvExporter.exportarPrevisaoComprasCSV(dados);
         exibirAlertaInformacao("Exportação CSV", resultado);
     }
 
     /**
-     * Limpa todos os filtros aplicados
+     * Reseta todos os filtros para os valores padrão.
      */
     @FXML
     void limparFiltros(ActionEvent event) {
         txtFiltro.clear();
         cbCategoria.setValue("TODAS");
         cbUrgencia.setValue("TODOS");
-        // Os listeners irão automaticamente aplicar os filtros "limpos"
     }
 
-    // Métodos auxiliares para exibição de alertas
+    //====================================================
+    // MÉTODOS AUXILIARES DE ALERTA
+    //====================================================
+
+    /**
+     * Exibe um alerta de erro padrão.
+     */
     private void exibirAlertaErro(String titulo, String mensagem) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
@@ -210,16 +331,14 @@ public class PrevisaoDeComprasController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Exibe um alerta informativo padrão.
+     */
     private void exibirAlertaInformacao(String titulo, String mensagem) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
-    }
-
-    private void exibirMensagemSucesso(String mensagem) {
-        // Pode ser implementado com uma Label na interface se preferir
-        System.out.println(mensagem);
     }
 }
