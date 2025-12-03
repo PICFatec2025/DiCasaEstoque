@@ -47,6 +47,7 @@ public class AdicionarProdutoController implements DataFormController {
     @FXML private Button btnAtualizar;
     @FXML private Button btnDeletar;
 
+
     private Produto produtoAtual;
 
     private static final String[] TIPOS_PRODUTO = {
