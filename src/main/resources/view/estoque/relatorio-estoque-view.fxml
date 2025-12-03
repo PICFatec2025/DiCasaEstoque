@@ -28,7 +28,6 @@
                         <Label text="Buscar produto:" styleClass="texto-busca"/>
                         <TextField styleClass="text-field-busca" fx:id="textFieldBusca" HBox.hgrow="ALWAYS"/>
                         <ImageView fitHeight="20" fitWidth="20" styleClass="search-icon" onMouseClicked="#onClickButtonBuscar">
-                            <Image url="@../../static/icone-busca.png" /> <!-- Altere o caminho para seu ícone -->
                         </ImageView>
                     </children>
                 </HBox>

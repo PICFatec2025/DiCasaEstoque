@@ -127,7 +127,7 @@ public class CadastroFornecedorController implements DataFormController {
         aplicarMascaraCep(txtCep);
         aplicarMascaraCnpj(txtCnpj);
     }
-    
+
 
     /**
      * Aplica máscara de telefone brasileira: (99) 99999-9999 ou (99) 9999-9999.

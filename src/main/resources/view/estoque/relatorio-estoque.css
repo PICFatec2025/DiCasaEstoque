@@ -1,12 +1,12 @@
 /* Estilos para a área central */
 .center-vbox {
-    -fx-background-color: #f39c12;
+    -fx-background-color: #FFE0B2;
     -fx-padding: 30;
     -fx-alignment: top-center;
 }
 
 .center-title {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-alignment: center;
@@ -35,7 +35,7 @@
 }
 
 .texto-busca {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-padding: 0 5 0 0;
 }
