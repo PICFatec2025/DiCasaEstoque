@@ -29,7 +29,6 @@ public class PrevisaoDeComprasController implements Initializable {
     private final CSVPrevisaoComprasExporter csvExporter;
 
     // Componentes FXML
-    @FXML private ComboBox<String> cbCategoria;
     @FXML private ComboBox<String> cbUrgencia;
     @FXML private TableView<PrevisaoCompraDTO> tabelaProdutos;
     @FXML private TableView<?> tabelaFornecedores;
@@ -37,7 +36,6 @@ public class PrevisaoDeComprasController implements Initializable {
 
     // Lista de dados
     private ObservableList<PrevisaoCompraDTO> produtosData = FXCollections.observableArrayList();
-    private ObservableList<String> categorias = FXCollections.observableArrayList();
     private ObservableList<String> niveisUrgencia = FXCollections.observableArrayList("TODOS", "CRÍTICO", "ALTO", "MÉDIO", "BAIXO");
 
     public PrevisaoDeComprasController(EstoqueService estoqueService,
@@ -66,13 +64,7 @@ public class PrevisaoDeComprasController implements Initializable {
         cbUrgencia.setItems(niveisUrgencia);
         cbUrgencia.setValue("TODOS");
 
-        // Configura ComboBox de Categoria (será preenchido com dados reais)
-        categorias.addAll("TODAS", "Grãos", "Óleos", "Limpeza", "Bebidas", "Laticínios", "Massas", "Farináceos");
-        cbCategoria.setItems(categorias);
-        cbCategoria.setValue("TODAS");
-
         // Listeners para filtros automáticos
-        cbCategoria.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
         cbUrgencia.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
         txtFiltro.textProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
     }
@@ -130,13 +122,11 @@ public class PrevisaoDeComprasController implements Initializable {
      */
     private void aplicarFiltros() {
         String filtroTexto = txtFiltro.getText().toLowerCase();
-        String categoriaSelecionada = cbCategoria.getValue();
         String urgenciaSelecionada = cbUrgencia.getValue();
 
         List<PrevisaoCompraDTO> filtrados = produtosData.stream()
                 .filter(produto ->
                         (filtroTexto.isEmpty() || produto.getNomeProduto().toLowerCase().contains(filtroTexto)) &&
-                                ("TODAS".equals(categoriaSelecionada) || produto.getCategoria().equals(categoriaSelecionada)) &&
                                 ("TODOS".equals(urgenciaSelecionada) || produto.getNivelUrgencia().equals(urgenciaSelecionada))
                 )
                 .collect(Collectors.toList());
@@ -196,7 +186,6 @@ public class PrevisaoDeComprasController implements Initializable {
     @FXML
     void limparFiltros(ActionEvent event) {
         txtFiltro.clear();
-        cbCategoria.setValue("TODAS");
         cbUrgencia.setValue("TODOS");
         // Os listeners irão automaticamente aplicar os filtros "limpos"
     }

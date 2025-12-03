@@ -45,7 +45,7 @@ public class RelatorioEstoqueController implements Initializable {
     @FXML
     private TableColumn<EstoqueProdutoCompletoResponseDTO,String> tableColumnNome;
     @FXML
-    private TableColumn<EstoqueProdutoCompletoResponseDTO,String> tableColumnCategoria;
+    private TableColumn<EstoqueProdutoCompletoResponseDTO,String> tableColumnTipo;
     @FXML
     private TableColumn<EstoqueProdutoCompletoResponseDTO,Integer> tableColumnQuantidade;
     @FXML
@@ -79,7 +79,7 @@ public class RelatorioEstoqueController implements Initializable {
      */
     private void initializeNodes(){
         setupColumnString(tableColumnNome, EstoqueProdutoCompletoResponseDTO::nome);
-        setupColumnString(tableColumnCategoria, EstoqueProdutoCompletoResponseDTO::tipo);
+        setupColumnString(tableColumnTipo, EstoqueProdutoCompletoResponseDTO::tipo);
         setupColumnInteger(tableColumnQuantidade, EstoqueProdutoCompletoResponseDTO::quantidade);
         setupColumnInteger(tableColumnQuantidadeMinima, EstoqueProdutoCompletoResponseDTO::quantidadeMinima);
         setupColumnString(tableColumnStatus, EstoqueProdutoCompletoResponseDTO::statusTexto);

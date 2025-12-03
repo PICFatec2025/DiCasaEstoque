@@ -7,7 +7,9 @@ import dicasa.estoque.models.entities.Usuario;
 import dicasa.estoque.service.ProdutoService;
 import dicasa.estoque.util.SessionManager;
 import javafx.fxml.FXML;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,7 +29,7 @@ public class AdicionarProdutoController implements DataFormController {
     @FXML private Label lblTitulo;
     @FXML private TextField txtNome;
     @FXML private TextField txtMarca;
-    @FXML private TextField txtTipo;
+    @FXML private ComboBox<String> cbTipo;
     @FXML private TextField txtQuantidade;
     @FXML private TextField txtValorUnitario;
     @FXML private TextField txtEstoqueEmergencial;
@@ -47,6 +49,10 @@ public class AdicionarProdutoController implements DataFormController {
 
     private Produto produtoAtual;
 
+    private static final String[] TIPOS_PRODUTO = {
+            "Carne", "Massa", "Preparo", "Legume", "Vegetai", "Embalagem", "Revenda", "Grão"
+    };
+
     public AdicionarProdutoController(ProdutoService produtoService) {
         this.produtoService = produtoService;
     }
@@ -55,6 +61,7 @@ public class AdicionarProdutoController implements DataFormController {
     public void initialize() {
         configurarModoCriacao();
         configurarCamposNumericos();
+        configurarTiposProduto();
     }
 
     /**
@@ -67,7 +74,7 @@ public class AdicionarProdutoController implements DataFormController {
             EstoqueProduto estoqueProduto = new EstoqueProduto();
             produto.setNome(textoObrigatorio(txtNome, "o nome"));
             produto.setMarca(txtMarca.getText());
-            produto.setTipo(textoObrigatorio(txtTipo, "o tipo"));
+            produto.setTipo(tipoObrigatorio());
             estoqueProduto.setQuantidade(ehUmNumeroInteiroPositivo(textoObrigatorio(txtQuantidade, "a quantidade")));
             estoqueProduto.setQuantidadeMinima(ehUmNumeroInteiroPositivo(textoObrigatorio(txtQuantidadeMinima, "a quantidade mínima")));
             estoqueProduto.setEstoqueEmergencial(ehUmNumeroInteiroPositivo(textoObrigatorio(txtEstoqueEmergencial, "o estoque emergencial")));
@@ -104,7 +111,7 @@ public class AdicionarProdutoController implements DataFormController {
         try {
             produtoAtual.setNome(textoObrigatorio(txtNome, "o nome"));
             produtoAtual.setMarca(txtMarca.getText());
-            produtoAtual.setTipo(textoObrigatorio(txtTipo, "o tipo"));
+            produtoAtual.setTipo(tipoObrigatorio());
             produtoAtual.setObservacao(txtObservacao.getText());
             produtoAtual.setDataAtualizacao(LocalDateTime.now());
 
@@ -168,7 +175,7 @@ public class AdicionarProdutoController implements DataFormController {
         }
         txtNome.setText(produtoAtual.getNome());
         txtMarca.setText(produtoAtual.getMarca());
-        txtTipo.setText(produtoAtual.getTipo());
+        cbTipo.setValue(produtoAtual.getTipo());
         txtObservacao.setText(produtoAtual.getObservacao());
         Usuario usuario = produtoAtual.getUsuario();
         txtUsuarioCriador.setText(usuario != null ? usuario.getNome() : "");
@@ -180,7 +187,7 @@ public class AdicionarProdutoController implements DataFormController {
     private void limparCampos() {
         txtNome.clear();
         txtMarca.clear();
-        txtTipo.clear();
+        cbTipo.getSelectionModel().clearSelection();
         txtQuantidade.clear();
         txtValorUnitario.clear();
         txtEstoqueEmergencial.clear();
@@ -272,6 +279,10 @@ public class AdicionarProdutoController implements DataFormController {
         textFieldRecebeApenasNumerosInteiros(txtEstoqueEmergencial, 9);
     }
 
+    private void configurarTiposProduto() {
+        cbTipo.setItems(FXCollections.observableArrayList(TIPOS_PRODUTO));
+    }
+
     /**
      * Garante que campos obrigatórios sejam preenchidos antes de salvar.
      */
@@ -279,6 +290,14 @@ public class AdicionarProdutoController implements DataFormController {
         String valor = campo.getText() != null ? campo.getText().trim() : "";
         if (valor.isEmpty()) {
             throw new IllegalArgumentException("Informe " + nomeCampo + ".");
+        }
+        return valor;
+    }
+
+    private String tipoObrigatorio() {
+        String valor = cbTipo.getValue();
+        if (valor == null || valor.trim().isEmpty()) {
+            throw new IllegalArgumentException("Selecione o tipo.");
         }
         return valor;
     }

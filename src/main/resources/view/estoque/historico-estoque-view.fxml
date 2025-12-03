@@ -19,7 +19,6 @@
                 <HBox alignment="CENTER_LEFT" spacing="10" styleClass="caixa-filtro-pesquisa">
                     <Label styleClass="filtro-label" text="Filtrar por:" />
                     <!-- ComboBox vazios - serão preenchidos no controller -->
-                    <ComboBox fx:id="categoriaFilter" prefWidth="150" promptText="Categoria" />
                     <ComboBox fx:id="produtoFilter" prefWidth="150" promptText="Produto" />
 
                     <Button styleClass="clear-filters-button" text="Limpar Filtros" />
@@ -72,7 +71,7 @@
                         </TableColumn>
                         <TableColumn prefWidth="120" text="Tipo">
                             <cellValueFactory>
-                                <PropertyValueFactory property="categoria" />
+                                <PropertyValueFactory property="tipo" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="100" text="Quantidade">

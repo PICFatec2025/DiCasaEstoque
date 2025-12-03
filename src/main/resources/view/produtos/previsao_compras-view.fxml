@@ -21,8 +21,6 @@
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Filtrar:" style="-fx-font-weight: bold;"/>
             <TextField fx:id="txtFiltro" promptText="Nome do produto" prefWidth="200"/>
-            <Label text="Categoria:" style="-fx-font-weight: bold;"/>
-            <ComboBox fx:id="cbCategoria" promptText="Todas categorias" prefWidth="150"/>
             <Label text="Urgência:" style="-fx-font-weight: bold;"/>
             <ComboBox fx:id="cbUrgencia" promptText="Todos níveis" prefWidth="120"/>
             <Button text="Atualizar"
@@ -41,9 +39,9 @@
                         <PropertyValueFactory property="nomeProduto" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="100" text="Categoria">
+                <TableColumn prefWidth="100" text="Tipo">
                     <cellValueFactory>
-                        <PropertyValueFactory property="categoria" />
+                        <PropertyValueFactory property="tipo" />
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="100" text="Estoque Atual">

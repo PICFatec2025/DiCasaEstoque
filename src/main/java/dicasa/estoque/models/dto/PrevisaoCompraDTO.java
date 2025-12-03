@@ -5,20 +5,20 @@ import javafx.beans.property.*;
 public class PrevisaoCompraDTO {
     private final LongProperty idProduto;
     private final StringProperty nomeProduto;
-    private final StringProperty categoria;
+    private final StringProperty tipo;
     private final IntegerProperty estoqueAtual;
     private final IntegerProperty estoqueMinimo;
     private final IntegerProperty quantidadeComprar;
     private final StringProperty nivelUrgencia;
     private final StringProperty fornecedoresDisponiveis;
 
-    public PrevisaoCompraDTO(Long idProduto, String nomeProduto, String categoria,
+    public PrevisaoCompraDTO(Long idProduto, String nomeProduto, String tipo,
                              Integer estoqueAtual, Integer estoqueMinimo,
                              Integer quantidadeComprar, String nivelUrgencia,
                              String fornecedoresDisponiveis) {
         this.idProduto = new SimpleLongProperty(idProduto);
         this.nomeProduto = new SimpleStringProperty(nomeProduto);
-        this.categoria = new SimpleStringProperty(categoria);
+        this.tipo = new SimpleStringProperty(tipo);
         this.estoqueAtual = new SimpleIntegerProperty(estoqueAtual);
         this.estoqueMinimo = new SimpleIntegerProperty(estoqueMinimo);
         this.quantidadeComprar = new SimpleIntegerProperty(quantidadeComprar);
@@ -28,7 +28,7 @@ public class PrevisaoCompraDTO {
 
     // Getters no padrão JavaBean (com "get")
     public String getNomeProduto() { return nomeProduto.get(); }
-    public String getCategoria() { return categoria.get(); }
+    public String getTipo() { return tipo.get(); }
     public Integer getEstoqueAtual() { return estoqueAtual.get(); }
     public Integer getEstoqueMinimo() { return estoqueMinimo.get(); }
     public Integer getQuantidadeComprar() { return quantidadeComprar.get(); }
@@ -38,7 +38,7 @@ public class PrevisaoCompraDTO {
 
     // Property methods para o PropertyValueFactory
     public StringProperty nomeProdutoProperty() { return nomeProduto; }
-    public StringProperty categoriaProperty() { return categoria; }
+    public StringProperty tipoProperty() { return tipo; }
     public IntegerProperty estoqueAtualProperty() { return estoqueAtual; }
     public IntegerProperty estoqueMinimoProperty() { return estoqueMinimo; }
     public IntegerProperty quantidadeComprarProperty() { return quantidadeComprar; }

@@ -16,12 +16,12 @@ public class CSVPrevisaoComprasExporter {
 
         try (FileWriter writer = new FileWriter(caminhoArquivo)) {
             // Cabeçalho
-            writer.append("Produto,Categoria,Estoque Atual,Estoque Minimo,Quantidade Comprar,Urgencia,Fornecedores\n");
+            writer.append("Produto,Tipo,Estoque Atual,Estoque Minimo,Quantidade Comprar,Urgencia,Fornecedores\n");
 
             // Linhas
             for (PrevisaoCompraDTO previsao : previsoes) {
                 writer.append(escape(previsao.getNomeProduto())).append(",")
-                        .append(escape(previsao.getCategoria())).append(",")
+                        .append(escape(previsao.getTipo())).append(",")
                         .append(String.valueOf(previsao.getEstoqueAtual())).append(",")
                         .append(String.valueOf(previsao.getEstoqueMinimo())).append(",")
                         .append(String.valueOf(previsao.getQuantidadeComprar())).append(",")

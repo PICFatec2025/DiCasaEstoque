@@ -49,7 +49,6 @@
             <columns>
                 <TableColumn text="Data" prefWidth="100"/>
                 <TableColumn text="Produto" prefWidth="150"/>
-                <TableColumn text="Categoria" prefWidth="120"/>
                 <TableColumn text="Qtd" prefWidth="80"/>
                 <TableColumn text="Valor Unitário" prefWidth="120"/>
                 <TableColumn text="Valor Total" prefWidth="120"/>
