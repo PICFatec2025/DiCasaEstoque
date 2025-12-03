@@ -44,7 +44,7 @@
                             </columnResizePolicy>
                             <columns>
                                 <TableColumn fx:id="tableColumnNome" prefWidth="200" text="Produto" />
-                                <TableColumn fx:id="tableColumnCategoria" prefWidth="150" text="Categoria" />
+                                <TableColumn fx:id="tableColumnTipo" prefWidth="150" text="Tipo" />
                                 <TableColumn fx:id="tableColumnQuantidade" prefWidth="120" text="Estoque Atual" />
                                 <TableColumn fx:id="tableColumnQuantidadeMinima" prefWidth="120" text="Mínimo" />
                                 <TableColumn fx:id="tableColumnStatus" prefWidth="120" text="Status" />

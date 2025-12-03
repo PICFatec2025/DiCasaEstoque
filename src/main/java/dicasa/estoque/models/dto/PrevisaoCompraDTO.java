@@ -2,76 +2,57 @@ package dicasa.estoque.models.dto;
 
 import javafx.beans.property.*;
 
-/**
- * Data Transfer Object (DTO) para Previsão de Compras
- *
- *
- * 1. ENCAPSULAMENTO: Todos os atributos são privados e acessados via getters
- * 2. CONSTRUTOR: Inicializa todas as propriedades obrigatórias
- * 3. PROPERTIES DO JAVAFX: Usa Property para binding bidirecional com a interface
- * 4. MÉTODOS ESTÁTICOS: Contém lógica de negócio reutilizável
- * 5. SOBRESCRITA: Implementa toString() para depuração
- * 6. JAVA BEAN PATTERN: Segue convenções de getters
- */
 public class PrevisaoCompraDTO {
     private final LongProperty idProduto;
     private final StringProperty nomeProduto;
-    private final StringProperty categoria;
+    private final StringProperty tipo;
     private final IntegerProperty estoqueAtual;
     private final IntegerProperty estoqueMinimo;
     private final IntegerProperty quantidadeComprar;
     private final StringProperty nivelUrgencia;
+    private final StringProperty fornecedoresDisponiveis;
 
-    public PrevisaoCompraDTO(Long idProduto, String nomeProduto, String categoria,
+    public PrevisaoCompraDTO(Long idProduto, String nomeProduto, String tipo,
                              Integer estoqueAtual, Integer estoqueMinimo,
-                             Integer quantidadeComprar, String nivelUrgencia) {
+                             Integer quantidadeComprar, String nivelUrgencia,
+                             String fornecedoresDisponiveis) {
         this.idProduto = new SimpleLongProperty(idProduto);
         this.nomeProduto = new SimpleStringProperty(nomeProduto);
-        this.categoria = new SimpleStringProperty(categoria);
+        this.tipo = new SimpleStringProperty(tipo);
         this.estoqueAtual = new SimpleIntegerProperty(estoqueAtual);
         this.estoqueMinimo = new SimpleIntegerProperty(estoqueMinimo);
         this.quantidadeComprar = new SimpleIntegerProperty(quantidadeComprar);
         this.nivelUrgencia = new SimpleStringProperty(nivelUrgencia);
+        this.fornecedoresDisponiveis = new SimpleStringProperty(fornecedoresDisponiveis);
     }
 
-    // ========== GETTERS (JavaBean Pattern) ==========
-    public Long getIdProduto() { return idProduto.get(); }
+    // Getters no padrão JavaBean (com "get")
     public String getNomeProduto() { return nomeProduto.get(); }
-    public String getCategoria() { return categoria.get(); }
+    public String getTipo() { return tipo.get(); }
     public Integer getEstoqueAtual() { return estoqueAtual.get(); }
     public Integer getEstoqueMinimo() { return estoqueMinimo.get(); }
     public Integer getQuantidadeComprar() { return quantidadeComprar.get(); }
     public String getNivelUrgencia() { return nivelUrgencia.get(); }
+    public String getFornecedoresDisponiveis() { return fornecedoresDisponiveis.get(); }
+    public Long getIdProduto() { return idProduto.get(); }
 
-    // ========== PROPERTY METHODS (JavaFX Binding) ==========
-    public LongProperty idProdutoProperty() { return idProduto; }
+    // Property methods para o PropertyValueFactory
     public StringProperty nomeProdutoProperty() { return nomeProduto; }
-    public StringProperty categoriaProperty() { return categoria; }
+    public StringProperty tipoProperty() { return tipo; }
     public IntegerProperty estoqueAtualProperty() { return estoqueAtual; }
     public IntegerProperty estoqueMinimoProperty() { return estoqueMinimo; }
     public IntegerProperty quantidadeComprarProperty() { return quantidadeComprar; }
     public StringProperty nivelUrgenciaProperty() { return nivelUrgencia; }
 
-    // ========== MÉTODOS DE NEGÓCIO ESTÁTICOS ==========
-
-    /**
-     * Calcula a quantidade a comprar baseado no estoque atual e mínimo
-     */
+    // Mantenha os métodos estáticos
     public static Integer calcularQuantidadeComprar(Integer estoqueAtual, Integer estoqueMinimo) {
-        if (estoqueAtual == null || estoqueMinimo == null || estoqueMinimo <= 0) {
+        if (estoqueAtual >= estoqueMinimo) {
             return 0;
         }
-        return Math.max(0, estoqueMinimo - estoqueAtual);
+        return estoqueMinimo - estoqueAtual;
     }
 
-    /**
-     * Determina o nível de urgência da compra
-     */
     public static String determinarUrgencia(Integer estoqueAtual, Integer estoqueMinimo) {
-        if (estoqueAtual == null || estoqueMinimo == null || estoqueMinimo <= 0) {
-            return "INDEFINIDO";
-        }
-
         if (estoqueAtual == 0) {
             return "CRÍTICO";
         } else if (estoqueAtual < estoqueMinimo * 0.3) {
@@ -81,12 +62,5 @@ public class PrevisaoCompraDTO {
         } else {
             return "BAIXO";
         }
-    }
-
-    // ========== SOBRESCRITA DE toString() ==========
-    @Override
-    public String toString() {
-        return String.format("%s: %d unidades (%s)",
-                getNomeProduto(), getQuantidadeComprar(), getNivelUrgencia());
     }
 }
