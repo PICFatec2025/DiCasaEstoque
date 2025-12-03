@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21.0.8"
@@ -13,78 +14,82 @@
             fx:controller="dicasa.estoque.controller.perfil.PerfilController"
             stylesheets="@perfil.css">
     <children>
-        <VBox alignment="TOP_CENTER" spacing="20.0" prefHeight="600.0" prefWidth="800.0" styleClass="container">
+        <StackPane alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label styleClass="page-title" text="Perfil" />
-                <Label styleClass="page-subtitle" text="Atualize informações sobre seu usuário" />
-
-                <VBox spacing="20.0" styleClass="card">
+                <VBox alignment="TOP_CENTER" spacing="20.0" prefHeight="600.0" prefWidth="800.0" styleClass="container">
                     <children>
-                        <Label styleClass="label-titulo" text="Informações do perfil" />
-                        <Label styleClass="label-texto" text="Atualize as informações do seu perfil e endereço de email." />
+                        <Label styleClass="page-title" text="Perfil" />
+                        <Label styleClass="page-subtitle" text="Atualize informações sobre seu usuário" />
 
-                        <VBox spacing="10.0">
+                        <VBox spacing="20.0" styleClass="card">
                             <children>
-                                <Label styleClass="label-textfield" text="Nome:" />
-                                <TextField fx:id="textFieldNome" styleClass="textfield" />
-                                <Label fx:id="labelErrorNome" styleClass="error-label" textFill="RED" />
+                                <Label styleClass="label-titulo" text="Informações do perfil" />
+                                <Label styleClass="label-texto" text="Atualize as informações do seu perfil e endereço de email." />
+
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <Label styleClass="label-textfield" text="Nome:" />
+                                        <TextField fx:id="textFieldNome" styleClass="textfield" />
+                                        <Label fx:id="labelErrorNome" styleClass="error-label" textFill="RED" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <Label styleClass="label-textfield" text="E-mail:" />
+                                        <TextField fx:id="textFieldEmail" styleClass="textfield" />
+                                        <Label fx:id="labelErrorEmail" styleClass="error-label" textFill="RED" />
+                                    </children>
+                                </VBox>
+
+                                <Button fx:id="buttonAtualizarPerfil" text="Atualizar Perfil" onAction="#onClickAtualizarPerfil" />
                             </children>
                         </VBox>
 
-                        <VBox spacing="10.0">
+                        <VBox spacing="20.0" styleClass="card">
                             <children>
-                                <Label styleClass="label-textfield" text="E-mail:" />
-                                <TextField fx:id="textFieldEmail" styleClass="textfield" />
-                                <Label fx:id="labelErrorEmail" styleClass="error-label" textFill="RED" />
+                                <Label styleClass="label-titulo" text="Atualizar senha" />
+                                <Label styleClass="label-texto" text="Certifique-se de usar uma senha difícil para uma maior segurança." />
+
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <Label styleClass="label-textfield" text="Antiga senha:" />
+                                        <PasswordField fx:id="passwordFieldSenhaAntiga" styleClass="password-field" />
+                                        <Label fx:id="labelErrorSenhaAntiga" styleClass="error-label" textFill="RED" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <Label styleClass="label-textfield" text="Nova senha:" />
+                                        <PasswordField fx:id="passwordFieldSenhaNova" styleClass="password-field" />
+                                        <Label fx:id="labelErrorSenhaNova" styleClass="error-label" textFill="RED" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <Label styleClass="label-textfield" text="Confirmar senha:" />
+                                        <PasswordField fx:id="passwordFieldConfirmarSenha" styleClass="password-field" />
+                                        <Label fx:id="labelErrorConfirmarSenha" styleClass="error-label" textFill="RED" />
+                                    </children>
+                                </VBox>
+
+                                <Button fx:id="buttonAlterarSenha" text="Alterar Senha" onAction="#onClickAlterarSenha" />
                             </children>
                         </VBox>
 
-                        <Button fx:id="buttonAtualizarPerfil" text="Atualizar Perfil" onAction="#onClickAtualizarPerfil" />
-                    </children>
-                </VBox>
-
-                <VBox spacing="20.0" styleClass="card">
-                    <children>
-                        <Label styleClass="label-titulo" text="Atualizar senha" />
-                        <Label styleClass="label-texto" text="Certifique-se de usar uma senha difícil para uma maior segurança." />
-
-                        <VBox spacing="10.0">
+                        <VBox spacing="20.0" styleClass="card">
                             <children>
-                                <Label styleClass="label-textfield" text="Antiga senha:" />
-                                <PasswordField fx:id="passwordFieldSenhaAntiga" styleClass="password-field" />
-                                <Label fx:id="labelErrorSenhaAntiga" styleClass="error-label" textFill="RED" />
+                                <Label styleClass="label-titulo" text="Deletar conta" />
+                                <TextArea styleClass="texto-deletar-conta" editable="false" focusTraversable="false" wrapText="true"
+                                          text="Quando deletar sua conta, todos os seus recursos e dados serão permanentemente excluídos. Antes de deletar sua conta, faça o download de quaisquer dados ou informações que você deseja reter." />
+                                <Button fx:id="buttonDeletarPerfil" text="Deletar Perfil" onAction="#onClickDeletarPerfil" />
                             </children>
                         </VBox>
-
-                        <VBox spacing="10.0">
-                            <children>
-                                <Label styleClass="label-textfield" text="Nova senha:" />
-                                <PasswordField fx:id="passwordFieldSenhaNova" styleClass="password-field" />
-                                <Label fx:id="labelErrorSenhaNova" styleClass="error-label" textFill="RED" />
-                            </children>
-                        </VBox>
-
-                        <VBox spacing="10.0">
-                            <children>
-                                <Label styleClass="label-textfield" text="Confirmar senha:" />
-                                <PasswordField fx:id="passwordFieldConfirmarSenha" styleClass="password-field" />
-                                <Label fx:id="labelErrorConfirmarSenha" styleClass="error-label" textFill="RED" />
-                            </children>
-                        </VBox>
-
-                        <Button fx:id="buttonAlterarSenha" text="Alterar Senha" onAction="#onClickAlterarSenha" />
-                    </children>
-                </VBox>
-
-                <VBox spacing="20.0" styleClass="card">
-                    <children>
-                        <Label styleClass="label-titulo" text="Deletar conta" />
-                        <TextArea styleClass="texto-deletar-conta" editable="false" focusTraversable="false" wrapText="true"
-                                  text="Quando deletar sua conta, todos os seus recursos e dados serão permanentemente excluídos. Antes de deletar sua conta, faça o download de quaisquer dados ou informações que você deseja reter." />
-                        <Button fx:id="buttonDeletarPerfil" text="Deletar Perfil" onAction="#onClickDeletarPerfil" />
                     </children>
                 </VBox>
             </children>
-        </VBox>
+        </StackPane>
     </children>
 </AnchorPane>

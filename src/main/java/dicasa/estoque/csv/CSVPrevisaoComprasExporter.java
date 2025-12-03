@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,9 +15,18 @@ import java.util.List;
 public class CSVPrevisaoComprasExporter {
 
     public String exportarPrevisaoComprasCSV(List<PrevisaoCompraDTO> previsoes) {
-        String caminhoArquivo = "previsao_compras_" + LocalDateTime.now().toString().replaceAll("[:.]", "-") + ".csv";
+        Path diretorioRelatorios = Paths.get("relatorios", "previsao_compras");
+        Path caminhoArquivo = diretorioRelatorios.resolve(
+                "previsao_compras_" + LocalDateTime.now().toString().replaceAll("[:.]", "-") + ".csv"
+        );
 
-        try (FileWriter writer = new FileWriter(caminhoArquivo)) {
+        try {
+            Files.createDirectories(diretorioRelatorios);
+        } catch (IOException e) {
+            return "❌ Erro ao criar diretório de relatórios";
+        }
+
+        try (FileWriter writer = new FileWriter(caminhoArquivo.toFile())) {
             // Cabeçalho
             writer.append("Produto,Tipo,Estoque Atual,Estoque Minimo,Quantidade Comprar,Urgencia,Fornecedores\n");
 
@@ -29,7 +41,7 @@ public class CSVPrevisaoComprasExporter {
                         .append(escape(previsao.getFornecedoresDisponiveis())).append("\n");
             }
 
-            return "✅ CSV gerado em: " + caminhoArquivo;
+            return "✅ CSV gerado em: " + caminhoArquivo.toAbsolutePath();
         } catch (IOException e) {
             return "❌ Erro ao gerar o CSV: " + e.getMessage();
         }
