@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,8 +22,18 @@ public class CSVExporter {
      * @return mensagem que vai aparecer na tela após completar a ação
      */
     public String exportarEstoqueEmCSV(List<EstoqueProdutoCompletoResponseDTO> produtos){
-        String caminhoArquivo = "estoque_" + LocalDateTime.now().toString().replaceAll("[:.]", "-") + ".csv";
-        try (FileWriter writer = new FileWriter(caminhoArquivo)) {
+        Path diretorioRelatorios = Paths.get("relatorios", "estoque_atual");
+        Path caminhoArquivo = diretorioRelatorios.resolve(
+                "estoque_" + LocalDateTime.now().toString().replaceAll("[:.]", "-") + ".csv"
+        );
+
+        try {
+            Files.createDirectories(diretorioRelatorios);
+        } catch (IOException e) {
+            return "Erro ao criar diretório de relatórios";
+        }
+
+        try (FileWriter writer = new FileWriter(caminhoArquivo.toFile())) {
             // Cabeçalho
             writer.append("ID Produto,Nome,Marca,Tipo,Data Criacao, Quantidade,Minima,Emergencial,Status Texto\n");
 
@@ -37,7 +50,7 @@ public class CSVExporter {
                         .append(escape(produto.statusTexto())).append("\n");
             }
 
-            return "✅ CSV gerado em: " + caminhoArquivo;
+            return "✅ CSV gerado em: " + caminhoArquivo.toAbsolutePath();
         } catch (IOException e) {
             return "Erro ao gerar CSV";
         }
